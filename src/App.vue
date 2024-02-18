@@ -1,30 +1,123 @@
 <script setup>
-import HelloWorld from './components/HelloWorld.vue'
+import AppBar from './components/AppBar.vue'
+import SideBar from './components/SideBar.vue'
+import ToolBar from './components/ToolBar.vue'
+import Grid from './components/Grid.vue'
 </script>
 
-<template>
-  <div>
-    <a href="https://vitejs.dev" target="_blank">
-      <img src="/vite.svg" class="logo" alt="Vite logo" />
-    </a>
-    <a href="https://vuejs.org/" target="_blank">
-      <img src="./assets/vue.svg" class="logo vue" alt="Vue logo" />
-    </a>
-  </div>
-  <HelloWorld msg="Vite + Vue" />
+<template >
+    <v-app class="v-app">
+      <!-- APP BAR -->
+      <app-bar></app-bar>
+      <!-- MAIN CONTENTS-->
+      <v-main class="v-main">
+        <!-- SIDE BAR -->
+        <side-bar></side-bar>
+        <!-- SHEETS -->
+        <v-container class="container">
+          <!-- ROUTER -->
+          <router-view></router-view>
+          <!-- Temp -->
+          <v-sheet class="sheet light">
+            <!-- TITLE -->
+            <v-row class="text-h3">
+              Nhập liệu phân tích
+            </v-row>
+            <!-- TOOL BAR -->
+            <tool-bar></tool-bar>
+            <!-- GRID -->
+            <grid></grid>
+          </v-sheet>
+        </v-container>   
+      </v-main>
+    </v-app>
 </template>
 
+<style>
+body,html {
+  margin: 0 !important;
+  padding: 0 !important;
+}
+* {
+  box-sizing: border-box;
+}
+</style>
 <style scoped>
-.logo {
-  height: 6em;
-  padding: 1.5em;
-  will-change: filter;
-  transition: filter 300ms;
+
+.v-app{
+  margin: 0 !important;
+  padding: 0 !important;
 }
-.logo:hover {
-  filter: drop-shadow(0 0 2em #646cffaa);
+.container{
+  position: absolute;
+  /* background: gray; */
+  left: 300px;
+  height: 100%;
+  width: calc(100% - 300px);
+  padding: 24px;
+ 
 }
-.logo.vue:hover {
-  filter: drop-shadow(0 0 2em #42b883aa);
+.sheet{
+  min-height: 100%;
+  max-height: 100%;
+  overflow-y: auto;
+}
+.gray{
+  background: gray;
+}
+.v-main{
+  position: absolute;
+  top: 64px;
+  min-width: 100vw;
+  height: calc(100vh - 64px);
+  margin: 0 !important;
+  padding: 0 !important;
+}
+.m-0{
+  margin: 0 !important;
+}
+.p-0{
+  padding: 0 !important;
+}
+
+
+
+/* Scroll */
+.light::-webkit-scrollbar {
+  width: 15px;
+}
+
+.light::-webkit-scrollbar-track {
+  background: #e6e6e6;
+  border-left: 1px solid #dadada;
+}
+
+.light::-webkit-scrollbar-thumb {
+  background: #b0b0b0;
+  border: solid 3px #e6e6e6;
+  border-radius: 7px;
+}
+
+.light::-webkit-scrollbar-thumb:hover {
+  background: black;
+}
+
+.dark::-webkit-scrollbar {
+  width: 15px;
+}
+
+.dark::-webkit-scrollbar-track {
+  background: #202020;
+  border-left: 1px solid #2c2c2c;
+}
+
+.dark::-webkit-scrollbar-thumb {
+  background: #3e3e3e;
+  border: solid 3px #202020;
+  border-radius: 7px;
+}
+
+.dark::-webkit-scrollbar-thumb:hover {
+  background: white;
 }
 </style>
