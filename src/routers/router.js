@@ -3,17 +3,22 @@ import { createRouter, createWebHistory } from 'vue-router'
 // 1. Define route components.
 // These can be imported from other files
 const Home = { template: '<div>Home</div>' }
-const About = { template: '<div>About</div>' }
 // import TNav from '@/layouts/t-nav.vue'
-// import TFooter from '@/layouts/t-footer.vue'
+import InputDataAndAnalysis from '../components/InputDataAndAnalysis.vue'
 
 
 // 2. Define some routes
 // Each route should map to a component.
 // We'll talk about nested routes later.
 const routes = [
-    { path: '/', component: Home },
-    { path: '/about', component: About },
+    { path: '/', name: "Home", component: Home },
+    { path: '/menu', name: "menu", component: InputDataAndAnalysis },
+    { path: '/notifycation', name: "notifycation", component: InputDataAndAnalysis },
+    { path: '/profiles', name: "profiles", component: InputDataAndAnalysis },
+    { path: '/exams', name: "exams", component: InputDataAndAnalysis },
+    { path: '/students', name: "students", component: InputDataAndAnalysis },
+    { path: '/input-data-and-analysis', name: "input-data-and-analysis", component: InputDataAndAnalysis },
+    { path: '/evaluate', name: "evaluate", component: InputDataAndAnalysis },
     // { path: '/nav', component: TNav },
     // { path: '/footer', component: TFooter },
     // {

@@ -1,34 +1,17 @@
 <script setup>
 import AppBar from './components/AppBar.vue'
 import SideBar from './components/SideBar.vue'
-import ToolBar from './components/ToolBar.vue'
-import Grid from './components/Grid.vue'
 </script>
 
 <template >
     <v-app class="v-app">
       <!-- APP BAR -->
       <app-bar></app-bar>
-      <!-- MAIN CONTENTS-->
       <v-main class="v-main">
         <!-- SIDE BAR -->
         <side-bar></side-bar>
-        <!-- SHEETS -->
-        <v-container class="container">
-          <!-- ROUTER -->
-          <router-view></router-view>
-          <!-- Temp -->
-          <v-sheet class="sheet light">
-            <!-- TITLE -->
-            <v-row class="text-h3">
-              Nhập liệu phân tích
-            </v-row>
-            <!-- TOOL BAR -->
-            <tool-bar></tool-bar>
-            <!-- GRID -->
-            <grid></grid>
-          </v-sheet>
-        </v-container>   
+        <!-- MAIN CONTENTS-->
+        <router-view/>
       </v-main>
     </v-app>
 </template>

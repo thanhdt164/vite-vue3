@@ -22,15 +22,17 @@
 		<v-divider></v-divider>
 
 		<v-list density="compact" nav>
-			<v-list-item class="list-item" prepend-icon="mdi-home-city" title="Menu" value="1"></v-list-item>
-			<v-list-item class="list-item" prepend-icon="mdi-account" title="Hồ sơ học sinh" value="2"></v-list-item>
-			<v-list-item class="list-item" prepend-icon="mdi-account-group-outline" title="Bài kiểm tra" value="3"></v-list-item>
-			<v-list-item class="list-item" prepend-icon="mdi-account-group-outline" title="Kết quả học sinh" value="4"></v-list-item>
-			<v-list-item class="list-item" prepend-icon="mdi-account-group-outline" title="Nhập liệu phân tích" value="5"></v-list-item>
-			<v-list-item class="list-item" prepend-icon="mdi-account-group-outline" title="Đánh giá" value="6"></v-list-item>
+			<v-list-item @click="direct(1)" class="list-item" prepend-icon="mdi-menu" title="Menu" value="1"></v-list-item>
+			<v-list-item @click="direct(2)" class="list-item" prepend-icon="mdi-bell-ring" title="Thông báo" value="2"></v-list-item>
+			<v-list-item @click="direct(3)" class="list-item" prepend-icon="mdi-account" title="Hồ sơ học sinh" value="3"></v-list-item>
+			<v-list-item @click="direct(4)" class="list-item" prepend-icon="mdi-clipboard-text" title="Bài kiểm tra" value="4"></v-list-item>
+			<v-list-item @click="direct(5)" class="list-item" prepend-icon="mdi-text-box-check-outline" title="Kết quả học sinh" value="5"></v-list-item>
+			<v-list-item @click="direct(6)" class="list-item" prepend-icon="mdi-poll" title="Nhập liệu phân tích" value="6"></v-list-item>
+			<v-list-item @click="direct(7)" class="list-item" prepend-icon="mdi-star" title="Đánh giá" value="7"></v-list-item>
 		</v-list>
 	</v-navigation-drawer>
 </template>
+
 <script>
   export default {
     data () {
@@ -39,6 +41,34 @@
         rail: true,
       }
     },
+	methods:{
+		direct(key){
+			switch(key){
+				case 1 :
+					this.$router.push('/menu')
+					break;
+				case 2 :
+					this.$router.push('/notifycation')
+					break;
+				case 3 :
+					this.$router.push('/profiles')
+					break;
+				case 4 :
+					this.$router.push('/exams')
+					break;
+				case 5 :
+					this.$router.push('/students')
+					break;
+				case 6 :
+					this.$router.push('/input-data-and-analysis')
+					break;
+				case 7 :
+					this.$router.push('/evaluate')
+					break;
+			}
+			
+		}
+	}
   }
 </script>
 
