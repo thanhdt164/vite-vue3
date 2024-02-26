@@ -4,7 +4,13 @@ import { createRouter, createWebHistory } from 'vue-router'
 // These can be imported from other files
 const Home = { template: '<div>Home</div>' }
 // import TNav from '@/layouts/t-nav.vue'
-import InputDataAndAnalysis from '../components/InputDataAndAnalysis.vue'
+import Menu from '../views/Menu.vue'
+import Notification from '../views/Notification.vue'
+import Profiles from '../views/Profiles.vue'
+import Exams from '../views/Exams.vue'
+import Students from '../views/Students.vue'
+import InputDataAndAnalysis from '../views/InputDataAndAnalysis.vue'
+import Evaluate from '../views/Evaluate.vue'
 
 
 // 2. Define some routes
@@ -12,13 +18,13 @@ import InputDataAndAnalysis from '../components/InputDataAndAnalysis.vue'
 // We'll talk about nested routes later.
 const routes = [
     { path: '/', name: "Home", component: Home },
-    { path: '/menu', name: "menu", component: InputDataAndAnalysis },
-    { path: '/notifycation', name: "notifycation", component: InputDataAndAnalysis },
-    { path: '/profiles', name: "profiles", component: InputDataAndAnalysis },
-    { path: '/exams', name: "exams", component: InputDataAndAnalysis },
-    { path: '/students', name: "students", component: InputDataAndAnalysis },
+    { path: '/menu', name: "menu", component: Menu },
+    { path: '/notification', name: "notification", component: Notification },
+    { path: '/profiles', name: "profiles", component: Profiles },
+    { path: '/exams', name: "exams", component: Exams },
+    { path: '/students', name: "students", component: Students },
     { path: '/input-data-and-analysis', name: "input-data-and-analysis", component: InputDataAndAnalysis },
-    { path: '/evaluate', name: "evaluate", component: InputDataAndAnalysis },
+    { path: '/evaluate', name: "evaluate", component: Evaluate },
     // { path: '/nav', component: TNav },
     // { path: '/footer', component: TFooter },
     // {

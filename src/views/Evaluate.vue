@@ -1,6 +1,6 @@
 <script setup>
-import ToolBar from './ToolBar.vue'
-import Grid from './Grid.vue'
+import ToolBar from '../components/ToolBar.vue'
+import Grid from '../components/Grid.vue'
 </script>
 
 <template>
