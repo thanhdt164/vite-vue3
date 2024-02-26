@@ -22,7 +22,7 @@
 		<v-divider></v-divider>
 
 		<v-list density="compact" nav>
-			<v-list-item @click="direct(1)" class="list-item" prepend-icon="mdi-menu" title="Menu" value="1"></v-list-item>
+			<v-list-item @click="direct(1)" class="list-item" prepend-icon="mdi-puzzle" title="Danh mục" value="1"></v-list-item>
 			<v-list-item @click="direct(2)" class="list-item" prepend-icon="mdi-bell-ring" title="Thông báo" value="2"></v-list-item>
 			<v-list-item @click="direct(3)" class="list-item" prepend-icon="mdi-account" title="Hồ sơ học sinh" value="3"></v-list-item>
 			<v-list-item @click="direct(4)" class="list-item" prepend-icon="mdi-clipboard-text" title="Bài kiểm tra" value="4"></v-list-item>
@@ -48,7 +48,7 @@
 					this.$router.push('/menu')
 					break;
 				case 2 :
-					this.$router.push('/notifycation')
+					this.$router.push('/notification')
 					break;
 				case 3 :
 					this.$router.push('/profiles')
