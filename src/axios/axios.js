@@ -5,10 +5,11 @@ import axios from "axios";
 // axios.defaults.headers.post['Content-Type'] = 'application/x-www-form-urlencoded';
 
 const instance = axios.create({
-    baseURL: 'http://example.com/api',
-    timeout: 5000,
+    baseURL: 'https://localhost:7114',
+    timeout: 10000,
     headers: {
       'Content-Type': 'application/json', // Header mặc định cho tất cả các request
+      'Authorization':localStorage.getItem('token'),
     },
   });
   
@@ -27,6 +28,13 @@ function put(endpoint, data) {
 }
   
 // Phương thức DELETE
-function delete(endpoint) {
+function delete1(endpoint) {
     return instance.delete(endpoint);
 }
+function login(data){
+    return instance.post("/AuthenticateController/login",data)
+}
+function getAllAnalysisContent(){
+    return instance.get("/AnalysisContent/get-all")
+}
+export default {login,getAllAnalysisContent};

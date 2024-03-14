@@ -1,15 +1,17 @@
 <script setup>
 import AppBar from './components/AppBar.vue'
 import SideBar from './components/SideBar.vue'
+import { useRoute } from 'vue-router'
+const route = useRoute();
 </script>
 
 <template >
     <v-app class="v-app">
       <!-- APP BAR -->
-      <app-bar></app-bar>
+      <app-bar v-if="route.path !== '/login'"></app-bar>
       <v-main class="v-main">
         <!-- SIDE BAR -->
-        <side-bar></side-bar>
+        <side-bar v-if="route.path !== '/login'"></side-bar>
         <!-- MAIN CONTENTS-->
         <router-view/>
       </v-main>
