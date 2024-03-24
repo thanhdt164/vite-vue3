@@ -13,7 +13,7 @@
 <script setup>
     import { ref, onMounted } from 'vue'
     import { QuillEditor } from '@vueup/vue-quill'
-    import ApiService from '/Education/vite-vue3/src/axios/axios.js';
+    import ApiService from '../../axios/axios.js';
     import '@vueup/vue-quill/dist/vue-quill.snow.css';
     const toolbarOptions = 
     ref([
@@ -48,7 +48,7 @@
   left: 300px;
   height: 100%;
   width: calc(100% - 300px);
-  padding: 24px;
+  padding: 0 24px;
 }
 .editor-form{
     height: 300px;

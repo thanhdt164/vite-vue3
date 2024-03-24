@@ -39,7 +39,7 @@ body,html {
   left: 300px;
   height: 100%;
   width: calc(100% - 300px);
-  padding: 24px;
+  padding: 0 24px;
  
 }
 .sheet{
