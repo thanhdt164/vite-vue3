@@ -29,6 +29,7 @@
 			<v-list-item @click="direct(5)" class="list-item" prepend-icon="mdi-text-box-check-outline" title="Kết quả học sinh" value="5"></v-list-item>
 			<v-list-item @click="direct(6)" class="list-item" prepend-icon="mdi-poll" title="Nhập liệu phân tích" value="6"></v-list-item>
 			<v-list-item @click="direct(7)" class="list-item" prepend-icon="mdi-star" title="Đánh giá" value="7"></v-list-item>
+			<v-list-item @click="direct(8)" class="list-item" prepend-icon="mdi-star" title="Tạo đề kiểm tra" value="8"></v-list-item>
 		</v-list>
 	</v-navigation-drawer>
 </template>
@@ -64,6 +65,9 @@
 					break;
 				case 7 :
 					this.$router.push('/evaluate')
+					break;
+				case 8 :
+					this.$router.push('/quiz-maker')
 					break;
 			}
 			

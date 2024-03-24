@@ -13,7 +13,7 @@ import Grid from '../../components/Grid.vue'
             Nhập liệu phân tích
         </v-row>
         <!-- TOOL BAR -->
-        <tool-bar></tool-bar>
+        <tool-bar-grid></tool-bar-grid>
         <!-- GRID -->
         <grid></grid>
         </v-sheet>
@@ -27,7 +27,7 @@ import Grid from '../../components/Grid.vue'
   left: 300px;
   height: 100%;
   width: calc(100% - 300px);
-  padding: 24px;
+  padding: 0 24px;
  
 }
 .sheet{
