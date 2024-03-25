@@ -13,6 +13,7 @@ import Students from '../views/Students.vue'
 import InputDataAndAnalysis from '../views/InputDataAndAnalysis.vue'
 import Evaluate from '../views/Evaluate.vue'
 import Login from '../views/Login.vue'
+import Register from '../views/Register.vue'
 
 
 // 2. Define some routes
@@ -29,6 +30,7 @@ const routes = [
     { path: '/input-data-and-analysis', name: "input-data-and-analysis", component: InputDataAndAnalysis },
     { path: '/evaluate', name: "evaluate", component: Evaluate },
     { path: '/login', name: "login", component: Login },
+    { path: '/register', name: "register", component: Register },
     // { path: '/nav', component: TNav },
     // { path: '/footer', component: TFooter },
     // {
@@ -72,10 +74,10 @@ function parseJwt (token) {
 router.beforeEach((to, from, next) => {
        var token = parseJwt(localStorage.getItem('token'));
        var currentTime = new Date().getTime();
-        if(((!token || token.exp < currentTime/1000) && to.path !== '/login')){
-            next('/login');
-            return;
-        }
+        // if(((!token || token.exp < currentTime/1000) && to.path !== '/login')){
+        //     next('/login');
+        //     return;
+        // }
        next()
   })
 export default router;
