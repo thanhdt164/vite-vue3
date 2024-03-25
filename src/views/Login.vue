@@ -43,7 +43,7 @@
     </v-sheet>
   </template>
 <script>
-import ApiService from '/Education/vite-vue3/src/axios/axios.js';
+import ApiService from '../axios/axios.js';
 export default {
   data: () => ({
     form: false,

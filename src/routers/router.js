@@ -12,6 +12,7 @@ import ExamsDetail from '../views/Exam/ExamDetail.vue'
 import Students from '../views/Students.vue'
 import InputDataAndAnalysis from '../views/InputDataAndAnalysis.vue'
 import Evaluate from '../views/Evaluate.vue'
+import QuizMaker from '../views/QuizMaker.vue'
 import Login from '../views/Login.vue'
 import Register from '../views/Register.vue'
 
@@ -21,6 +22,7 @@ import Register from '../views/Register.vue'
 // We'll talk about nested routes later.
 const routes = [
     { path: '/', name: "Home", component: Home },
+    { path: '/login', name: "login", component: Login },
     { path: '/menu', name: "menu", component: Menu },
     { path: '/notification', name: "notification", component: Notification },
     { path: '/profiles', name: "profiles", component: Profiles },
@@ -31,6 +33,7 @@ const routes = [
     { path: '/evaluate', name: "evaluate", component: Evaluate },
     { path: '/login', name: "login", component: Login },
     { path: '/register', name: "register", component: Register },
+    { path: '/quiz-maker', name: "quiz-maker", component: QuizMaker },
     // { path: '/nav', component: TNav },
     // { path: '/footer', component: TFooter },
     // {

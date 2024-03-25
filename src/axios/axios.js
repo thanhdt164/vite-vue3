@@ -14,21 +14,21 @@ const instance = axios.create({
   });
   
 // Phương thức GET
-function get(endpoint) {
+function getAPI(endpoint) {
     return instance.get(endpoint);
 }
 
 // Phương thức POST
-function post(endpoint, params) {
+function postAPI(endpoint, params) {
     return instance.post(endpoint, params);
 }
 // Phương thức PUT
-function put(endpoint, data) {
+function putAPI(endpoint, data) {
     return instance.put(endpoint, data);
 }
   
 // Phương thức DELETE
-function delete1(endpoint) {
+function deleteAPI(endpoint) {
     return instance.delete(endpoint);
 }
 function login(data){
