@@ -8,10 +8,10 @@ const route = useRoute();
 <template >
     <v-app class="v-app">
       <!-- APP BAR -->
-      <app-bar v-if="route.path !== '/login'"></app-bar>
+      <app-bar v-if="route.path !== '/login' && route.path !== '/register'"></app-bar>
       <v-main class="v-main">
         <!-- SIDE BAR -->
-        <side-bar v-if="route.path !== '/login'"></side-bar>
+        <side-bar v-if="route.path !== '/login' && route.path !== '/register'"></side-bar>
         <!-- MAIN CONTENTS-->
         <router-view/>
       </v-main>

@@ -54,7 +54,7 @@
 <script setup>
 import { QuillEditor } from '@vueup/vue-quill'
 import ToolBar from '../components/ToolBar.vue'
-
+import ApiService from '../axios/axios';
 import { ref } from 'vue'
 
 
@@ -153,7 +153,7 @@ let examModel = {
     }
   ]
 }
-function saveQuiz() {
+async function saveQuiz() {
 	let param = {
 		exam: examModel.exam,
 		questionAnswers: []
@@ -175,6 +175,7 @@ function saveQuiz() {
 		question.answers = answers;
 		param.questionAnswers.push(question)
 	});
+    var res = await ApiService.InsertExam(param);
 }
 </script>
 
