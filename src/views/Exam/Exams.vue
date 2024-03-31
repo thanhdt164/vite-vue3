@@ -1,5 +1,5 @@
 <script setup>
-import ToolBar from '../../components/ToolBar.vue'
+// import ToolBar from '../../components/ToolBar.vue'
 import Grid from '../../components/Grid.vue'
 </script>
 
@@ -21,29 +21,4 @@ import Grid from '../../components/Grid.vue'
 </template>
 
 <style scoped="scss">
-.container{
-  position: absolute;
-  /* background: gray; */
-  left: 300px;
-  height: 100%;
-  width: calc(100% - 300px);
-  padding: 0 24px;
- 
-}
-.sheet{
-  min-height: 100%;
-  max-height: 100%;
-  overflow-y: auto;
-}
-.gray{
-  background: gray;
-}
-.v-main{
-  position: absolute;
-  top: 64px;
-  min-width: 100vw;
-  height: calc(100vh - 64px);
-  margin: 0 !important;
-  padding: 0 !important;
-}
 </style>

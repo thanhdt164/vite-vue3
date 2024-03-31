@@ -1,14 +1,32 @@
 <template>
-    <v-data-table-server v-model:items-per-page="itemsPerPage" :search="search" :headers="headers"
-        :items-length="totalItems" :items="serverItems" :loading="loading" item-value="name" @update:options="loadItems">
+    <v-data-table-server 
+    v-model:items-per-page="itemsPerPage" 
+    :search="search" 
+    :headers="headers"
+    :items-length="totalItems" 
+    :items="serverItems" 
+    :loading="loading" 
+    item-value="routeExam ? ExamName : name" 
+    @update:options="loadItems">
         <template v-slot:tfoot>
-            <tr>
+            <tr v-if="!routeExam" >
                 <td>
                     <v-text-field v-model="name" hide-details placeholder="Search name..." class="ma-2"
                         density="compact"></v-text-field>
                 </td>
                 <td>
                     <v-text-field v-model="calories" hide-details placeholder="Minimum calories" type="number" class="ma-2"
+                        density="compact"></v-text-field>
+                </td>
+            </tr>
+            <!-- Exam -->
+            <tr v-else @click="clickItem" >
+                <td>
+                    <v-text-field v-model="ExamName" hide-details placeholder="Tìm kiếm bài kiểm tra..." class="ma-2"
+                        density="compact"></v-text-field>
+                </td>
+                <td>
+                    <v-text-field v-model="School" hide-details placeholder="Tìm kiếm trường" class="ma-2"
                         density="compact"></v-text-field>
                 </td>
             </tr>
@@ -99,6 +117,16 @@
       iron: '22',
     },
   ]
+const desserts2 = [
+  {
+    ExamName: 'Bài kiểm tra giữa kì I, Năm học 2023-2024',
+    School: 'Trường THCS Văn Phú',
+    Subject: "Vật lý - THCS",
+    Time: "50 phút",
+    PeriodTime: "2023-2024",
+    QuestionAmount: '40',
+  },
+]
 
   const FakeAPI = {
     async fetch ({ page, itemsPerPage, sortBy, search }) {
@@ -135,7 +163,47 @@
         }, 500)
       })
     },
+  };
+  const FakeAPIExams = {
+    async fetch ({ page, itemsPerPage, sortBy, search }) {
+      return new Promise(resolve => {
+        setTimeout(() => {
+          const start = (page - 1) * itemsPerPage
+          const end = start + itemsPerPage
+          const items = desserts2.slice().filter(item => {
+            if (search.ExamName && !item.ExamName.toLowerCase().includes(search.ExamName.toLowerCase())) {
+              return false
+            }
+            if (search.School && !item.School.toLowerCase().includes(search.School.toLowerCase())) {
+              return false
+            }
+
+            // eslint-disable-next-line sonarjs/prefer-single-boolean-return
+            // if (search.calories && !(item.calories >= Number(search.calories))) {
+            //   return false
+            // }
+
+            return true
+          })
+
+          if (sortBy.length) {
+            const sortKey = sortBy[0].key
+            const sortOrder = sortBy[0].order
+            items.sort((a, b) => {
+              const aValue = a[sortKey]
+              const bValue = b[sortKey]
+              return sortOrder === 'desc' ? bValue - aValue : aValue - bValue
+            })
+          }
+
+          const paginated = items.slice(start, end)
+
+          resolve({ items: paginated, total: items.length })
+        }, 500)
+      })
+    },
   }
+
 
   export default {
     data: () => ({
@@ -159,7 +227,22 @@
       name: '',
       calories: '',
       search: '',
+
+      ExamName: '',
+      School: '',
+      // search: '',
     }),
+    props:{
+      // p_headers: {
+      //   type: Array,
+      //   default: []
+      // },
+    },
+    computed: {
+      routeExam(){
+        return this.$route.name == 'exams'
+      }
+    },
     watch: {
       name () {
         this.search = String(Date.now())
@@ -167,16 +250,52 @@
       calories () {
         this.search = String(Date.now())
       },
+      ExamName () {
+        this.search = String(Date.now())
+      },
+      School () {
+        this.search = String(Date.now())
+      },
     },
     methods: {
       loadItems ({ page, itemsPerPage, sortBy }) {
-        this.loading = true
-        FakeAPI.fetch({ page, itemsPerPage, sortBy, search: { name: this.name, calories: this.calories } }).then(({ items, total }) => {
-          this.serverItems = items
-          this.totalItems = total
-          this.loading = false
-        })
+        if(!this.routeExam){
+          this.loading = true
+          FakeAPI.fetch({ page, itemsPerPage, sortBy, search: { name: this.name, calories: this.calories } }).then(({ items, total }) => {
+            this.serverItems = items
+            this.totalItems = total
+            this.loading = false
+          })
+        }else{
+          this.loading = true
+          FakeAPIExams.fetch({ page, itemsPerPage, sortBy, search: { ExamName: this.ExamName, School: this.School } }).then(({ items, total }) => {
+            this.serverItems = items
+            this.totalItems = total
+            this.loading = false
+          })
+        }
+        
       },
+      clickItem(val){
+        debugger
+      }
+    },
+    created(){
+      if(this.routeExam){
+        this.headers = [
+          {
+            title: 'Tên đề thi',
+            align: 'start',
+            sortable: false,
+            key: 'ExamName',
+          },
+          { title: 'Trường', key: 'School', align: 'end' },
+          { title: 'Môn học', key: 'Subject', align: 'end' },
+          { title: 'Thời gian', key: 'Time', align: 'end' },
+          { title: 'Kỳ thi', key: 'PeriodTime', align: 'end' },
+          { title: 'Số lượng câu hỏi', key: 'QuestionAmount', align: 'end' },
+        ]
+      }
     },
   }
 </script>
