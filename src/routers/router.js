@@ -14,6 +14,7 @@ import InputDataAndAnalysis from '../views/InputDataAndAnalysis.vue'
 import Evaluate from '../views/Evaluate.vue'
 import QuizMaker from '../views/QuizMaker.vue'
 import Login from '../views/Login.vue'
+import Register from '../views/Register.vue'
 
 
 // 2. Define some routes
@@ -30,6 +31,8 @@ const routes = [
     { path: '/students', name: "students", component: Students },
     { path: '/input-data-and-analysis', name: "input-data-and-analysis", component: InputDataAndAnalysis },
     { path: '/evaluate', name: "evaluate", component: Evaluate },
+    { path: '/login', name: "login", component: Login },
+    { path: '/register', name: "register", component: Register },
     { path: '/quiz-maker', name: "quiz-maker", component: QuizMaker },
     // { path: '/nav', component: TNav },
     // { path: '/footer', component: TFooter },

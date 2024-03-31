@@ -6,9 +6,9 @@ import axios from "axios";
 
 const instance = axios.create({
     baseURL: 'https://localhost:7114',
-    timeout: 10000,
     headers: {
       'Content-Type': 'application/json', // Header mặc định cho tất cả các request
+        // timeout: 10000,
       'Authorization':localStorage.getItem('token'),
     },
   });
@@ -37,4 +37,10 @@ function login(data){
 function getAllAnalysisContent(){
     return instance.get("/AnalysisContent/get-all")
 }
-export default {login,getAllAnalysisContent};
+function InsertExam(data){
+    return instance.post("/Exams/exam-detail/", data);
+}
+function InsertUser(data){
+    return instance.post("/User/create-user",data);
+}
+export default {login,getAllAnalysisContent,InsertExam,InsertUser};
