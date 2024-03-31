@@ -13,15 +13,15 @@
         <div class="quiz-box">
             <div class="quiz">
                 <div class="top-quiz">
-                    <v-btn @click="saveQuiz">
-                        Thêm mới
-                        <v-icon end icon="mdi-add" ></v-icon>
-                    </v-btn>
+                    <!-- <v-btn variant="tonal" @click="saveQuiz">
+                        Lưu đề thi
+                        <v-icon end icon="mdi-content-save-plus" ></v-icon>
+                    </v-btn> -->
                 </div>
                 <div class="quiz-content">
                     <div class="item-quiz" v-for="(quiz, index) in quizs" :key="index" >
                         <div class="question">
-                            <div>CÂU HỎI: {{index+1}}</div>
+                            <v-label>CÂU HỎI: {{index+1}}</v-label>
                             <div class="quill-custom">
                                 <QuillEditor 
                                     theme="snow" :toolbar="toolbarOptions" 
@@ -30,19 +30,34 @@
                                 />
                             </div>
                         </div>
-                        <div>
-                            <div>ĐÁP ÁN:</div>
+                        <div class="answer">
+                            <v-label>ĐÁP ÁN:</v-label>
                             <div class="quill-custom">
                                 <div v-for="(item, id) in [1,2,3,4]" :key="id" class="quiz-item">
-                                    <div>{{ ["A.", "B.", "C.", "D."][id] }}</div>
-                                    <QuillEditor
-                                        theme="snow" :toolbar="toolbarOptions" 
-                                        v-model:content="quiz.answers[id].text"
-                                        contentType="html"
-                                    />
+																		<!-- {{ ["A.", "B.", "C.", "D."][id] }} -->
+                                    <v-checkbox 
+																			class="custom-checkbox" 
+																			v-model="quiz.answers[id].isTrue" 
+																			:label='["A.", "B.", "C.", "D."][id]'
+																		></v-checkbox>
+																		<QuillEditor								
+																				theme="snow" :toolbar="toolbarOptionsQuiz" 
+																				v-model:content="quiz.answers[id].text"
+																				contentType="html"
+																		/>
                                 </div>
                             </div>
                         </div>
+												<div class="foot-answer" v-if="index == quizs.length - 1">
+													<v-btn class="btn-add-quiz" variant="tonal" @click="addQuiz">
+															Thêm câu hỏi
+															<v-icon end icon="mdi-plus-box" ></v-icon>
+													</v-btn>
+													<v-btn class="btn-save-quiz" variant="tonal" @click="saveQuiz">
+															Lưu đề thi
+															<v-icon end icon="mdi-content-save-plus" ></v-icon>
+													</v-btn>
+												</div>
                     </div>
                 </div>
             </div>
@@ -124,6 +139,12 @@ const toolbarOptions = [
 
   ['clean']                                         // remove formatting button
 ];
+const toolbarOptionsQuiz = [
+  ['blockquote', 'code-block'],
+  ['image','formula'],
+  [{ 'script': 'sub'}, { 'script': 'super' }],      // superscript/subscript
+  ['clean']                                         // remove formatting button
+];
 
 
 let examModel = {
@@ -177,43 +198,26 @@ async function saveQuiz() {
 	});
     var res = await ApiService.InsertExam(param);
 }
+
+function addQuiz(){
+	quizs.value.push({
+		question: null,
+		answers: [
+			{ text: "", isTrue: false },
+			{ text: "", isTrue: false },
+			{ text: "", isTrue: false },
+			{ text: "", isTrue: false }
+		]
+	})
+}
+
+
 </script>
 
-<style scoped="scss">
-.container{
-  position: absolute;
-  /* background: gray; */
-  left: 300px;
-  height: 100%;
-  width: calc(100% - 300px);
-  padding: 0 24px;
- 
-}
-.sheet{
-  min-height: 100%;
-  max-height: 100%;
-  overflow-y: auto;
-}
-.gray{
-  background: gray;
-}
-.v-main{
-  position: absolute;
-  top: 64px;
-  min-width: 100vw;
-  height: calc(100vh - 64px);
-  margin: 0 !important;
-  padding: 0 !important;
-}
-.title{
-    font-size: 40px;
-    line-height: 48px;
-}
-
-
+<style scoped lang="scss">
 .quiz-box{
     /* border: 1px solid black; */
-    padding: 16px;
+    /* padding: 16px; */
     height: calc(100vh - 132px);
     overflow: scroll;
 }
@@ -222,9 +226,39 @@ async function saveQuiz() {
     flex-direction: row-reverse;
 }
 .item-quiz{
-    margin-bottom: 48px;
+	padding: 8px 0px;
+	&:hover{
+		background-color: aliceblue;
+		border-radius: 4px;
+	}
+	margin-bottom: 48px;
+	.question{
+		margin-bottom: 16px;		
+	}
+	.answer{
+		margin-bottom: 16px;
+	}
+	.foot-answer{
+		display: flex;
+    flex-direction: row-reverse;
+		.btn-add-quiz, .btn-save-quiz{
+			margin-right: 8px;
+		}
+	}
 }
+
 .quill-custom{
-    padding-left: 32px;
+	padding-left: 32px;
+}
+
+</style>
+
+<style>
+.v-input__control{
+	height: 35px;
+	align-items: center;
+}
+.v-input__details{
+	display: none !important;
 }
 </style>

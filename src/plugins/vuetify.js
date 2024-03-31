@@ -22,7 +22,10 @@ const vuetify = createVuetify({
         },
         VContainer:{
             style: 'max-width: none; min-width: none;'
-        }
+        },
+        // VCheckBox:{
+        //     style: 
+        // }
     },
 })
 
