@@ -196,7 +196,12 @@ async function saveQuiz() {
 		question.answers = answers;
 		param.questionAnswers.push(question)
 	});
-    var res = await ApiService.InsertExam(param);
+	var res = await ApiService.InsertExam(param);
+	if(res.data.Success){
+		this.$toast.success('Lưu đề thi thành công!')
+	}else{
+		this.$toast.error('Lưu đề thi thất bại!')
+	}
 }
 
 function addQuiz(){

@@ -7,7 +7,8 @@
     :items="serverItems" 
     :loading="loading" 
     item-value="routeExam ? ExamName : name" 
-    @update:options="loadItems">
+    @update:options="loadItems"
+    @click="clickItem" >
         <template v-slot:tfoot>
             <tr v-if="!routeExam" >
                 <td>
@@ -20,7 +21,7 @@
                 </td>
             </tr>
             <!-- Exam -->
-            <tr v-else @click="clickItem" >
+            <tr v-else>
                 <td>
                     <v-text-field v-model="ExamName" hide-details placeholder="Tìm kiếm bài kiểm tra..." class="ma-2"
                         density="compact"></v-text-field>
@@ -118,6 +119,46 @@
     },
   ]
 const desserts2 = [
+  {
+    ExamName: 'Bài kiểm tra giữa kì I, Năm học 2023-2024',
+    School: 'Trường THCS Văn Phú',
+    Subject: "Vật lý - THCS",
+    Time: "50 phút",
+    PeriodTime: "2023-2024",
+    QuestionAmount: '40',
+  },
+  {
+    ExamName: 'Bài kiểm tra giữa kì I, Năm học 2023-2024',
+    School: 'Trường THCS Văn Phú',
+    Subject: "Vật lý - THCS",
+    Time: "50 phút",
+    PeriodTime: "2023-2024",
+    QuestionAmount: '40',
+  },
+  {
+    ExamName: 'Bài kiểm tra giữa kì I, Năm học 2023-2024',
+    School: 'Trường THCS Văn Phú',
+    Subject: "Vật lý - THCS",
+    Time: "50 phút",
+    PeriodTime: "2023-2024",
+    QuestionAmount: '40',
+  },
+  {
+    ExamName: 'Bài kiểm tra giữa kì I, Năm học 2023-2024',
+    School: 'Trường THCS Văn Phú',
+    Subject: "Vật lý - THCS",
+    Time: "50 phút",
+    PeriodTime: "2023-2024",
+    QuestionAmount: '40',
+  },
+  {
+    ExamName: 'Bài kiểm tra giữa kì I, Năm học 2023-2024',
+    School: 'Trường THCS Văn Phú',
+    Subject: "Vật lý - THCS",
+    Time: "50 phút",
+    PeriodTime: "2023-2024",
+    QuestionAmount: '40',
+  },
   {
     ExamName: 'Bài kiểm tra giữa kì I, Năm học 2023-2024',
     School: 'Trường THCS Văn Phú',
@@ -277,7 +318,7 @@ const desserts2 = [
         
       },
       clickItem(val){
-        debugger
+        this.$router.push('/exam-detail')
       }
     },
     created(){
