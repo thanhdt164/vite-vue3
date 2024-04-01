@@ -7,20 +7,24 @@
 
             <v-spacer></v-spacer>
 
-            <!-- <v-btn @click="addclick">
-                Thêm mới
+            <v-btn @click="mergeQuiz">
+                Trộn đề
                 <v-icon end icon="mdi-add" ></v-icon>
-            </v-btn> -->
+            </v-btn>
         </v-toolbar>
     </div>
 </template>
 
-<script setup>
+<script>
 import { ref } from 'vue'
-
-// function addclick() {
-//     this.$emit("addclick");
-// }
+export default{
+    methods:{
+        mergeQuiz() {
+            $emit("mergeQuiz");
+        }
+    }
+}
+ 
 </script>
 <style scoped>
 .toolbar-title{
