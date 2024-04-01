@@ -48,58 +48,6 @@
 // import { ref, onMounted } from 'vue';
 import ToolBar from '../../components/ToolBar.vue';
 import ApiService from '../../axios/axios.js';
-// const lstAnalysis = ref([])
-// const getlstAnalysis = async ()=>{
-// 		var res = await ApiService.getAllAnalysisContent();
-// 		console.log(res);
-// }
-// getlstAnalysis();
-
-
-// const quizs = ref([
-// 	{
-// 		question: "<p>Lực nào dưới đây là lực đàn hồi?</p>",
-// 		answers: [
-// 			{
-// 				text: "<p>Lực đẩy của lò xo dưới yên xe đạp<p/>",
-// 				isTrue: true
-// 			},
-// 			{
-// 				text: "<p>Trọng lực của một quả nặng<p/>",
-// 				isTrue: false
-// 			},
-// 			{
-// 				text: "<p>Lực hút của nam châm tác dụng lên miếng sắt<p/>",
-// 				isTrue: false
-// 			},
-// 			{
-// 				text: "<p>Lực kéo của hai đôi kéo co<p/>",
-// 				isTrue: false
-// 			}
-// 		]
-// 	},
-// 	{
-// 		question: "<p>Khi có một lực tác động lên vật thì vận tốc của vật sẽ như thế nào?</p>",
-// 		answers: [
-// 			{
-// 				text: "<p>Vận tốc không thay đổi<p/>",
-// 				isTrue: false
-// 			},
-// 			{
-// 				text: "<p>Vận tốc giảm dần<p/>",
-// 				isTrue: false
-// 			},
-// 			{
-// 				text: "<p>Vận tốc có thể tăng có thể giảm<p/>",
-// 				isTrue: true
-// 			},
-// 			{
-// 				text: "<p>Vận tốc tăng dần<p/>",
-// 				isTrue: false
-// 			}
-// 		]
-// 	}
-// ])
 
 export default{
 	data: () => ({
