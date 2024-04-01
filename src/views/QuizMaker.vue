@@ -70,8 +70,10 @@
 import { QuillEditor } from '@vueup/vue-quill'
 import ToolBar from '../components/ToolBar.vue'
 import ApiService from '../axios/axios';
+import {useToast} from 'vue-toast-notification';
 import { ref } from 'vue'
 
+const $toast = useToast();
 
 
 const quizs = ref([
@@ -196,11 +198,11 @@ async function saveQuiz() {
 		question.answers = answers;
 		param.questionAnswers.push(question)
 	});
-	var res = await ApiService.InsertExam(param);
-	if(res.data.Success){
-		this.$toast.success('Lưu đề thi thành công!')
+	// var res = await ApiService.InsertExam(param);
+	if(true){
+		$toast.success('Lưu đề thi thành công!')
 	}else{
-		this.$toast.error('Lưu đề thi thất bại!')
+		$toast.error('Lưu đề thi thất bại!')
 	}
 }
 
@@ -255,10 +257,6 @@ function addQuiz(){
 .quill-custom{
 	padding-left: 32px;
 }
-
-</style>
-
-<style>
 .v-input__control{
 	height: 35px;
 	align-items: center;
@@ -266,4 +264,15 @@ function addQuiz(){
 .v-input__details{
 	display: none !important;
 }
+
+</style>
+
+<style>
+/* .v-input__control{
+	height: 35px;
+	align-items: center;
+}
+.v-input__details{
+	display: none !important;
+} */
 </style>

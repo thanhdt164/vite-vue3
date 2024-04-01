@@ -7,17 +7,27 @@
 
             <v-spacer></v-spacer>
 
-            <v-btn>
+            <!-- <v-btn>
                 Sắp xếp
                 <v-icon end icon="mdi-sort"></v-icon>
-            </v-btn>
-            <v-btn>
-                Trộn đề
+            </v-btn> -->
+            <v-btn @click="quizMaker">
+                Tạo đề thi
                 <v-icon end icon="mdi-merge"></v-icon>
             </v-btn>
         </v-toolbar>
     </div>
 </template>
+
+<script>
+export default{
+    methods:{
+        quizMaker(){
+            this.$emit('quizMaker')
+        }
+    }
+}
+</script>
 
 <style scoped>
 .toolbar-title{

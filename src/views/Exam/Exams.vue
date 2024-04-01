@@ -1,8 +1,3 @@
-<script setup>
-// import ToolBar from '../../components/ToolBar.vue'
-import Grid from '../../components/Grid.vue'
-</script>
-
 <template>
     <!-- SHEETS -->
     <v-container class="container">
@@ -10,15 +5,37 @@ import Grid from '../../components/Grid.vue'
         <v-sheet class="sheet light">
         <!-- TITLE -->
         <v-row class="text-h3">
-            Nhập liệu phân tích
+            Danh sách đề thi
         </v-row>
         <!-- TOOL BAR -->
-        <tool-bar-grid></tool-bar-grid>
+        <tool-bar-grid
+            @quizMaker="quizMaker"
+        ></tool-bar-grid>
         <!-- GRID -->
         <grid></grid>
         </v-sheet>
     </v-container>  
 </template>
+
+<script>
+import ToolBarGrid from '../../components/ToolBarGrid.vue'
+import Grid from '../../components/Grid.vue'
+
+export default{
+    data: () => ({
+
+    }),
+    components: {
+        ToolBarGrid,
+        Grid
+    },
+    methods:{
+        quizMaker(){
+            this.$router.push('quiz-maker')
+        }
+    }
+}
+</script>
 
 <style scoped="scss">
 </style>

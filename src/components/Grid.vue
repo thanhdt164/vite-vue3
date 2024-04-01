@@ -8,7 +8,7 @@
     :loading="loading" 
     item-value="routeExam ? ExamName : name" 
     @update:options="loadItems"
-    @click="clickItem" >
+    @click="clickItem">
         <template v-slot:tfoot>
             <tr v-if="!routeExam" >
                 <td>

@@ -5,7 +5,9 @@
                Đề kiểm tra
             </v-row>
             <!-- TOOL BAR -->
-            <tool-bar></tool-bar>
+            <tool-bar
+							@mergeQuiz="mergeQuiz"
+						></tool-bar>
             <!-- Exam Area -->
             <div class="exam-box">
 								<!-- HEADER -->
@@ -46,8 +48,9 @@
 
 <script>
 // import { ref, onMounted } from 'vue';
-import ToolBar from '../../components/ToolBar.vue';
 import ApiService from '../../axios/axios.js';
+import ToolBar from '../../components/ToolBar.vue';
+
 
 export default{
 	data: () => ({
@@ -96,6 +99,9 @@ export default{
 			}
 		]
 	}),
+	components:{
+		ToolBar,
+	},
 	created(){
 		this.ExamsByID();
 	},
@@ -108,6 +114,10 @@ export default{
 			}).finally(() => {
 
 			}) 
+		},
+		mergeQuiz(){
+			debugger
+			// call api merge
 		}
 	},
 }
