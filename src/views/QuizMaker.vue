@@ -74,8 +74,6 @@ import {useToast} from 'vue-toast-notification';
 import { ref } from 'vue'
 
 const $toast = useToast();
-
-
 const quizs = ref([
     {
         question: "<p>Lực nào dưới đây là lực đàn hồi?</p>",
@@ -198,8 +196,8 @@ async function saveQuiz() {
 		question.answers = answers;
 		param.questionAnswers.push(question)
 	});
-	// var res = await ApiService.InsertExam(param);
-	if(true){
+	var res = await ApiService.InsertExam(param);
+	if(res.data.success){
 		$toast.success('Lưu đề thi thành công!')
 	}else{
 		$toast.error('Lưu đề thi thất bại!')

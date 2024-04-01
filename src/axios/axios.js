@@ -43,6 +43,9 @@ function InsertExam(data){
 function InsertUser(data){
     return instance.post("/User/create-user",data);
 }
+function getAllExams(){
+    return instance.get("/Exams/get-all");
+}
 
 function Exams(param){
     // return instance.post("/Exams/get-all", param);
@@ -56,6 +59,9 @@ function Exams(param){
         ]
         resolve(rs);
     })
+}
+function getExamByCode(code){
+    return instance.get(`/Exams/exam-bycode?examCode=${code}`)
 }
 function ExamsByID(param){
     return new Promise((resolve, reject) => {
@@ -120,4 +126,4 @@ function ExamsByID(param){
         resolve(rs);
     })
 }
-export default {login,getAllAnalysisContent,InsertExam,InsertUser, Exams, ExamsByID};
+export default {login,getAllAnalysisContent,InsertExam,InsertUser, Exams, ExamsByID,getAllExams,getExamByCode};

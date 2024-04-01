@@ -8,7 +8,8 @@
     :loading="loading" 
     item-value="routeExam ? ExamName : name" 
     @update:options="loadItems"
-    @click="clickItem">
+    @click:row="handleRowClick"
+    >
         <template v-slot:tfoot>
             <tr v-if="!routeExam" >
                 <td>
@@ -262,7 +263,6 @@ const desserts2 = [
         { title: 'Protein (g)', key: 'protein', align: 'end' },
         { title: 'Iron (%)', key: 'iron', align: 'end' },
       ],
-      serverItems: [],
       loading: true,
       totalItems: 0,
       name: '',
@@ -278,6 +278,18 @@ const desserts2 = [
       //   type: Array,
       //   default: []
       // },
+      headers:{
+        type:Array,
+        default:[]
+      },
+      serverItems:{
+        type:Array,
+        default:[]
+      },
+      loading:{
+        type:Boolean,
+        default :false
+      }
     },
     computed: {
       routeExam(){
@@ -317,8 +329,8 @@ const desserts2 = [
         }
         
       },
-      clickItem(val){
-        this.$router.push('/exam-detail')
+      handleRowClick(val,e){
+        this.$emit("clickRow",e.item)
       }
     },
     created(){
