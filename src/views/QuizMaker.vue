@@ -198,8 +198,8 @@ async function saveQuiz() {
 		question.answers = answers;
 		param.questionAnswers.push(question)
 	});
-	// var res = await ApiService.InsertExam(param);
-	if(true){
+	var res = await ApiService.InsertExam(param);
+	if(res.success){
 		$toast.success('Lưu đề thi thành công!')
 	}else{
 		$toast.error('Lưu đề thi thất bại!')

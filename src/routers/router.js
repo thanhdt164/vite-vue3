@@ -77,10 +77,10 @@ function parseJwt (token) {
 router.beforeEach((to, from, next) => {
        var token = parseJwt(localStorage.getItem('token'));
        var currentTime = new Date().getTime();
-        // if(((!token || token.exp < currentTime/1000) && to.path !== '/login')){
-        //     next('/login');
-        //     return;
-        // }
+        if(((!token || token.exp < currentTime/1000) && (to.path !== '/login' && to.path !== '/register'))){
+            next('/login');
+            return;
+        }
        next()
   })
 export default router;

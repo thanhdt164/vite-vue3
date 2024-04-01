@@ -10,7 +10,7 @@
             v-model="email"
             :readonly="loading"
             :rules="[required]"
-            class="mb-2"
+            class="mb-8"
             clearable
             label="Tài khoản"
           ></v-text-field>

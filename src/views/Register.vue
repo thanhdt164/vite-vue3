@@ -54,7 +54,6 @@ export default {
                 Password:this.password
             }
             var res = await ApiService.InsertUser(param)
-            console.log(res);
             if(res && res.Success){
                 this.$router.push("/login");
             }
