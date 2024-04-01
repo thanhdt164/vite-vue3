@@ -6,33 +6,33 @@
             </v-row>
             <!-- TOOL BAR -->
             <tool-bar
-							@mergeQuiz="mergeQuiz"
-						></tool-bar>
+				@mergeQuiz="mergeQuiz"
+			></tool-bar>
             <!-- Exam Area -->
             <div class="exam-box">
 								<!-- HEADER -->
                 <v-row class="exam-header">
-									<v-col :cols="4" class="left-header">
-										<v-label>Phòng GDĐT Sơn Dương</v-label>
-										<v-label>Trường THCS Văn Phú</v-label>
-									</v-col>
-									<v-col :cols="8" class="right-header">
-										<v-label class="exam-title">Đề kiểm tra đề xuất bồi dưỡng thường xuyên</v-label>
-										<v-label class="subject">Môn: Vật lý</v-label>
-										<v-label class="time">Thời gian: 50 phút (Không kể thời gian giao đề)</v-label>
-									</v-col>
+					<v-col :cols="4" class="left-header">
+						<v-label>Phòng GDĐT Sơn Dương</v-label>
+						<v-label>Trường THCS Văn Phú</v-label>
+					</v-col>
+					<v-col :cols="8" class="right-header">
+						<v-label class="exam-title">Đề kiểm tra đề xuất bồi dưỡng thường xuyên</v-label>
+						<v-label class="subject">Môn: Vật lý</v-label>
+						<v-label class="time">Thời gian: 50 phút (Không kể thời gian giao đề)</v-label>
+					</v-col>
                 </v-row>
 								<!-- BODY -->
                 <v-row class="exam-body">
 									<v-col :cols="12" class="item-quiz" v-for="(quiz, index) in quizs" :key="index">
 										<div class="question">
 											<span>Câu {{index+1}}: </span>
-											<v-label v-html="quiz.question"></v-label>
+											<v-label v-html="quiz.questionContent"></v-label>
 										</div>
 										<div class="answer">
 											<div v-for="(item, id) in [1,2,3,4]" :key="id" class="quiz-item">
 												<span :class="{'red': quiz.answers[id].isTrue}">{{ ["A", "B", "C", "D"][id] }}. </span>
-												<v-label v-html="quiz.answers[id].text"></v-label>
+												<v-label v-html="quiz.answers[id].answerContent"></v-label>
 											</div>
 										</div>
 									</v-col>
@@ -102,8 +102,14 @@ export default{
 	components:{
 		ToolBar,
 	},
-	created(){
-		this.ExamsByID();
+	async created(){
+		//this.ExamsByID();
+		var id = this.$route.query.id;
+		var res = await ApiService.getExamByCode(id);
+		if (res){
+			this.quizs = res.data.data.questionAnswers
+		}
+		console.log(this.quizs);
 	},
 	methods:{
 		ExamsByID(){
@@ -116,7 +122,6 @@ export default{
 			}) 
 		},
 		mergeQuiz(){
-			debugger
 			// call api merge
 		}
 	},

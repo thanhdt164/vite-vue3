@@ -25,7 +25,7 @@
             </v-form>
             <div class="mt-2">
                 <p class="text-body-2">
-                   Bạn đã có tài khoản? <a href="#">Đăng nhập ngay</a>
+                   Bạn đã có tài khoản? <span  @click="goLogin">Đăng nhập ngay</span>
                 </p>
             </div>
         </v-sheet>
@@ -54,9 +54,13 @@ export default {
                 Password:this.password
             }
             var res = await ApiService.InsertUser(param)
-            if(res && res.Success){
+            if(res && res.data.success){
+                this.$toast.success("Đăng ký thành công")
                 this.$router.push("/login");
             }
+        },
+        goLogin(){
+            this.$router.push("/login");
         },
         requireRePassword(val){
             if (this.password != val){
