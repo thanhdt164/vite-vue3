@@ -24,7 +24,7 @@
 <script>
 import ToolBarGrid from '../../components/ToolBarGrid.vue'
 import Grid from '../../components/Grid.vue'
-import ApiService from '/Education/vite-vue3/src/axios/axios';
+import ApiService from '../../axios/axios';
 
 export default{
     data: () => ({

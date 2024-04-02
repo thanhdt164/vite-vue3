@@ -10,7 +10,7 @@
     @update:options="loadItems"
     @click:row="handleRowClick"
     >
-        <template v-slot:tfoot>
+        <template v-slot:tfoot v-if="!routeExamDetail">
             <tr v-if="!routeExam" >
                 <td>
                     <v-text-field v-model="name" hide-details placeholder="Search name..." class="ma-2"
@@ -294,6 +294,9 @@ const desserts2 = [
     computed: {
       routeExam(){
         return this.$route.name == 'exams'
+      },
+      routeExamDetail(){
+        return this.$route.name == 'examdetail'
       }
     },
     watch: {
