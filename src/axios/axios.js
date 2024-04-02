@@ -46,8 +46,11 @@ function InsertUser(data){
 function getAllExams(){
     return instance.get("/Exams/get-all");
 }
-function getallShuffExams(){
-    return instance.get("/Exams/all-shuff-exams");
+function shuffExams(code){
+    return instance.get(`/Exams/shuff-exams?examCode=${code}`);
+}
+function getallShuffExams(id){
+    return instance.get(`/Exams/all-shuff-exams?examID=${id}`);
 }
 
 function Exams(param){
@@ -129,4 +132,4 @@ function ExamsByID(param){
         resolve(rs);
     })
 }
-export default {login,getAllAnalysisContent,InsertExam,InsertUser, Exams, ExamsByID,getAllExams,getExamByCode};
+export default {login,getAllAnalysisContent,InsertExam,InsertUser, Exams, ExamsByID,getAllExams,getExamByCode, shuffExams, getallShuffExams };

@@ -48,7 +48,7 @@ export default{
         //     console.log(res);
         // }
         detailExam(val){
-            this.$router.push({path:"/exam-detail",query:{id:val.examTestCode}});
+            this.$router.push({ path: '/exam-detail', query: { id: val.examTestCode +"/"+ val.examTestID } });
         }
     },
     async created(){

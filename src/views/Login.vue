@@ -64,7 +64,8 @@ export default {
       var res = await ApiService.login(param);
       if(res && res.status == 200){
         localStorage.setItem('token',res.data.data.access_token)
-        this.$router.push("/notification");
+        this.$toast.success("Đăng nhập thành công");
+        this.$router.push("/exams");
       }
       if (!this.form) return
       this.loading = true

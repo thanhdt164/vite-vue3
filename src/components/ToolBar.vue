@@ -20,7 +20,7 @@ import { ref } from 'vue'
 export default{
     methods:{
         mergeQuiz() {
-            $emit("mergeQuiz");
+            this.$emit("mergeQuiz");
         }
     }
 }

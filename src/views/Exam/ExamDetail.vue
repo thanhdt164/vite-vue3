@@ -10,8 +10,10 @@
 						></tool-bar>
 						<!-- Danh sách đề trộn -->
 						<grid
+						v-if="datasMerge.length > 0"
 						:headers="headerMerge"
 						:serverItems="datasMerge"
+						@clickRow="handleRowClick"
 						></grid>
 
 						<hr style="margin-bottom: 32px;">
@@ -58,6 +60,7 @@
 import ApiService from '../../axios/axios.js';
 import ToolBar from '../../components/ToolBar.vue';
 import Grid from '../../components/Grid.vue'
+import {useToast} from 'vue-toast-notification';
 
 export default{
 	data: () => ({
@@ -107,9 +110,18 @@ export default{
 		],
 		headerMerge: [
 			{
-				title: 'Mã đề', key: 'examTestCode', align: 'left'
-			}
-		]
+				title: 'ID đề thi', key: 'examTestID', align: 'left'
+			},
+			{
+				title: 'Mã đề thi', key: 'examTestCode', align: 'left'
+			},
+			{
+				title: 'Đề gốc', key: 'isOrgin', align: 'left'
+			},
+		],
+		toast: useToast(),
+		datasMerge: [],
+		arrQuestionAnswers: []
 	}),
 	components:{
 		ToolBar,
@@ -118,12 +130,11 @@ export default{
 	async created(){
 		//this.ExamsByID();
 		//preview
-		var id = this.$route.query.id;
+		var id = this.$route.query.id.split("/")[0];
 		var res = await ApiService.getExamByCode(id);
 		if (res){
 			this.quizs = res.data.data.questionAnswers
 		}
-		console.log(this.quizs);
 
 		// lấy all đề merge
 		this.getAllMerge()
@@ -140,18 +151,34 @@ export default{
 		},
 		mergeQuiz(){
 			// call api merge
-		},
-		getAllMerge(){
-			// debugger
-			let id = this.$route.params.id;
-			ApiService.getallShuffExams(id).then(res => {
-				this.datasMerge = res.data.Data;
+			var code = this.$route.query.id.split("/")[0];
+			ApiService.shuffExams(code).then(res => {
+				if(res.data.data){
+					this.toast.success('Trộn đề thi thành công!')
+					this.getAllMerge()
+				}else{
+					this.toast.success('Trộn đề thi thất bại!')
+				}
 			}).catch(err => {
 				
 			}).finally(() => {
 
 			}) 
-		}
+		},
+		getAllMerge(){
+			// let id = this.$route.params.id;
+			var id = this.$route.query.id.split("/")[1];
+			ApiService.getallShuffExams(id).then(res => {
+				this.datasMerge = res.data.data.map(x => x.exam);
+				this.arrQuestionAnswers = res.data.data.map(x =>x.questionAnswers);
+			}).catch(err => {
+				
+			}).finally(() => {
+
+			}) 
+		},
+		// handleRowClick(val){
+		// }
 	},
 }
 	
