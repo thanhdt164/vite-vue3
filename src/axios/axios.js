@@ -46,6 +46,9 @@ function InsertUser(data){
 function getAllExams(){
     return instance.get("/Exams/get-all");
 }
+function getallShuffExams(){
+    return instance.get("/Exams/all-shuff-exams");
+}
 
 function Exams(param){
     // return instance.post("/Exams/get-all", param);

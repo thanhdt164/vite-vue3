@@ -255,22 +255,17 @@ function addQuiz(){
 .quill-custom{
 	padding-left: 32px;
 }
-.v-input__control{
-	height: 35px;
-	align-items: center;
-}
-.v-input__details{
-	display: none !important;
-}
 
 </style>
 
-<style>
-/* .v-input__control{
-	height: 35px;
-	align-items: center;
+<style lang="scss">
+.quiz-item{
+	.v-input__control{
+		height: 35px;
+		align-items: center;
+	}
+	.v-input__details{
+		display: none !important;
+	}
 }
-.v-input__details{
-	display: none !important;
-} */
 </style>

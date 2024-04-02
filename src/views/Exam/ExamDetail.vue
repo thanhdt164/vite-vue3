@@ -6,8 +6,15 @@
             </v-row>
             <!-- TOOL BAR -->
             <tool-bar
-				@mergeQuiz="mergeQuiz"
-			></tool-bar>
+							@mergeQuiz="mergeQuiz"
+						></tool-bar>
+						<!-- Danh sách đề trộn -->
+						<grid
+						:headers="headerMerge"
+						:serverItems="datasMerge"
+						></grid>
+
+						<hr style="margin-bottom: 32px;">
             <!-- Exam Area -->
             <div class="exam-box">
 								<!-- HEADER -->
@@ -50,7 +57,7 @@
 // import { ref, onMounted } from 'vue';
 import ApiService from '../../axios/axios.js';
 import ToolBar from '../../components/ToolBar.vue';
-
+import Grid from '../../components/Grid.vue'
 
 export default{
 	data: () => ({
@@ -97,19 +104,29 @@ export default{
 					}
 				]
 			}
+		],
+		headerMerge: [
+			{
+				title: 'Mã đề', key: 'examTestCode', align: 'left'
+			}
 		]
 	}),
 	components:{
 		ToolBar,
+		Grid
 	},
 	async created(){
 		//this.ExamsByID();
+		//preview
 		var id = this.$route.query.id;
 		var res = await ApiService.getExamByCode(id);
 		if (res){
 			this.quizs = res.data.data.questionAnswers
 		}
 		console.log(this.quizs);
+
+		// lấy all đề merge
+		this.getAllMerge()
 	},
 	methods:{
 		ExamsByID(){
@@ -123,6 +140,17 @@ export default{
 		},
 		mergeQuiz(){
 			// call api merge
+		},
+		getAllMerge(){
+			// debugger
+			let id = this.$route.params.id;
+			ApiService.getallShuffExams(id).then(res => {
+				this.datasMerge = res.data.Data;
+			}).catch(err => {
+				
+			}).finally(() => {
+
+			}) 
 		}
 	},
 }
