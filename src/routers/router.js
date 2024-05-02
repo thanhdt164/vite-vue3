@@ -2,8 +2,6 @@ import { createRouter, createWebHistory } from 'vue-router'
 
 // 1. Define route components.
 // These can be imported from other files
-const Home = { template: '<div>Home</div>' }
-// import TNav from '@/layouts/t-nav.vue'
 import Menu from '../views/Menu.vue'
 import Notification from '../views/Notification.vue'
 import Profiles from '../views/Profiles.vue'
@@ -13,15 +11,16 @@ import Students from '../views/Students.vue'
 import InputDataAndAnalysis from '../views/InputDataAndAnalysis.vue'
 import Evaluate from '../views/Evaluate.vue'
 import QuizMaker from '../views/QuizMaker.vue'
+import QuizMaker2 from '../views/QuizMaker2.vue'
 import Login from '../views/Login.vue'
 import Register from '../views/Register.vue'
+import Template from '@/components/Template/Template.vue'
 
 
 // 2. Define some routes
 // Each route should map to a component.
 // We'll talk about nested routes later.
 const routes = [
-    { path: '/', name: "Home", component: Home },
     { path: '/login', name: "login", component: Login },
     { path: '/menu', name: "menu", component: Menu },
     { path: '/notification', name: "notification", component: Notification },
@@ -33,7 +32,8 @@ const routes = [
     { path: '/evaluate', name: "evaluate", component: Evaluate },
     { path: '/login', name: "login", component: Login },
     { path: '/register', name: "register", component: Register },
-    { path: '/quiz-maker', name: "quiz-maker", component: QuizMaker },
+    { path: '/quiz-maker', name: "quiz-maker", component: QuizMaker2 },
+    { path: '/template', name: "template", component: Template },
     // { path: '/nav', component: TNav },
     // { path: '/footer', component: TFooter },
     // {
@@ -64,6 +64,8 @@ const router = createRouter({
     history: createWebHistory(),
     routes, // short for `routes: routes`
 })
+
+
 function parseJwt (token) {
     if(!token) return "";
     var base64Url = token?.split('.')[1];
@@ -75,12 +77,12 @@ function parseJwt (token) {
     return JSON.parse(jsonPayload);
 }
 router.beforeEach((to, from, next) => {
-       var token = parseJwt(localStorage.getItem('token'));
-       var currentTime = new Date().getTime();
-        if(((!token || token.exp < currentTime/1000) && (to.path !== '/login' && to.path !== '/register'))){
-            next('/login');
-            return;
-        }
-       next()
-  })
-export default router;
+    var token = parseJwt(localStorage.getItem('token'));
+    var currentTime = new Date().getTime();
+    if(((!token || token.exp < currentTime/1000) && (to.path !== '/login' && to.path !== '/register'))){
+        next('/login');
+        return;
+    }
+    next()
+})
+export {router};

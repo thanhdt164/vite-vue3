@@ -166,8 +166,7 @@ export default{
 			}) 
 		},
 		getAllMerge(){
-			// let id = this.$route.params.id;
-			var id = this.$route.query.id.split("/")[1];
+			let id = this.$route.params.id;
 			ApiService.getallShuffExams(id).then(res => {
 				this.datasMerge = res.data.data.map(x => x.exam);
 				this.arrQuestionAnswers = res.data.data.map(x =>x.questionAnswers);

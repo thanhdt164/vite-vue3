@@ -23,13 +23,14 @@
 
 		<v-list density="compact" nav>
 			<v-list-item @click="direct(1)" class="list-item" prepend-icon="mdi-puzzle" title="Danh mục" value="1"></v-list-item>
-			<!-- <v-list-item @click="direct(2)" class="list-item" prepend-icon="mdi-bell-ring" title="Thông báo" value="2"></v-list-item> -->
-			<!-- <v-list-item @click="direct(3)" class="list-item" prepend-icon="mdi-account" title="Hồ sơ học sinh" value="3"></v-list-item> -->
+			<v-list-item @click="direct(2)" class="list-item" prepend-icon="mdi-bell-ring" title="Thông báo" value="2"></v-list-item>
+			<v-list-item @click="direct(3)" class="list-item" prepend-icon="mdi-account" title="Hồ sơ học sinh" value="3"></v-list-item>
 			<v-list-item @click="direct(4)" class="list-item" prepend-icon="mdi-clipboard-text" title="Bài kiểm tra" value="4"></v-list-item>
-			<!-- <v-list-item @click="direct(5)" class="list-item" prepend-icon="mdi-text-box-check-outline" title="Kết quả học sinh" value="5"></v-list-item> -->
-			<!-- <v-list-item @click="direct(6)" class="list-item" prepend-icon="mdi-poll" title="Nhập liệu phân tích" value="6"></v-list-item> -->
+			<v-list-item @click="direct(5)" class="list-item" prepend-icon="mdi-text-box-check-outline" title="Kết quả học sinh" value="5"></v-list-item>
+			<v-list-item @click="direct(6)" class="list-item" prepend-icon="mdi-poll" title="Nhập liệu phân tích" value="6"></v-list-item>
 			<v-list-item @click="direct(7)" class="list-item" prepend-icon="mdi-star" title="Đánh giá" value="7"></v-list-item>
 			<v-list-item @click="direct(8)" class="list-item" prepend-icon="mdi-star" title="Tạo đề kiểm tra" value="8"></v-list-item>
+			<v-list-item @click="direct(9)" class="list-item" prepend-icon="mdi-star" title="Mẫu" value="9"></v-list-item>
 		</v-list>
 	</v-navigation-drawer>
 </template>
@@ -68,6 +69,9 @@
 					break;
 				case 8 :
 					this.$router.push('/quiz-maker')
+					break;
+				case 9 :
+					this.$router.push('/template')
 					break;
 			}
 			
