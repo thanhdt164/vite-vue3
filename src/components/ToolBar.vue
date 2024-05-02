@@ -1,34 +1,92 @@
 <template>
-    <div>
-        <v-toolbar prominent>
-            <!-- <v-app-bar-nav-icon></v-app-bar-nav-icon> -->
+    <!-- <v-toolbar prominent>
+        <v-toolbar-title class="toolbar-title">Đề kiểm tra học kì 1 2023-2024</v-toolbar-title>
 
-            <v-toolbar-title class="toolbar-title">Đề kiểm tra học kì 1 2023-2024</v-toolbar-title>
+        <v-spacer></v-spacer>
 
-            <v-spacer></v-spacer>
+        <v-btn @click="mergeQuiz">
+            Trộn đề
+            <v-icon end icon="mdi-add" ></v-icon>
+        </v-btn>
+    </v-toolbar> -->
+    <v-toolbar density="compact" class="c-toolbar">
+        <!-- <v-app-bar-nav-icon></v-app-bar-nav-icon> -->
+        
+        <v-toolbar-title>{{title}}</v-toolbar-title>
 
-            <v-btn @click="mergeQuiz">
-                Trộn đề
-                <v-icon end icon="mdi-add" ></v-icon>
-            </v-btn>
-        </v-toolbar>
-    </div>
+        <v-spacer></v-spacer>
+        <slot name="right-tool"></slot>
+        <!--  <v-btn icon>
+            <v-icon>mdi-magnify</v-icon>
+        </v-btn>
+
+        <v-btn icon>
+            <v-icon>mdi-heart</v-icon>
+        </v-btn>
+
+        <v-btn icon>
+            <v-icon>mdi-dots-vertical</v-icon>
+        </v-btn> -->
+    </v-toolbar>
 </template>
 
 <script>
-import { ref } from 'vue'
 export default{
-    methods:{
-        mergeQuiz() {
-            $emit("mergeQuiz");
+    name: "ToolBar",
+	components:{
+		
+	},
+    data: () => ({
+
+	}),
+	props:{
+		tmp_Prop: {
+            type: [Number, Array, Object, String],
+            default: 100
+        },
+        title:{
+            type: String,
+            default: "Title"
         }
+	},
+	watch:{
+		tmp_obj: {
+            handler(newVal, oldVal) {
+                
+            },
+            //callback to fire on all nested mutations
+            deep: true, 
+            // executed immediately by declaring
+            immediate: true, 
+            //callback to trigger only once when the source changes
+            once: true, 
+        }
+	},
+	computed: {
+
+	},
+	created: () => {
+
+	},
+    methods:{
+        // mergeQuiz() {
+        //     $emit("mergeQuiz");
+        // }
     }
 }
  
 </script>
-<style scoped>
+<style scoped lang="scss">
 .toolbar-title{
     text-align: left;
     font-size: 16px;
+}
+
+</style>
+<style lang="scss">
+.c-toolbar{
+  .v-toolbar__content{
+    height: 56px !important;
+  }
 }
 </style>
