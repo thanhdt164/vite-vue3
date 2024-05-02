@@ -65,7 +65,9 @@ export default {
       if(res && res.status == 200){
         localStorage.setItem('token',res.data.data.access_token)
         this.$toast.success("Đăng nhập thành công");
-        this.$router.push("/exams");
+        setTimeout(() => {
+         this.$router.push("/exams");
+        }, 0);
       }
       if (!this.form) return
       this.loading = true
