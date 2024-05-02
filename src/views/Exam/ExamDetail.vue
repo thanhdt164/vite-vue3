@@ -142,7 +142,6 @@ export default{
 			// call api merge
 		},
 		getAllMerge(){
-			// debugger
 			let id = this.$route.params.id;
 			ApiService.getallShuffExams(id).then(res => {
 				this.datasMerge = res.data.Data;
