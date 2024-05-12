@@ -52,7 +52,8 @@
             <v-list-item @click="direct(6)" class="list-item" prepend-icon="mdi-poll" title="Nhập liệu phân tích" value="6"></v-list-item>
             <v-list-item @click="direct(7)" class="list-item" prepend-icon="mdi-star" title="Đánh giá" value="7"></v-list-item>
             <v-list-item @click="direct(8)" class="list-item" prepend-icon="mdi-star" title="Tạo đề kiểm tra" value="8"></v-list-item>
-            <v-list-item @click="direct(9)" class="list-item" prepend-icon="mdi-star" title="Mẫu" value="9"></v-list-item>
+            <v-list-item @click="direct(9)" class="list-item" prepend-icon="mdi mdi-format-list-group-plus" title="Tạo kỳ thi" value="9"></v-list-item>
+            <v-list-item @click="direct(10)" class="list-item" prepend-icon="mdi mdi-badge-account" title="Phân khối" value="9"></v-list-item>
           </v-list>
         </v-navigation-drawer>
         
@@ -119,7 +120,10 @@ export default{
 					this.$router.push('/quiz-maker')
 					break;
 				case 9 :
-					this.$router.push('/template')
+					this.$router.push('/create-exam')
+					break;
+				case 10 :
+					this.$router.push('/user-block')
 					break;
 			}
 			

@@ -3,11 +3,16 @@ import {baseCRUD} from "@/axios/BaseConfig";
 
 class UserAPI extends BaseAPI{
     constructor(name = "User"){
+        super();
         this.controller = name;
     }
     // Phương thức riêng
     InsertUser(data){
-        let url = this.url('create-user')
+        let url = this.url('/create-user')
+        return baseCRUD.post(url, data)
+    }
+    createUserBlock(data){
+        let url = this.url('/users-block')
         return baseCRUD.post(url, data)
     }
 }

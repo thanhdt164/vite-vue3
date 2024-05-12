@@ -3,6 +3,7 @@ import {baseCRUD} from "@/axios/BaseConfig";
 
 class ExamsAPI extends BaseAPI{
     constructor(name = "Exams"){
+        super();
         this.controller = name;
     }
     // Phương thức riêng
@@ -17,6 +18,10 @@ class ExamsAPI extends BaseAPI{
     getExamByCode(code){
         let url = this.url(`exam-bycode?examCode=${code}`)
         return baseCRUD.get(url)
+    }
+    getAllExam(){
+        let url = this.url('get-all')
+        return baseCRUD.get(url);
     }
 }
 export default ExamsAPI;
