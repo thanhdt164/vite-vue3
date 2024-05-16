@@ -54,6 +54,7 @@
             <v-list-item @click="direct(8)" class="list-item" prepend-icon="mdi-star" title="Tạo đề kiểm tra" value="8"></v-list-item>
             <v-list-item @click="direct(9)" class="list-item" prepend-icon="mdi mdi-format-list-group-plus" title="Tạo kỳ thi" value="9"></v-list-item>
             <v-list-item @click="direct(10)" class="list-item" prepend-icon="mdi mdi-badge-account" title="Phân khối" value="9"></v-list-item>
+            <v-list-item @click="direct(100)" class="list-item" prepend-icon="mdi-star" title="Template" value="8"></v-list-item>
           </v-list>
         </v-navigation-drawer>
         
@@ -125,6 +126,9 @@ export default{
 				case 10 :
 					this.$router.push('/user-block')
 					break;
+        case 100 :
+        this.$router.push('/template')
+        break;
 			}
 			
 		}

@@ -1,24 +1,62 @@
-<script setup>
-import ToolBarGrid from '../components/ToolBarGrid.vue'
-import Grid from '../components/Grid.vue'
-</script>
-
 <template>
-    <!-- SHEETS -->
-    <v-container class="container">
-        <!-- Temp -->
-        <v-sheet class="sheet light">
-        <!-- TITLE -->
-        <v-row class="text-h3">
-            Nhập liệu phân tích
-        </v-row>
-        <!-- TOOL BAR -->
-        <tool-bar-grid></tool-bar-grid>
-        <!-- GRID -->
-        <grid></grid>
-        </v-sheet>
-    </v-container>  
+	<BaseArea title="Kết quả học sinh">
+		<template v-slot:center-area>
+			<Grid></Grid>
+		</template>
+	</BaseArea>
 </template>
+<!-- SCRIPT -->
+<script>
+/* IMPORT */
+import BaseArea from '@/components/BaseArea.vue'
+import Expansion from '@/components/Expansion.vue'
+import Grid from '@/components/Grid.vue'
 
-<style scoped="scss">
+/* EXPORT */
+export default{
+	name: "",
+	components:{
+		BaseArea,
+		Expansion,
+		Grid
+	},
+  data: () => ({
+
+	}),
+	props:{
+		tmp_Prop: {
+      type: [Number, Array, Object, String],
+      default: 100
+    },
+	},
+	watch:{
+		tmp_obj: {
+      handler(newVal, oldVal) {
+        
+      },
+			//callback to fire on all nested mutations
+      deep: true, 
+			// executed immediately by declaring
+			immediate: true, 
+			//callback to trigger only once when the source changes
+			once: true, 
+    }
+	},
+	computed: {
+
+	},
+	created(){
+
+	},
+	methods:{
+
+	}
+}
+/* STYLE */
+</script>
+<style scoped lang="scss">
+
+</style>
+<style lang="scss">
+
 </style>

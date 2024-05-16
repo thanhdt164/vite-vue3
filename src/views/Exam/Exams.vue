@@ -1,67 +1,62 @@
 <template>
-    <!-- SHEETS -->
-    <v-container class="container">
-        <!-- Temp -->
-        <v-sheet class="sheet light">
-        <!-- TITLE -->
-        <v-row class="text-h3">
-            Danh sách đề thi
-        </v-row>
-        <!-- TOOL BAR -->
-        <tool-bar-grid
-            @quizMaker="quizMaker"
-        ></tool-bar-grid>
-        <!-- GRID -->
-        <grid
-         :headers="headers"
-         :serverItems="datas"
-         @clickRow="detailExam"
-        ></grid>
-        </v-sheet>
-    </v-container>  
+	<BaseArea title="Bài kiểm tra">
+		<template v-slot:center-area>
+			<Grid></Grid>
+		</template>
+	</BaseArea>
 </template>
-
+<!-- SCRIPT -->
 <script>
-import ToolBarGrid from '../../components/ToolBarGrid.vue'
-import Grid from '../../components/Grid.vue'
-import ApiService from '../../axios/axios';
+/* IMPORT */
+import BaseArea from '@/components/BaseArea.vue'
+import Expansion from '@/components/Expansion.vue'
+import Grid from '@/components/Grid.vue'
 
+/* EXPORT */
 export default{
-    data: () => ({
-        datas:[],
-        headers:[
-            {
-                title: 'Mã đề', key: 'examTestCode', align: 'left'
-            }
-        ]
-    }),
-    components: {
-        ToolBarGrid,
-        Grid
+	name: "",
+	components:{
+		BaseArea,
+		Expansion,
+		Grid
+	},
+  data: () => ({
+
+	}),
+	props:{
+		tmp_Prop: {
+      type: [Number, Array, Object, String],
+      default: 100
     },
-    methods:{
-        quizMaker(){
-            this.$router.push('quiz-maker')
-        },
-        // async detailExam(val){
-        //     var res = await ApiService.getExamByCode(val.examTestCode);
-        //     console.log(res);
-        // }
-        detailExam(val){
-            this.$router.push({ path: '/exam-detail', query: { id: val.examTestCode +"/"+ val.examTestID } });
-        }
-    },
-    async created(){
-        var res = await ApiService.getAllExams();
-        if (res && res.data.success){
-            this.datas = res.data.data;
-        }else{
-            this.$toast.info(res.data.message)
-        }
+	},
+	watch:{
+		tmp_obj: {
+      handler(newVal, oldVal) {
+        
+      },
+			//callback to fire on all nested mutations
+      deep: true, 
+			// executed immediately by declaring
+			immediate: true, 
+			//callback to trigger only once when the source changes
+			once: true, 
     }
+	},
+	computed: {
+
+	},
+	created(){
+
+	},
+	methods:{
+
+	}
 }
-
+/* STYLE */
 </script>
+<style scoped lang="scss">
 
-<style scoped="scss">
+</style>
+<style lang="scss">
+
 </style>
