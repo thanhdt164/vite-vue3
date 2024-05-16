@@ -57,5 +57,5 @@ const baseCRUD = {
     },
   };
   
-  export default { configAPI, baseCRUD};
+  export  { configAPI, baseCRUD};
 

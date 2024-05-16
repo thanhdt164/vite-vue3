@@ -14,6 +14,8 @@ import QuizMaker from '../views/QuizMaker.vue'
 import QuizMaker2 from '../views/QuizMaker2.vue'
 import Login from '../views/Login.vue'
 import Register from '../views/Register.vue'
+import CreateExam from '../views/CreateExam.vue'
+import AddUserBLock from '../views/AddUserBLock.vue'
 import Template from '@/components/Template/Template.vue'
 
 
@@ -34,6 +36,8 @@ const routes = [
     { path: '/register', name: "register", component: Register },
     { path: '/quiz-maker', name: "quiz-maker", component: QuizMaker2 },
     { path: '/template', name: "template", component: Template },
+    { path: '/create-exam', name: "create-exam", component: CreateExam },
+    { path: '/user-block', name: "user-block", component: AddUserBLock },
     // { path: '/nav', component: TNav },
     // { path: '/footer', component: TFooter },
     // {

@@ -38,7 +38,7 @@ export default{
       default: [{Key: 'California', Value: 'California'}]
     },
     item_key:{
-      type: String,
+      type: Number,
       default: "Key"
     },
     item_value:{
