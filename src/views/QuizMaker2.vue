@@ -1,89 +1,88 @@
 <!-- TEMPLATE -->
 <template>
-  <BaseArea
-  title="Tạo bài kiểm tra"
-  >
-  
-  <v-sheet class="quiz-info">
-    <!-- THÔNG TIN CHUNG -->
-    <v-label>Thông tin chung:</v-label>
-    <v-row style="width: 70%;">
-      <v-col style="margin-right: 16px;">
-        <Card
-          title="Phòng GDĐT"
-        ></Card>
-      </v-col>
-      <v-col style="margin-right: 16px;">
-        <Card
-          title="Trường"
-          :text.sync="school"
-        ></Card>
-      </v-col>
-      <v-col>
-        <Card
-          title="Tên đề kiếm tra"
-        ></Card>
-      </v-col>  
-    </v-row>
-    <!-- Thông tin khác -->
-    <v-label>Thông tin khác:</v-label>
-    <!-- Môn học -->
-    <v-row style="width: 50%;">
-      <v-col cols="3">
-        <v-label>Mã đề: </v-label>
-      </v-col>
-      <v-col>
-        <TextField v-model="examTestCode"></TextField>
-      </v-col>
-    </v-row>
-    <!-- Môn học -->
-    <v-row style="width: 50%;">
-      <v-col cols="3">
-        <v-label>Môn học: </v-label>
-      </v-col>
-      <v-col>
-        <Combobox 
-          v-model="subject"
-          :label="comboboxSubjects.label"
-          :item_source="comboboxSubjects.source"
-        ></Combobox>
-      </v-col>
-    </v-row>
-    <!-- Thời gian -->
-    <v-row style="width: 50%;">
-      <v-col cols="3">
-        <v-label>Thời gian:</v-label>
-      </v-col>
-      <v-col>
-        <Combobox 
-          v-model="time"
-          :label="comboboxTimes.label"
-          :item_source="comboboxTimes.source"
-        ></Combobox>
-      </v-col>
-    </v-row>
-  </v-sheet>
-    <v-sheet class="quiz-box">
-      <!-- CÂU HỎI -->
-      <v-sheet class="quiz-list">
-        <v-row>
-          <Expansion v-for="(quiz, index) in quizs" :key="index"
-            :title="`Câu hỏi ${index+1}:`"
-            :quiz="quiz"
-          ></Expansion>
+  <BaseArea title="Tạo đề kiểm tra">
+    <template v-slot:center-area>
+      <v-sheet class="quiz-info">
+        <!-- THÔNG TIN CHUNG -->
+        <v-label>Thông tin chung:</v-label>
+        <v-row style="width: 70%;">
+          <v-col style="margin-right: 16px;">
+            <Card
+              title="Phòng GDĐT"
+            ></Card>
+          </v-col>
+          <v-col style="margin-right: 16px;">
+            <Card
+              title="Trường"
+              :text.sync="school"
+            ></Card>
+          </v-col>
+          <v-col>
+            <Card
+              title="Tên đề kiếm tra"
+            ></Card>
+          </v-col>  
         </v-row>
-        <v-row class="foot-quiz-box">
-          <v-btn class="btn-save-quiz" variant="tonal" @click="saveQuiz">
-              Lưu đề thi
-              <v-icon end icon="mdi-content-save-plus" ></v-icon>
-          </v-btn>
-          <v-btn class="btn-add-quiz" variant="tonal" @click="addQuiz">
-              Thêm câu hỏi
-              <v-icon end icon="mdi-plus-box" ></v-icon>
-          </v-btn>
+        <!-- Thông tin khác -->
+        <v-label>Thông tin khác:</v-label>
+        <!-- Môn học -->
+        <v-row style="width: 50%;">
+          <v-col cols="3">
+            <v-label>Mã đề: </v-label>
+          </v-col>
+          <v-col>
+            <TextField v-model="examTestCode"></TextField>
+          </v-col>
+        </v-row>
+        <!-- Môn học -->
+        <v-row style="width: 50%;">
+          <v-col cols="3">
+            <v-label>Môn học: </v-label>
+          </v-col>
+          <v-col>
+            <Combobox 
+              v-model="subject"
+              :label="comboboxSubjects.label"
+              :item_source="comboboxSubjects.source"
+            ></Combobox>
+          </v-col>
+        </v-row>
+        <!-- Thời gian -->
+        <v-row style="width: 50%;">
+          <v-col cols="3">
+            <v-label>Thời gian:</v-label>
+          </v-col>
+          <v-col>
+            <Combobox 
+              v-model="time"
+              :label="comboboxTimes.label"
+              :item_source="comboboxTimes.source"
+            ></Combobox>
+          </v-col>
         </v-row>
       </v-sheet>
-    </v-sheet>
+      <v-sheet class="quiz-box">
+        <!-- CÂU HỎI -->
+        <v-sheet class="quiz-list">
+          <v-row>
+            <Expansion v-for="(quiz, index) in quizs" :key="index"
+              :title="`Câu hỏi ${index+1}:`"
+              :quiz="quiz"
+            ></Expansion>
+          </v-row>
+          <v-row class="foot-quiz-box">
+            <v-btn class="btn-save-quiz" variant="tonal" @click="saveQuiz">
+                Lưu đề thi
+                <v-icon end icon="mdi-content-save-plus" ></v-icon>
+            </v-btn>
+            <v-btn class="btn-add-quiz" variant="tonal" @click="addQuiz">
+                Thêm câu hỏi
+                <v-icon end icon="mdi-plus-box" ></v-icon>
+            </v-btn>
+          </v-row>
+        </v-sheet>
+      </v-sheet>
+    </template>
   </BaseArea>
 </template>
 <!-- SCRIPT -->

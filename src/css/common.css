@@ -4,11 +4,19 @@
 .h-full{
 	height: 100% !important;
 }
+.p-0{
+	padding: 0 !important;
+}
+.m-0{
+	margin: 0 !important;
+}
 
 .v-selection-control{
 	min-height: unset !important;
 	height: 40px;
 }
+.v-input,
+.v-field,
 .v-input__control {
 	&:focus-visible {
 		outline: none;

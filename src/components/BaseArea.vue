@@ -2,14 +2,28 @@
 <template>
   <div class="box-area w-full">
     <div class="top-area">
-      <!-- <v-row class="w-full">
-        {{title}}
-      </v-row> -->
-      <ToolBar :title="titleX">
-      </ToolBar>
+      <v-row class="title">
+        {{titleX}}
+      </v-row>
+      <v-row class="p-0">
+        <ToolBar>
+          <template v-slot:left-tool>
+            <v-breadcrumbs :items="itemsBreadCrumbs">
+              <template v-slot:title="{ item }">
+                {{ item.title }}
+              </template>
+            </v-breadcrumbs>
+          </template>
+          <template v-slot:right-tool>
+            <!-- <v-btn icon>
+              <v-icon>mdi-magnify</v-icon>
+            </v-btn> -->
+          </template>
+        </ToolBar>
+      </v-row>
     </div>
     <div class="center-area">
-      <slot></slot>
+      <slot name="center-area"></slot>
     </div>
     <div class="bot-area">
       <slot name="bot-area"></slot>
@@ -31,7 +45,8 @@ export default{
     ToolBar
   },
   data: () => ({
-    titleX: ""
+    titleX: "",
+    itemsBreadCrumbs: []
 	}),
 	props:{
     title:{
@@ -57,6 +72,22 @@ export default{
 	},
 	created(){
     this.titleX = this.title;
+    let pathItems = this.$route.fullPath.split('/');
+    pathItems.forEach((path, id) => {
+      if(path){
+        this.itemsBreadCrumbs.push({
+          title: `${path}`,
+          // disabled: id == pathItems.length,
+          disabled: false,
+          href: this.$route.href
+        })
+      }else{
+        this.itemsBreadCrumbs.push({
+          title: `Home`,
+          disabled: true,
+        })
+      }
+    });
 	},
 	methods:{
 
@@ -70,17 +101,25 @@ export default{
   flex-direction: column;
   .top-area{
     display: flex;
+    flex-direction: column;
     align-items: center;
     font-size: 28px;
-    height: 56px;
+    
+    .title{
+      height: 56px;
+      align-items: center;
+      padding: 0 16px !important;
+    }
   }
   .center-area{
     font-size: 14px;
-    height: 100%;
-    overflow: scroll;
+    height: calc(100% - 56px - 56px - 16px);
+    overflow-y: scroll;
+    // padding: 0 16px !important;
+    padding: 0 !important;
   }
   .bot-area{
-
+    // height: 56px;
   }
 }
 </style>
