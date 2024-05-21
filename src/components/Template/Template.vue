@@ -1,7 +1,10 @@
 <!-- TEMPLATE -->
 <template>
-    <BaseArea>
-			
+    <BaseArea title="Nhập liệu phân tích">
+			<template v-slot:center-area>
+				<Grid>
+				</Grid>
+			</template>
 		</BaseArea>
 </template>
 <!-- SCRIPT -->
@@ -9,13 +12,15 @@
 /* IMPORT */
 import BaseArea from '@/components/BaseArea.vue'
 import Expansion from '@/components/Expansion.vue'
+import Grid from '@/components/Grid.vue'
 
 /* EXPORT */
 export default{
 	name: "",
 	components:{
 		BaseArea,
-		Expansion
+		Expansion,
+		Grid
 	},
   data: () => ({
 

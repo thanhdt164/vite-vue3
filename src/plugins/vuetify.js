@@ -22,7 +22,7 @@ const vuetify = createVuetify({
             style: 'outline: none;',
         },
         VRow:{
-            style: 'margin: 0; padding: 0px 0px 16px'
+            style: 'margin: 0; padding: 0px 0px 16px; width: 100%'
         },
         VCol:{
             style: 'margin: 0; padding: 0px'

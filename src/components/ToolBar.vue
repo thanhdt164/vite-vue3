@@ -1,19 +1,10 @@
 <template>
-    <!-- <v-toolbar prominent>
-        <v-toolbar-title class="toolbar-title">Đề kiểm tra học kì 1 2023-2024</v-toolbar-title>
-
-        <v-spacer></v-spacer>
-
-        <v-btn @click="mergeQuiz">
-            Trộn đề
-            <v-icon end icon="mdi-add" ></v-icon>
-        </v-btn>
-    </v-toolbar> -->
     <v-toolbar density="compact" class="c-toolbar">
         <!-- <v-app-bar-nav-icon></v-app-bar-nav-icon> -->
         
-        <v-toolbar-title>{{title}}</v-toolbar-title>
-
+        <v-toolbar-title v-if="title">{{title}}</v-toolbar-title>
+        
+        <slot name="left-tool"></slot>
         <v-spacer></v-spacer>
         <slot name="right-tool"></slot>
         <!--  <v-btn icon>
@@ -37,6 +28,7 @@ export default{
 		
 	},
     data: () => ({
+        titles: ['9A1', 'Vật lý', 'Kiểm tra cuối kì']
 
 	}),
 	props:{
@@ -46,7 +38,7 @@ export default{
         },
         title:{
             type: String,
-            default: "Title"
+            default: ""
         }
 	},
 	watch:{
@@ -85,8 +77,9 @@ export default{
 </style>
 <style lang="scss">
 .c-toolbar{
-  .v-toolbar__content{
-    height: 56px !important;
-  }
+    font-size: 16px;;
+    .v-toolbar__content{
+        height: 56px !important;
+    }
 }
 </style>
