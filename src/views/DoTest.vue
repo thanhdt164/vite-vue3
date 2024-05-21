@@ -51,7 +51,14 @@
 							</v-col>
 						</v-row>
 					</div>
+					<div >
+						<v-btn class="btn-add-quiz" variant="tonal" @click="endCountDown">
+								Nộp bài
+								<v-icon end icon="mdi mdi-coffee-maker-check" ></v-icon>
+						</v-btn>
+					</div>
                 </div>
+				
 				<!-- FOOTER -->
                 <v-row class="exam-footer">
                     <!-- footer -->
@@ -134,7 +141,7 @@ function endCountDown(e){
 </script>
 <style lang="scss" scoped>
 .exam-body{
-	height: calc(100vh - 150px);
+	max-height: calc(100vh - 250px);
 	overflow: auto;
 }
 </style>
