@@ -6,17 +6,17 @@
             </v-row>
             <!-- TOOL BAR -->
             <tool-bar
-							@mergeQuiz="mergeQuiz"
-						></tool-bar>
-						<!-- Danh sách đề trộn -->
-						<grid
-						v-if="datasMerge.length > 0"
-						:headers="headerMerge"
-						:serverItems="datasMerge"
-						@clickRow="handleRowClick"
-						></grid>
+				@mergeQuiz="mergeQuiz"
+				></tool-bar>
+				<!-- Danh sách đề trộn -->
+				<grid
+				v-if="datasMerge.length > 0"
+				:headers="headerMerge"
+				:serverItems="datasMerge"
+				@clickRow="handleRowClick"
+				></grid>
 
-						<hr style="margin-bottom: 32px;">
+				<hr style="margin-bottom: 32px;">
             <!-- Exam Area -->
             <div class="exam-box">
 								<!-- HEADER -->

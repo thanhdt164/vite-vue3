@@ -17,7 +17,7 @@ import Register from '../views/Register.vue'
 import CreateExam from '../views/CreateExam.vue'
 import AddUserBLock from '../views/AddUserBLock.vue'
 import Template from '@/components/Template/Template.vue'
-
+import DoTest from "../views/DoTest.vue"
 
 // 2. Define some routes
 // Each route should map to a component.
@@ -38,6 +38,7 @@ const routes = [
     { path: '/template', name: "template", component: Template },
     { path: '/create-exam', name: "create-exam", component: CreateExam },
     { path: '/user-block', name: "user-block", component: AddUserBLock },
+    { path: '/do-test', name: "do-test", component: DoTest },
     // { path: '/nav', component: TNav },
     // { path: '/footer', component: TFooter },
     // {

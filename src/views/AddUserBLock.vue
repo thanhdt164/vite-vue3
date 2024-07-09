@@ -87,7 +87,7 @@ async function  addUserBlock(){
     }
     var res = await userAPI.createUserBlock(request);
     if (res && res.data.success){
-        $toast.success("Thêm thành công ")
+        $toast.success("Thêm thành công")
         blockID.value = 0
         lstUserID.value = []
     }
