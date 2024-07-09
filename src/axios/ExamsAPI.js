@@ -23,5 +23,13 @@ class ExamsAPI extends BaseAPI{
         let url = this.url('get-all')
         return baseCRUD.get(url);
     }
+    getExamDoing(examCode){
+        let url = this.url(`/current-exam?code=${examCode}`)
+        return baseCRUD.get(url);
+    }
+    getMarkTest(data){
+        let url = this.url(`/mark-test`)
+        return baseCRUD.post(url, data);
+    }
 }
 export default ExamsAPI;
