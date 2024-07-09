@@ -2,34 +2,24 @@
   <div class="grid-box">
     <v-card-title class="d-flex align-center">
       <v-spacer></v-spacer>
-      <v-spacer></v-spacer>
-      <!-- <v-text-field 
-        v-model="calories" 
-        placeholder="Minimum calories" 
-        density="compact"
-        label="Search"
-        prepend-inner-icon="mdi-magnify"
-        variant="solo-filled"
-        flat
-        hide-details 
-        single-line
-        type="number"
-      ></v-text-field> -->
-      <v-text-field
-        class="search-bar"
-        v-model="name"
-        placeholder="Search name..."
-        density="compact"
-        label="Search"
-        prepend-inner-icon="mdi-magnify"
-        variant="solo-filled"
-        flat
-        hide-details
-        single-line
-        width="200px"
-      ></v-text-field>
-      
-      <v-btn variant="tonal" @click="addItem">
+      <v-responsive
+        class="mx-auto"
+        max-width="400"
+      >
+        <v-text-field
+          class="search-bar"
+          v-model="name"
+          placeholder="Search name..."
+          density="compact"
+          label="Search"
+          prepend-inner-icon="mdi-magnify"
+          variant="solo-filled"
+          flat
+          hide-details
+          single-line
+        ></v-text-field>
+      </v-responsive>
+      <v-btn variant="tonal" @click="addItem" class="btn-add">
         Thêm mới
         <v-icon end icon="mdi-plus-box" ></v-icon>
       </v-btn>
@@ -42,32 +32,15 @@
 
     :items-per-page="itemsPerPage" 
     :search="search" 
-    :headers="headers"  
+    :headers="headersX"  
     :items-length="totalItems" 
     :items="serverItems" 
     :loading="loading" 
     item-value="name" 
     multi-sort
-    @update:options="loadItems">
+    @update:options="loadItems"
+    @click:row="handleRowClick">
       <template v-slot:top>
-        <!-- <v-dialog v-model="dialog" max-width="500px">
-          <v-card>
-            <v-card-title class="text-h5">
-              Are you sure you want to delete this item?
-            </v-card-title>
-            <v-card-actions>
-              <v-spacer></v-spacer>
-              <v-btn color="blue-darken-1" variant="text" @click="closeDelete">Cancel</v-btn>
-              <v-btn
-                color="blue-darken-1"
-                variant="text"
-                @click="deleteItemConfirm"
-                >OK
-              </v-btn>
-              <v-spacer></v-spacer>
-            </v-card-actions>
-          </v-card>
-        </v-dialog> -->
       </template>
       <template v-slot:thead>
       </template>
@@ -76,17 +49,13 @@
       <template v-slot:item.actions="{ item }">
         <v-icon
           class="me-2"
-          size="small"
           @click="editItem(item)"
-        >
-          mdi-pencil
-        </v-icon>
+          icon="mdi-pencil"
+        ></v-icon>
         <v-icon
-          size="small"
           @click="deleteItem(item)"
-        >
-          mdi-delete
-        </v-icon>
+          icon="mdi-delete"
+        ></v-icon>
       </template>
       <template v-slot:no-data>
         Dữ liệu trống
@@ -262,7 +231,7 @@ export default {
     sortBy: [],
 
     itemSelected: [],
-    headers: [
+    headersX: [
       {
         title: 'Dessert (100g serving)',
         align: 'start',
@@ -290,6 +259,19 @@ export default {
     currentItem: null,
 
   }),
+  props:{
+    api: {
+      type: Function,
+      default: null
+    },
+    headers:{
+      type: Array,
+      default: null
+    }
+  },
+  created(){
+    this.init();
+  },
   watch: {
     name () {
       this.search = String(Date.now())
@@ -299,16 +281,41 @@ export default {
     },
   },
   methods: {
+    init(){
+      this.headersX = this.headers ?? this.headersX;
+    },
     loadItems ({ page, itemsPerPage, sortBy }) {
       this.page = page
       this.itemsPerPage = itemsPerPage
       this.sortBy = sortBy
       this.loading = true
-      FakeAPI.fetch({ page, itemsPerPage, sortBy, search: { name: this.name, calories: this.calories } }).then(({ items, total }) => {
-        this.serverItems = items
-        this.totalItems = total
-        this.loading = false
-      })
+      if(this.api != null){
+      // Call API
+        this.api.paging({
+          PageIndex: page,
+          PageSize: 10,
+          ValueWhere: ""
+        }).then(res => {
+          this.serverItems = res.data.data.pageData
+          this.totalItems = res.data.data.pageSize
+        }).catch(err => {
+
+        }).finally(() => {
+          this.loading = false
+        })
+      }else{
+      // Default
+        FakeAPI.fetch({ page, itemsPerPage, sortBy, search: { name: this.name, calories: this.calories } })
+        .then(({ items, total }) => {
+          this.serverItems = items
+          this.totalItems = total
+          this.loading = false
+        })
+      }
+      
+    },
+    handleRowClick(evt,e){
+      this.$emit("clickRow",e.item)
     },
     addItem(){
       this.dialogEdit = true
@@ -394,21 +401,25 @@ export default {
 </script>
 
 <style lang="scss" scoped>
-.grid-box{
-  height: 100%;
-  padding: 0 0 0 24px;
-  .grid-table{
-    height: calc(100% - 56px);
-    >thead{
-      position: sticky;
-      top: 0;
-      background: white;
-    }
-  }
+.btn-add{
+  margin-left: 8px;
 }
 </style>
 
 <style lang="scss">
+.grid-box{
+  height: 100%;
+  // padding: 0 0 0 24px;
+  .grid-table{
+    height: calc(100% - 56px);
+    .v-data-table__thead{
+      position: sticky;
+      top: 0;
+      background: white;
+      z-index: 10;
+    }
+  }
+}
 .search-bar{
   .v-field__input {
     padding: 0 8px !important;

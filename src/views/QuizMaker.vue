@@ -34,30 +34,30 @@
                             <v-label>ĐÁP ÁN:</v-label>
                             <div class="quill-custom">
                                 <div v-for="(item, id) in [1,2,3,4]" :key="id" class="quiz-item">
-																		<!-- {{ ["A.", "B.", "C.", "D."][id] }} -->
+                                    <!-- {{ ["A.", "B.", "C.", "D."][id] }} -->
                                     <v-checkbox 
-																			class="custom-checkbox" 
-																			v-model="quiz.answers[id].isTrue" 
-																			:label='["A.", "B.", "C.", "D."][id]'
-																		></v-checkbox>
-																		<QuillEditor								
-																				theme="snow" :toolbar="toolbarOptionsQuiz" 
-																				v-model:content="quiz.answers[id].text"
-																				contentType="html"
-																		/>
+                                      class="custom-checkbox" 
+                                      v-model="quiz.answers[id].isTrue" 
+                                      :label='["A.", "B.", "C.", "D."][id]'
+                                    ></v-checkbox>
+                                    <QuillEditor                
+                                        theme="snow" :toolbar="toolbarOptionsQuiz" 
+                                        v-model:content="quiz.answers[id].text"
+                                        contentType="html"
+                                    />
                                 </div>
                             </div>
                         </div>
-												<div class="foot-answer" v-if="index == quizs.length - 1">
-													<v-btn class="btn-add-quiz" variant="tonal" @click="addQuiz">
-															Thêm câu hỏi
-															<v-icon end icon="mdi-plus-box" ></v-icon>
-													</v-btn>
-													<v-btn class="btn-save-quiz" variant="tonal" @click="saveQuiz">
-															Lưu đề thi
-															<v-icon end icon="mdi-content-save-plus" ></v-icon>
-													</v-btn>
-												</div>
+                        <div class="foot-answer" v-if="index == quizs.length - 1">
+                          <v-btn class="btn-add-quiz" variant="tonal" @click="addQuiz">
+                              Thêm câu hỏi
+                              <v-icon end icon="mdi-plus-box" ></v-icon>
+                          </v-btn>
+                          <v-btn class="btn-save-quiz" variant="tonal" @click="saveQuiz">
+                              Lưu đề thi
+                              <v-icon end icon="mdi-content-save-plus" ></v-icon>
+                          </v-btn>
+                        </div>
                     </div>
                 </div>
             </div>
@@ -80,42 +80,42 @@ const quizs = ref([
         answers: [
             {
                 text: "<p>Lực đẩy của lò xo dưới yên xe đạp<p/>",
-								isTrue: true
+                isTrue: true
             },
             {
-								text: "<p>Trọng lực của một quả nặng<p/>",
-								isTrue: false
+                text: "<p>Trọng lực của một quả nặng<p/>",
+                isTrue: false
             },
             {
-								text: "<p>Lực hút của nam châm tác dụng lên miếng sắt<p/>",
-								isTrue: false
+                text: "<p>Lực hút của nam châm tác dụng lên miếng sắt<p/>",
+                isTrue: false
             },
             {
-								text: "<p>Lực kéo của hai đôi kéo co<p/>",
-								isTrue: false
+                text: "<p>Lực kéo của hai đôi kéo co<p/>",
+                isTrue: false
             }
-				]
+        ]
     },
     {
         question: "<p>Khi có một lực tác động lên vật thì vận tốc của vật sẽ như thế nào?</p>",
         answers: [
             {
-								text: "<p>Vận tốc không thay đổi<p/>",
-								isTrue: false
+                text: "<p>Vận tốc không thay đổi<p/>",
+                isTrue: false
             },
             {
-								text: "<p>Vận tốc giảm dần<p/>",
-								isTrue: false
+                text: "<p>Vận tốc giảm dần<p/>",
+                isTrue: false
             },
             {
-								text: "<p>Vận tốc có thể tăng có thể giảm<p/>",
-								isTrue: true
+                text: "<p>Vận tốc có thể tăng có thể giảm<p/>",
+                isTrue: true
             },
             {
-								text: "<p>Vận tốc tăng dần<p/>",
-								isTrue: false
+                text: "<p>Vận tốc tăng dần<p/>",
+                isTrue: false
             }
-				]
+        ]
     }
 ])
 
@@ -175,45 +175,45 @@ let examModel = {
   ]
 }
 async function saveQuiz() {
-	let param = {
-		exam: examModel.exam,
-		questionAnswers: []
-	}
-	quizs.value.forEach((quiz, id) => {
-		let question = {}
-		question.questionSortOrder = id + 1
-		question.image = "image" // tạm
-		question.questionContent = quiz.question
+  let param = {
+    exam: examModel.exam,
+    questionAnswers: []
+  }
+  quizs.value.forEach((quiz, id) => {
+    let question = {}
+    question.questionSortOrder = id + 1
+    question.image = "image" // tạm
+    question.questionContent = quiz.question
 
-		let	answers = []
-		quiz.answers.forEach((answer, idd) => {
-			answers.push({
-				answerSortOrder: idd + 1,
-				answerContent: answer.text,
-				isTrue: answer.isTrue,
-			})
-		})
-		question.answers = answers;
-		param.questionAnswers.push(question)
-	});
-	var res = await ApiService.InsertExam(param);
-	if(res.data.success){
-		$toast.success('Lưu đề thi thành công!')
-	}else{
-		$toast.error('Lưu đề thi thất bại!')
-	}
+    let  answers = []
+    quiz.answers.forEach((answer, idd) => {
+      answers.push({
+        answerSortOrder: idd + 1,
+        answerContent: answer.text,
+        isTrue: answer.isTrue,
+      })
+    })
+    question.answers = answers;
+    param.questionAnswers.push(question)
+  });
+  var res = await ApiService.InsertExam(param);
+  if(res.data.success){
+    $toast.success('Lưu đề thi thành công!')
+  }else{
+    $toast.error('Lưu đề thi thất bại!')
+  }
 }
 
 function addQuiz(){
-	quizs.value.push({
-		question: null,
-		answers: [
-			{ text: "", isTrue: false },
-			{ text: "", isTrue: false },
-			{ text: "", isTrue: false },
-			{ text: "", isTrue: false }
-		]
-	})
+  quizs.value.push({
+    question: null,
+    answers: [
+      { text: "", isTrue: false },
+      { text: "", isTrue: false },
+      { text: "", isTrue: false },
+      { text: "", isTrue: false }
+    ]
+  })
 }
 
 
@@ -231,41 +231,41 @@ function addQuiz(){
     flex-direction: row-reverse;
 }
 .item-quiz{
-	padding: 8px 0px;
-	&:hover{
-		background-color: aliceblue;
-		border-radius: 4px;
-	}
-	margin-bottom: 48px;
-	.question{
-		margin-bottom: 16px;		
-	}
-	.answer{
-		margin-bottom: 16px;
-	}
-	.foot-answer{
-		display: flex;
+  padding: 8px 0px;
+  &:hover{
+    background-color: aliceblue;
+    border-radius: 4px;
+  }
+  margin-bottom: 48px;
+  .question{
+    margin-bottom: 16px;    
+  }
+  .answer{
+    margin-bottom: 16px;
+  }
+  .foot-answer{
+    display: flex;
     flex-direction: row-reverse;
-		.btn-add-quiz, .btn-save-quiz{
-			margin-right: 8px;
-		}
-	}
+    .btn-add-quiz, .btn-save-quiz{
+      margin-right: 8px;
+    }
+  }
 }
 
 .quill-custom{
-	padding-left: 32px;
+  padding-left: 32px;
 }
 
 </style>
 
 <style lang="scss">
 .quiz-item{
-	.v-input__control{
-		height: 35px;
-		align-items: center;
-	}
-	.v-input__details{
-		display: none !important;
-	}
+  .v-input__control{
+    height: 35px;
+    align-items: center;
+  }
+  .v-input__details{
+    display: none !important;
+  }
 }
 </style>

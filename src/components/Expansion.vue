@@ -50,7 +50,7 @@
             hide-details
           ></v-checkbox>
           <div class="answer">
-            <QuillEditor	
+            <QuillEditor  
               theme="snow" 
               :toolbar="toolbarOptionsQuiz" 
               v-model:content="quiz.answers[id].text"
@@ -127,21 +127,21 @@ props:{
         answers: [
             {
                 text: "<p>Lực đẩy của lò xo dưới yên xe đạp<p/>",
-								isTrue: true
+                isTrue: true
             },
             {
-								text: "<p>Trọng lực của một quả nặng<p/>",
-								isTrue: false
+                text: "<p>Trọng lực của một quả nặng<p/>",
+                isTrue: false
             },
             {
-								text: "<p>Lực hút của nam châm tác dụng lên miếng sắt<p/>",
-								isTrue: false
+                text: "<p>Lực hút của nam châm tác dụng lên miếng sắt<p/>",
+                isTrue: false
             },
             {
-								text: "<p>Lực kéo của hai đôi kéo co<p/>",
-								isTrue: false
+                text: "<p>Lực kéo của hai đôi kéo co<p/>",
+                isTrue: false
             }
-				]
+        ]
     }
   },
 
