@@ -7,20 +7,20 @@
         <v-label>Thông tin chung:</v-label>
         <v-row style="width: 70%;">
           <v-col style="margin-right: 16px;">
-            <Card
+            <CardField
               title="Phòng GDĐT"
-            ></Card>
+            ></CardField>
           </v-col>
           <v-col style="margin-right: 16px;">
-            <Card
+            <CardField
               title="Trường"
               :text.sync="school"
-            ></Card>
+            ></CardField>
           </v-col>
           <v-col>
-            <Card
+            <CardField
               title="Tên đề kiếm tra"
-            ></Card>
+            ></CardField>
           </v-col>  
         </v-row>
         <!-- Thông tin khác -->
@@ -90,7 +90,7 @@
 /* IMPORT */
 import Combobox from '@/components/Combobox.vue'
 import BaseArea from '@/components/BaseArea.vue'
-import Card from '@/components/Card.vue'
+import CardField from '@/components/CardField.vue'
 import Expansion from '@/components/Expansion.vue'
 import TextField from '@/components/TextField.vue'
 import ApiService from '../axios/axios';
@@ -100,7 +100,7 @@ export default{
   name: "",
   components:{
     BaseArea,
-    Card,
+    CardField,
     Expansion,
     Combobox,
     TextField
@@ -259,7 +259,7 @@ export default{
         question.image = "image" // tạm
         question.questionContent = quiz.question
 
-        let	answers = []
+        let  answers = []
         quiz.answers.forEach((answer, idd) => {
           answers.push({
             answerSortOrder: idd + 1,
@@ -295,16 +295,16 @@ export default{
     padding: 16px;
   }
   .foot-quiz-box{
-		display: flex;
+    display: flex;
     flex-direction: row-reverse;
-		.btn-add-quiz{
+    .btn-add-quiz{
       margin-right: 8px;
     }
     .btn-save-quiz{
-			// margin-right: 8px;
-		}
+      // margin-right: 8px;
+    }
     
-	}
+  }
 }
 </style>
 <style lang="scss">

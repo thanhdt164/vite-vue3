@@ -10,12 +10,13 @@
             v-model="email"
             :readonly="loading"
             :rules="[required]"
-            class="mb-2"
+            class="login-field mb-2"
             clearable
             label="Tài khoản"
           ></v-text-field>
   
           <v-text-field
+            class="login-field"
             v-model="password"
             :readonly="loading"
             :rules="[required]"
@@ -80,7 +81,23 @@ export default {
   },
 }
 </script>
-<style  scoped>
+<style lang="scss">
+.login-field{
+  .v-input__control{
+    /* width: fit-content; */
+    height: 40px;
+  }
+  .v-field__field{
+    height: 40px;
+    .v-field__input{
+      height: 40px;
+      min-height: auto;
+    }
+    
+  }
+}
+</style>
+<style lang="scss" scoped>
 .title-main{
   font-size: 24px;
   font-weight: bold;

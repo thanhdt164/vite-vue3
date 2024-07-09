@@ -3,7 +3,7 @@ import {baseCRUD} from "@/axios/BaseConfig";
 
 class ExamsAPI extends BaseAPI{
     constructor(name = "Exams"){
-        super();
+        super(name);
         this.controller = name;
     }
     // Phương thức riêng
@@ -32,4 +32,4 @@ class ExamsAPI extends BaseAPI{
         return baseCRUD.post(url, data);
     }
 }
-export default ExamsAPI;
+export default new ExamsAPI();

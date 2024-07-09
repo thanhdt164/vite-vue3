@@ -1,6 +1,7 @@
 <!-- TEMPLATE -->
 <template>
   <v-card
+    class="field-card"
     :width="width"
     :height="height"
     :title="title"
@@ -22,7 +23,7 @@
 import TextField from '@/components/TextField.vue'
 /* EXPORT */
 export default{
-  name: "Card",
+  name: "CardField",
   components:{
     TextField
   },
@@ -97,7 +98,12 @@ export default{
 </script>
 <style scoped lang="scss">
 
+
 </style>
 <style lang="scss">
-
+.field-card{
+  .v-card-item{
+    padding: 0;
+  }
+}
 </style>

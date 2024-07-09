@@ -11,7 +11,7 @@ import 'vue-toast-notification/dist/theme-bootstrap.css';
 
 // import './style.css'
 import './css/scollbar.css'
-import './css/common.css'
+import './css/common.scss'
 // Quill
 import '@vueup/vue-quill/dist/vue-quill.snow.css';
 import { QuillEditor } from '@vueup/vue-quill'

@@ -1,0 +1,62 @@
+.w-full{
+  width: 100% !important
+}
+.h-full{
+  height: 100% !important;
+}
+.p-0{
+  padding: 0 !important;
+}
+.m-0{
+  margin: 0 !important;
+}
+
+.v-selection-control{
+  min-height: unset !important;
+  height: 40px;
+}
+.v-input,
+.v-field,
+.v-input__control,
+.v-field__overlay {
+  &:focus-visible {
+    outline: none;
+  }
+}
+.v-input{
+  /* line-height: 40px; */
+  /* min-height: 40px; */
+}
+.v-field{
+  font-size: 14px;
+}
+.v-field__input{
+  padding-bottom: 0px;
+}
+.v-input--density-default{
+  --v-input-control-height: 36px;
+  --v-input-padding-top: 0px;
+  --v-input-padding-bottom: 0px;
+  --v-field-padding-bottom: 0px;
+}
+/* .v-input{
+  height: 40px;
+  width: fit-content;
+} */
+.v-input__control{
+  /* width: fit-content; */
+  height: 36px;
+}
+.v-field__field{
+  height: 36px;
+  .v-field__input{
+    height: 36px;
+    min-height: auto;
+  }
+}
+.v-input__details{
+  padding: 0;
+  height: 17px;
+  min-height: auto;
+  padding-inline: 0 !important;
+}
