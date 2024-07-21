@@ -162,8 +162,10 @@ export default{
     examModel: {
       "exam": {
         //"examTestID": 0,
-        "examTestCode": "MD001",
-        "isOrigin": true
+        "examTestCode": "",
+        "isOrigin": true,
+        "subject": [],
+        "time": []
       },
       "questionAnswers": [
         {
@@ -245,8 +247,14 @@ export default{
      * Lưu đề thi
      */
     saveQuiz(){
+      let exam = {
+        "examTestCode": this.examTestCode,
+        "isOrigin": true,
+        "subject": this.subject.Value,
+        "time": this.time.Value
+      }
       let param = {
-        exam: this.examModel.exam,
+        exam: exam,
         questionAnswers: []
       }
       // Thông tin chung
@@ -257,13 +265,13 @@ export default{
         let question = {}
         question.questionSortOrder = id + 1
         question.image = "image" // tạm
-        question.questionContent = quiz.question
+        question.questionContent = this.removeEmptyTags(quiz.question)
 
-        let  answers = []
+        let answers = []
         quiz.answers.forEach((answer, idd) => {
           answers.push({
             answerSortOrder: idd + 1,
-            answerContent: answer.text,
+            answerContent: this.removeEmptyTags(answer.text),
             isTrue: answer.isTrue,
           })
         })
@@ -279,6 +287,15 @@ export default{
         }
       });
       
+    },
+    /**
+     * Loại bỏ các thẻ trống
+     * @param {*} htmlString 
+     */
+    removeEmptyTags(htmlString) {
+      if(htmlString){
+        return htmlString.replace('<br>', '').replace(/<(\w+)(\s*?)><\/\1>/g, '');
+      }
     }
   }
 }

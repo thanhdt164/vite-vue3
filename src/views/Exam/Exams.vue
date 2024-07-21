@@ -5,6 +5,7 @@
         :api="api"
         :headers="headers"
         @clickRow="clickRow"
+        :replacePagingGrid="pagingGrid"
       ></Grid>
     </template>
   </BaseArea>
@@ -25,7 +26,8 @@ export default{
   },
   data: () => ({
     headers: [],
-    api: ExamsAPI
+    api: ExamsAPI,
+    pagingGrid: null
   }),
   props:{
     tmp_Prop: {
@@ -71,10 +73,22 @@ export default{
         sortable: true
       });
     })
+
+    // check role
+    let roleName = localStorage.getItem('roleName');
+    // if(roleName == "Student"){
+    //   this.pagingGrid = ({
+    //     PageIndex,
+    //     PageSize,
+    //     ValueWhere
+    //   }) => {
+    //     return ExamsAPI.ExamByUser("aa922027-24ef-45f6-9479-48fa24dcdf51");
+    //   }
+    // }
   },
   methods:{
-    clickRow(){
-      //this.$route.path
+    clickRow(data){
+      this.$router.push({path:"/exam-detail",query:{id:data.examTestCode}});
     }
   }
 }

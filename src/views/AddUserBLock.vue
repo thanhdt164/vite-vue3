@@ -57,9 +57,8 @@ import  {ref} from 'vue'
 const lstStudent = ref([])
 const blockAPI = new BlockAPI();
 const lstBlock = ref([])
-const userAPI = new UserAPI();
 const getAllUser = async ()=>{
-    var res = await userAPI.getAll();
+    var res = await UserAPI.getAll();
     if (res && res.data.success){
         lstStudent.value = res.data.data
     }
@@ -85,7 +84,7 @@ async function  addUserBlock(){
         LstUser : lstUserID.value,
         BlockID :blockID.value     
     }
-    var res = await userAPI.createUserBlock(request);
+    var res = await UserAPI.createUserBlock(request);
     if (res && res.data.success){
         $toast.success("Thêm thành công")
         blockID.value = 0

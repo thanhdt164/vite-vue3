@@ -17,7 +17,7 @@ import Register from '../views/Register.vue'
 import CreateExam from '../views/CreateExam.vue'
 import AddUserBLock from '../views/AddUserBLock.vue'
 import Template from '@/components/Template/Template.vue'
-import DoTest from "../views/DoTest.vue"
+import DoTest from "@/views/DoTest.vue"
 import Tab from '@/components/Template/Tab.vue'
 import TextFields from '@/components/Template/TextFields.vue'
 

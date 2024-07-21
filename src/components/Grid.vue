@@ -267,6 +267,10 @@ export default {
     headers:{
       type: Array,
       default: null
+    },
+    replacePagingGrid:{
+      type: Function,
+      default: null
     }
   },
   created(){
@@ -284,25 +288,26 @@ export default {
     init(){
       this.headersX = this.headers ?? this.headersX;
     },
-    loadItems ({ page, itemsPerPage, sortBy }) {
+    async loadItems ({ page, itemsPerPage, sortBy }) {
       this.page = page
       this.itemsPerPage = itemsPerPage
       this.sortBy = sortBy
       this.loading = true
       if(this.api != null){
       // Call API
-        this.api.paging({
-          PageIndex: page,
-          PageSize: 10,
-          ValueWhere: ""
-        }).then(res => {
-          this.serverItems = res.data.data.pageData
-          this.totalItems = res.data.data.pageSize
-        }).catch(err => {
+        await this.pagingGrid(page, 10, "")
+        // this.api.paging({
+        //   PageIndex: page,
+        //   PageSize: 10,
+        //   ValueWhere: ""
+        // }).then(res => {
+        //   this.serverItems = res.data.data.pageData
+        //   this.totalItems = res.data.data.pageSize
+        // }).catch(err => {
 
-        }).finally(() => {
-          this.loading = false
-        })
+        // }).finally(() => {
+        //   this.loading = false
+        // })
       }else{
       // Default
         FakeAPI.fetch({ page, itemsPerPage, sortBy, search: { name: this.name, calories: this.calories } })
@@ -312,7 +317,33 @@ export default {
           this.loading = false
         })
       }
-      
+    },
+    /**
+     * 
+     */
+    async pagingGrid(pageIndex, pageSize = 10, valueWhere = ""){
+      let pageData = [];
+      let total = 0;
+      if(this.replacePagingGrid){
+        let res = await this.replacePagingGrid({
+          PageIndex: pageIndex,
+          PageSize: pageSize,
+          ValueWhere: valueWhere
+        })
+        pageData = res.data.data
+        total = pageData.length
+      }else{
+        let res = await this.api.paging({
+          PageIndex: pageIndex,
+          PageSize: pageSize,
+          ValueWhere: valueWhere
+        })
+        pageData = res.data.data.pageData
+        total = res.data.data.pageSize
+      }
+      this.serverItems = pageData
+      this.totalItems = total
+      this.loading = false
     },
     handleRowClick(evt,e){
       this.$emit("clickRow",e.item)
