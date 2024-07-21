@@ -64,7 +64,6 @@ import BlockAPI from '../axios/BlockAPI.js';
 import ExamGeneralAPI from '../axios/ExamGeneralAPI.js';
 import { useToast } from 'vue-toast-notification';
 import  {ref} from 'vue'
-const examAPI = new ExamsAPI();
 const blockAPI = new BlockAPI();
 const examGeneralAPI = new ExamGeneralAPI();
 const nameExam = ref("")
@@ -74,7 +73,7 @@ const lstBlock = ref([])
 const $toast = useToast();
 
 const getAllTest = async ()=>{
-    var res = await examAPI.getAll();
+    var res = await ExamsAPI.getAll();
     if (res && res.data.success){
         lstTests.value = res.data.data
     }

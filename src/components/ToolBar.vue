@@ -24,15 +24,15 @@
 <script>
 export default{
     name: "ToolBar",
-	components:{
-		
-	},
+  components:{
+    
+  },
     data: () => ({
         titles: ['9A1', 'Vật lý', 'Kiểm tra cuối kì']
 
-	}),
-	props:{
-		tmp_Prop: {
+  }),
+  props:{
+    tmp_Prop: {
             type: [Number, Array, Object, String],
             default: 100
         },
@@ -40,9 +40,9 @@ export default{
             type: String,
             default: ""
         }
-	},
-	watch:{
-		tmp_obj: {
+  },
+  watch:{
+    tmp_obj: {
             handler(newVal, oldVal) {
                 
             },
@@ -53,13 +53,13 @@ export default{
             //callback to trigger only once when the source changes
             once: true, 
         }
-	},
-	computed: {
+  },
+  computed: {
 
-	},
-	created: () => {
+  },
+  created: () => {
 
-	},
+  },
     methods:{
         // mergeQuiz() {
         //     $emit("mergeQuiz");
@@ -69,17 +69,21 @@ export default{
  
 </script>
 <style scoped lang="scss">
-.toolbar-title{
-    text-align: left;
-    font-size: 16px;
-}
+
 
 </style>
 <style lang="scss">
 .c-toolbar{
-    font-size: 16px;;
+    padding: 0 16px;
+    font-size: 16px;
+    .toolbar-title{
+        text-align: left;
+    }
+    .v-breadcrumbs{
+        padding: 0;
+    }
     .v-toolbar__content{
-        height: 56px !important;
+        height: 44px !important;
     }
 }
 </style>

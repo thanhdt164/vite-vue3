@@ -3,7 +3,7 @@ import {baseCRUD} from "@/axios/BaseConfig";
 
 class ExamsAPI extends BaseAPI{
     constructor(name = "Exams"){
-        super();
+        super(name);
         this.controller = name;
     }
     // Phương thức riêng
@@ -31,5 +31,9 @@ class ExamsAPI extends BaseAPI{
         let url = this.url(`/mark-test`)
         return baseCRUD.post(url, data);
     }
+    ExamByUser(userID){
+        let url = this.url('/exams-by-user')
+        return baseCRUD.post(url, userID)
+    }
 }
-export default ExamsAPI;
+export default new ExamsAPI();

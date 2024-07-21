@@ -70,12 +70,12 @@
 </template>
 <script setup>
 import { ref } from 'vue';
-import ExamsAPI from '../axios/ExamsAPI.js';
+import ExamsAPI from '@/axios/ExamsAPI.js';
 import VueCountdown from '@chenfengyuan/vue-countdown';
-const examAPI = new ExamsAPI();
+
 const quizs = ref([])
 const getDataExam = async (code) =>{
-	var res = await examAPI.getExamDoing(code);
+	var res = await ExamsAPI.getExamDoing(code);
 	quizs.value = res.data.data;
 	console.log(quizs.value);
 }
@@ -95,10 +95,9 @@ getDataExam("U2M280");
 async function endCountDown(){
 	var params = {
 		examCode:"U2M280",
-		userID:"aa922027-24ef-45f6-9479-48fa24dcdf51",
 		questionDetails:quizs.value
 	}
-	var res = await examAPI.getMarkTest(params);
+	var res = await ExamsAPI.getMarkTest(params);
 }
 </script>
 <style lang="scss" scoped>

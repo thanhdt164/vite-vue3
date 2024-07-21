@@ -1,6 +1,6 @@
 <!-- TEMPLATE -->
 <template>
-  <div class="box-area w-full">
+  <div class="box-area w-full h-full">
     <div class="top-area">
       <v-row class="title">
         {{titleX}}
@@ -47,51 +47,48 @@ export default{
   data: () => ({
     titleX: "",
     itemsBreadCrumbs: []
-	}),
-	props:{
+  }),
+  props:{
     title:{
       type: String,
       default: "Nhập liệu phân tích"
     }
-	},
-	watch:{
-		tmp_obj: {
+  },
+  watch:{
+    tmp_obj: {
       handler(newVal, oldVal) {
         
       },
-			//callback to fire on all nested mutations
+      //callback to fire on all nested mutations
       deep: true, 
-			// executed immediately by declaring
-			immediate: true, 
-			//callback to trigger only once when the source changes
-			once: true, 
+      // executed immediately by declaring
+      immediate: true, 
+      //callback to trigger only once when the source changes
+      once: true, 
     }
-	},
-	computed: {
-
-	},
-	created(){
+  },
+  computed: {
+    
+  },
+  created(){
     this.titleX = this.title;
-    let pathItems = this.$route.fullPath.split('/');
-    pathItems.forEach((path, id) => {
-      if(path){
-        this.itemsBreadCrumbs.push({
-          title: `${path}`,
-          // disabled: id == pathItems.length,
-          disabled: false,
-          href: this.$route.href
-        })
-      }else{
-        this.itemsBreadCrumbs.push({
-          title: `Home`,
-          disabled: true,
-        })
-      }
+    // let pathItems = this.$route.fullPath.split('/');
+    this.itemsBreadCrumbs.push({
+      title: `Home`,
+      disabled: true,
+    })
+    this.$route.matched.forEach((match, id) => {
+      this.itemsBreadCrumbs.push({
+        title: `${match.name}`,
+        // disabled: id == pathItems.length,
+        disabled: false,
+        href: match.path
+      })
     });
-	},
-	methods:{
+  },
+  methods:{
 
-	}
+  }
 }
 /* STYLE */
 </script>
@@ -113,10 +110,10 @@ export default{
   }
   .center-area{
     font-size: 14px;
-    height: calc(100% - 56px - 56px - 16px);
-    overflow-y: scroll;
-    // padding: 0 16px !important;
-    padding: 0 !important;
+    height: calc(100% - 56px - 56px);
+    overflow: scroll;
+    padding: 0 0 0 24px !important;
+    // padding: 0 !important;
   }
   .bot-area{
     // height: 56px;

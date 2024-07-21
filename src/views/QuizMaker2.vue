@@ -7,20 +7,20 @@
         <v-label>Thông tin chung:</v-label>
         <v-row style="width: 70%;">
           <v-col style="margin-right: 16px;">
-            <Card
+            <CardField
               title="Phòng GDĐT"
-            ></Card>
+            ></CardField>
           </v-col>
           <v-col style="margin-right: 16px;">
-            <Card
+            <CardField
               title="Trường"
               :text.sync="school"
-            ></Card>
+            ></CardField>
           </v-col>
           <v-col>
-            <Card
+            <CardField
               title="Tên đề kiếm tra"
-            ></Card>
+            ></CardField>
           </v-col>  
         </v-row>
         <!-- Thông tin khác -->
@@ -90,7 +90,7 @@
 /* IMPORT */
 import Combobox from '@/components/Combobox.vue'
 import BaseArea from '@/components/BaseArea.vue'
-import Card from '@/components/Card.vue'
+import CardField from '@/components/CardField.vue'
 import Expansion from '@/components/Expansion.vue'
 import TextField from '@/components/TextField.vue'
 import ApiService from '../axios/axios';
@@ -100,7 +100,7 @@ export default{
   name: "",
   components:{
     BaseArea,
-    Card,
+    CardField,
     Expansion,
     Combobox,
     TextField
@@ -162,8 +162,10 @@ export default{
     examModel: {
       "exam": {
         //"examTestID": 0,
-        "examTestCode": "MD001",
-        "isOrigin": true
+        "examTestCode": "",
+        "isOrigin": true,
+        "subject": [],
+        "time": []
       },
       "questionAnswers": [
         {
@@ -245,8 +247,14 @@ export default{
      * Lưu đề thi
      */
     saveQuiz(){
+      let exam = {
+        "examTestCode": this.examTestCode,
+        "isOrigin": true,
+        "subject": this.subject.Value,
+        "time": this.time.Value
+      }
       let param = {
-        exam: this.examModel.exam,
+        exam: exam,
         questionAnswers: []
       }
       // Thông tin chung
@@ -257,13 +265,13 @@ export default{
         let question = {}
         question.questionSortOrder = id + 1
         question.image = "image" // tạm
-        question.questionContent = quiz.question
+        question.questionContent = this.removeEmptyTags(quiz.question)
 
-        let	answers = []
+        let answers = []
         quiz.answers.forEach((answer, idd) => {
           answers.push({
             answerSortOrder: idd + 1,
-            answerContent: answer.text,
+            answerContent: this.removeEmptyTags(answer.text),
             isTrue: answer.isTrue,
           })
         })
@@ -279,6 +287,15 @@ export default{
         }
       });
       
+    },
+    /**
+     * Loại bỏ các thẻ trống
+     * @param {*} htmlString 
+     */
+    removeEmptyTags(htmlString) {
+      if(htmlString){
+        return htmlString.replace('<br>', '').replace(/<(\w+)(\s*?)><\/\1>/g, '');
+      }
     }
   }
 }
@@ -295,16 +312,16 @@ export default{
     padding: 16px;
   }
   .foot-quiz-box{
-		display: flex;
+    display: flex;
     flex-direction: row-reverse;
-		.btn-add-quiz{
+    .btn-add-quiz{
       margin-right: 8px;
     }
     .btn-save-quiz{
-			// margin-right: 8px;
-		}
+      // margin-right: 8px;
+    }
     
-	}
+  }
 }
 </style>
 <style lang="scss">
