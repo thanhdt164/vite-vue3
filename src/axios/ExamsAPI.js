@@ -31,5 +31,9 @@ class ExamsAPI extends BaseAPI{
         let url = this.url(`/mark-test`)
         return baseCRUD.post(url, data);
     }
+    ExamByUser(userID){
+        let url = this.url('/exams-by-user')
+        return baseCRUD.post(url, userID)
+    }
 }
 export default new ExamsAPI();

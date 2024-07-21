@@ -1,5 +1,8 @@
 <template>
     <v-sheet class="pa-12" rounded>
+      <div class="logo">
+        <img src="@/assets/thcs_nguyen_trai.jpg" alt="logo">
+      </div>
       <v-card class="mx-auto px-6 py-8" max-width="344">
         <div class="d-flex align-center justify-center mb-8 title-main ">PHÂN TÍCH GIÁO DỤC</div>
         <v-form
@@ -14,7 +17,7 @@
             clearable
             label="Tài khoản"
           ></v-text-field>
-  
+        
           <v-text-field
             class="login-field"
             v-model="password"
@@ -45,6 +48,7 @@
   </template>
 <script>
 import ApiService from '../axios/axios.js';
+import UserAPI from '@/axios/UserAPI.js';
 export default {
   data: () => ({
     form: false,
@@ -64,8 +68,8 @@ export default {
       }
       var res = await ApiService.login(param);
       if(res && res.status == 200){
-        localStorage.setItem('token',res.data.data.access_token)
         this.$toast.success("Đăng nhập thành công");
+        await this.initLogin(res.data);
         setTimeout(() => {
           this.$router.push("/exams");
         }, 1000);
@@ -78,6 +82,19 @@ export default {
     required (v) {
       return !!v || 'Không được để trống'
     },
+    async initLogin (res) {
+      localStorage.setItem('token',res.data.access_token)
+      // Call lấy dữ liệu userInfor, userOption
+      var res = UserAPI.InitLogin()
+      // localStorage.setItem('roleName', 'Student')
+      // localStorage.setItem('permissions', [{
+      //   Notification: ,
+      //   Profiles: ,
+      //   Exams: ,
+      //   Students: 
+      // }])
+      
+    }
   },
 }
 </script>
@@ -101,5 +118,15 @@ export default {
 .title-main{
   font-size: 24px;
   font-weight: bold;
+}
+.logo{
+  display: flex;
+  align-items: center;
+  justify-content: space-around;
+  height: 300px;
+  img{
+    height: 280px;
+    object-fit: contain;
+  }
 }
 </style>

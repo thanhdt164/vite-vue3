@@ -15,5 +15,9 @@ class UserAPI extends BaseAPI{
         let url = this.url('/users-block')
         return baseCRUD.post(url, data)
     }
+    InitLogin(){
+        let url = this.url('/init-login')
+        return baseCRUD.post(url)
+    }
 }
-export default UserAPI;
+export default new UserAPI();
