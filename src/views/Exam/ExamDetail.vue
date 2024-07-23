@@ -1,6 +1,7 @@
 <template>
   <BaseArea title="Bài kiểm tra">
     <template v-slot:center-area>
+      <Grid></Grid>
       <!-- Exam Area -->
       <div class="exam-box">
         <!-- HEADER -->

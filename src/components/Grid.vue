@@ -19,7 +19,7 @@
           single-line
         ></v-text-field>
       </v-responsive>
-      <v-btn variant="tonal" @click="addItem" class="btn-add">
+      <v-btn v-if="showbtnAdd" variant="tonal" @click="addItem" class="btn-add">
         Thêm mới
         <v-icon end icon="mdi-plus-box" ></v-icon>
       </v-btn>
@@ -261,7 +261,7 @@ export default {
   }),
   props:{
     api: {
-      type: Function,
+      type: Object,
       default: null
     },
     headers:{
@@ -271,6 +271,10 @@ export default {
     replacePagingGrid:{
       type: Function,
       default: null
+    },
+    showbtnAdd:{
+      type: Boolean,
+      default: false
     }
   },
   created(){
@@ -294,22 +298,10 @@ export default {
       this.sortBy = sortBy
       this.loading = true
       if(this.api != null){
-      // Call API
-        await this.pagingGrid(page, 10, "")
-        // this.api.paging({
-        //   PageIndex: page,
-        //   PageSize: 10,
-        //   ValueWhere: ""
-        // }).then(res => {
-        //   this.serverItems = res.data.data.pageData
-        //   this.totalItems = res.data.data.pageSize
-        // }).catch(err => {
-
-        // }).finally(() => {
-        //   this.loading = false
-        // })
+        // Call API
+        await this.pagingGrid(page, itemsPerPage, "")
       }else{
-      // Default
+        // Default
         FakeAPI.fetch({ page, itemsPerPage, sortBy, search: { name: this.name, calories: this.calories } })
         .then(({ items, total }) => {
           this.serverItems = items
@@ -319,7 +311,7 @@ export default {
       }
     },
     /**
-     * 
+     * paging chung các màn sử dụng grid
      */
     async pagingGrid(pageIndex, pageSize = 10, valueWhere = ""){
       let pageData = [];
@@ -341,9 +333,18 @@ export default {
         pageData = res.data.data.pageData
         total = res.data.data.pageSize
       }
+      this.convertPageData(pageData);
       this.serverItems = pageData
       this.totalItems = total
       this.loading = false
+    },
+    /**
+     * 
+     */
+    convertPageData(pageData){
+      pageData.forEach((el, id) => {
+        el["STT"] = id + 1 
+      });
     },
     handleRowClick(evt,e){
       this.$emit("clickRow",e.item)

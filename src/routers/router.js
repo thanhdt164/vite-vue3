@@ -27,18 +27,25 @@ import TextFields from '@/components/Template/TextFields.vue'
 // We'll talk about nested routes later.
 const routes = [
     { path: '/login', name: "login", component: Login },
+    { path: '/register', name: "register", component: Register },
     { path: '/menu', name: "menu", component: Menu },
     { path: '/notification', name: "notification", component: Notification },
     { path: '/profiles', name: "profiles", component: Profiles },
-    { path: '/exams', name: "exams", component: Exams },
-    { path: '/exam-detail', name: "examdetail", component: ExamsDetail },
+    // { 
+    //     path: '/exams', 
+    //     name: "exams",
+    //     title: "Bài kiểm tra", 
+    //     component: Exams,
+    //     children: [
+    //         { path: '/exam-detail', name: "exam-detail", title: "Chi tiết bài kiếm tra", component: ExamsDetail },
+    //     ]
+    // },
+    { path: '/exams', name: "exams", title: "Bài kiểm tra", component: Exams },
+    { path: '/exam-detail', name: "exam-detail", title: "Chi tiết bài kiếm tra", component: ExamsDetail },
     { path: '/students', name: "students", component: Students },
     { path: '/input-data-and-analysis', name: "input-data-and-analysis", component: InputDataAndAnalysis },
     { path: '/evaluate', name: "evaluate", component: Evaluate },
-    { path: '/login', name: "login", component: Login },
-    { path: '/register', name: "register", component: Register },
     { path: '/quiz-maker', name: "quiz-maker", component: QuizMaker2 },
-    
     { path: '/create-exam', name: "create-exam", component: CreateExam },
     { path: '/user-block', name: "user-block", component: AddUserBLock },
     { path: '/do-test', name: "do-test", component: DoTest },
@@ -46,7 +53,7 @@ const routes = [
     { 
         path: '/template', 
         name: "template", 
-        // component: Template,
+        component: Template,
         children: [
             { path: '/template/grid', name: 'grid', component: Template },
             { path: '/template/tab', name: 'tab', component: Tab },
