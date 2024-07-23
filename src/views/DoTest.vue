@@ -1,9 +1,8 @@
 <template>
+<BaseArea title="Làm bài kiểm tra">
+	<template v-slot:center-area>
     <v-container class="container">
         <v-sheet class="sheet light">
-            <v-row class="text-h3">
-               Làm bài kiểm tra
-            </v-row>
             <!-- Exam Area -->
             <div class="exam-box">
 				<!-- HEADER -->
@@ -67,11 +66,14 @@
             </div>
         </v-sheet>
     </v-container>
+	</template>
+</BaseArea>
 </template>
 <script setup>
 import { ref } from 'vue';
 import ExamsAPI from '@/axios/ExamsAPI.js';
 import VueCountdown from '@chenfengyuan/vue-countdown';
+import BaseArea from '@/components/BaseArea.vue'
 
 const quizs = ref([])
 const getDataExam = async (code) =>{
@@ -98,6 +100,10 @@ async function endCountDown(){
 		questionDetails:quizs.value
 	}
 	var res = await ExamsAPI.getMarkTest(params);
+	if(res.success){
+		// Chuyển hướng sang phân hệ bài kiếm tra
+		this.$router.push({path:"/exams"});
+	}
 }
 </script>
 <style lang="scss" scoped>

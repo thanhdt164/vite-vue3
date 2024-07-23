@@ -47,7 +47,10 @@
             <v-list-item v-show="checkrole('Menu')" @click="direct(1)" class="list-item" prepend-icon="mdi-puzzle" title="Danh mục" value="1"></v-list-item>
             <v-list-item v-show="checkrole('Notification')" @click="direct(2)" class="list-item" prepend-icon="mdi-bell-ring" title="Thông báo" value="2"></v-list-item>
             <v-list-item v-show="checkrole('Profiles')" @click="direct(3)" class="list-item" prepend-icon="mdi-account" title="Hồ sơ học sinh" value="3"></v-list-item>
-            <v-list-item v-show="checkrole('Exams')" @click="direct(4)" class="list-item" prepend-icon="mdi-clipboard-text" title="Bài kiểm tra" value="4"></v-list-item>
+            <v-list-item v-show="checkrole('Exams')" @click="direct(4)" class="list-item" prepend-icon="mdi-clipboard-text" 
+              :title="roleName == 'Student' ? 'Bài kiểm tra' : 'Danh sách đề thi'" 
+              value="4"
+            ></v-list-item>
             <v-list-item v-show="checkrole('Students')" @click="direct(5)" class="list-item" prepend-icon="mdi-text-box-check-outline" title="Kết quả học sinh" value="5"></v-list-item>
 
             <v-list-item v-show="checkrole('InputDataAndAnalysis')" @click="direct(6)" class="list-item" prepend-icon="mdi-poll" title="Nhập liệu phân tích" value="6"></v-list-item>
@@ -110,7 +113,13 @@ export default{
     loginOrRegister(){
       return this.$route.path == '/login' || this.$route.path == '/register'
     },
-    
+    /**
+     * Hiện tại đang có 2 role Student, Teacher
+     */
+    roleName(){
+      let roleName = localStorage.getItem('roleName');
+      return roleName;
+    }
   },
   created: () => {
 

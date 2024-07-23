@@ -1,53 +1,55 @@
 <template>
-     <v-container class="container-user-block">
-        <v-sheet class="sheet light">
-            <v-row class="text-h3 mb-8">
-                Phân khối cho học sinh
-            </v-row>
-            <v-row style="width: 50%;">
-                <v-col cols="3">
-                    <v-label>Khối:</v-label>
-                </v-col>
-                <v-col>
-                    <Combobox
-                        label="Khối"
-                        :item_source="lstBlock"
-                        item_key="blockID"
-                        @update:select="selectBlock"
-                        item_value="blockName"
-                    >
-                    </Combobox>
-                </v-col>
-            </v-row>
-            <v-row style="width: 50%;">
-                <v-col cols="3">
-                    <v-label>Chọn học sinh:</v-label>
-                </v-col>
-                <v-col>
-                    <Combobox
-                        label="Chọn học sinh"
-                        :item_source="lstStudent"
-                        item_key="userID"
-                        item_value="userName"
-                        :is_multiple="true"
-                        @update:select="selectStudent"
-                    >
-                    </Combobox>
-                </v-col>
-            </v-row>
-            <v-row style="width: 50%;">
-                <v-col cols="3" ></v-col>
-                <v-col cols="3" >
-                    <v-btn  variant="tonal" @click="addUserBlock">
-                        Thêm mới
-                        <v-icon end icon="mdi-plus-box" ></v-icon>
-                    </v-btn>
-                </v-col>
-            </v-row>
-        </v-sheet>
-     </v-container>
+<BaseArea title="Phân khối cho học sinh">
+    <template v-slot:center-area>
+        <v-container class="container-user-block">
+            <v-sheet class="sheet light">
+                <v-row style="width: 50%;">
+                    <v-col cols="3">
+                        <v-label>Khối:</v-label>
+                    </v-col>
+                    <v-col>
+                        <Combobox
+                            label="Khối"
+                            :item_source="lstBlock"
+                            item_key="blockID"
+                            @update:select="selectBlock"
+                            item_value="blockName"
+                        >
+                        </Combobox>
+                    </v-col>
+                </v-row>
+                <v-row style="width: 50%;">
+                    <v-col cols="3">
+                        <v-label>Chọn học sinh:</v-label>
+                    </v-col>
+                    <v-col>
+                        <Combobox
+                            label="Chọn học sinh"
+                            :item_source="lstStudent"
+                            item_key="userID"
+                            item_value="userName"
+                            :is_multiple="true"
+                            @update:select="selectStudent"
+                        >
+                        </Combobox>
+                    </v-col>
+                </v-row>
+                <v-row style="width: 50%;">
+                    <v-col cols="3" ></v-col>
+                    <v-col cols="3" >
+                        <v-btn  variant="tonal" @click="addUserBlock">
+                            Thêm mới
+                            <v-icon end icon="mdi-plus-box" ></v-icon>
+                        </v-btn>
+                    </v-col>
+                </v-row>
+            </v-sheet>
+        </v-container>
+    </template>
+</BaseArea>
 </template>
 <script setup>
+import BaseArea from '@/components/BaseArea.vue'
 import Combobox from '@/components/Combobox.vue'
 import { useToast } from 'vue-toast-notification';
 import UserAPI from '../axios/UserAPI.js';

@@ -86,7 +86,7 @@ export default {
       localStorage.setItem('token',res.data.access_token)
       // Call lấy dữ liệu userInfor, userOption
       var res = UserAPI.InitLogin()
-      // localStorage.setItem('roleName', 'Student')
+      localStorage.setItem('roleName', 'Student')
       // localStorage.setItem('permissions', [{
       //   Notification: ,
       //   Profiles: ,
@@ -125,7 +125,7 @@ export default {
   justify-content: space-around;
   height: 300px;
   img{
-    height: 280px;
+    height: 200px;
     object-fit: contain;
   }
 }

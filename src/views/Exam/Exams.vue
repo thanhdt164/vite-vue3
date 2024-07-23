@@ -49,7 +49,10 @@ export default{
     }
   },
   computed: {
-
+    roleName(){
+      let roleName = localStorage.getItem('roleName');
+      return roleName;
+    }
   },
   created(){
     let primaryHeader = [
@@ -75,20 +78,23 @@ export default{
     })
 
     // check role
-    let roleName = localStorage.getItem('roleName');
-    // if(roleName == "Student"){
-    //   this.pagingGrid = ({
-    //     PageIndex,
-    //     PageSize,
-    //     ValueWhere
-    //   }) => {
-    //     return ExamsAPI.ExamByUser("aa922027-24ef-45f6-9479-48fa24dcdf51");
-    //   }
-    // }
+    if(this.roleName == "Student"){
+      this.pagingGrid = ({
+        PageIndex,
+        PageSize,
+        ValueWhere
+      }) => {
+        return ExamsAPI.ExamByUser();
+      }
+    }
   },
   methods:{
     clickRow(data){
-      this.$router.push({path:"/exam-detail",query:{id:data.examTestCode}});
+      if(this.roleName == "Student"){
+        this.$router.push({path:"/do-test",query:{id:data.examTestCode}});
+      }else{
+        this.$router.push({path:"/exam-detail",query:{id:data.examTestCode}});
+      }
     }
   }
 }
