@@ -19,5 +19,13 @@ class UserAPI extends BaseAPI{
         let url = this.url('/init-login')
         return baseCRUD.post(url)
     }
+    getUserExamResult(){
+        let url = this.url('/lst-users-exam')
+        return baseCRUD.get(url)
+    }
+    async replacePagingGrid(pagingRequest) {
+        let url = this.url(`/paging`);
+        return baseCRUD.post(url, pagingRequest);
+    }
 }
 export default new UserAPI();

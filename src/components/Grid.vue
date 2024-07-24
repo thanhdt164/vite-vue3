@@ -269,8 +269,8 @@ export default {
       default: null
     },
     replacePagingGrid:{
-      type: Function,
-      default: null
+      type: Boolean,
+      default: false
     },
     showbtnAdd:{
       type: Boolean,
@@ -317,12 +317,12 @@ export default {
       let pageData = [];
       let total = 0;
       if(this.replacePagingGrid){
-        let res = await this.replacePagingGrid({
+        let res = await this.api.replacePagingGrid({
           PageIndex: pageIndex,
           PageSize: pageSize,
           ValueWhere: valueWhere
         })
-        pageData = res.data.data
+        pageData = res.data.data.pageData
         total = pageData.length
       }else{
         let res = await this.api.paging({

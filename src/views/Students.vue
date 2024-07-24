@@ -1,7 +1,12 @@
 <template>
   <BaseArea title="Kết quả học sinh">
     <template v-slot:center-area>
-      <Grid></Grid>
+      <Grid
+        :api="api"
+        :headers="headers"
+        :replacePagingGrid="true"
+      >
+      </Grid>
     </template>
   </BaseArea>
 </template>
@@ -11,6 +16,7 @@
 import BaseArea from '@/components/BaseArea.vue'
 import Expansion from '@/components/Expansion.vue'
 import Grid from '@/components/Grid.vue'
+import UserAPI from "@/axios/UserAPI.js"
 
 /* EXPORT */
 export default{
@@ -21,7 +27,8 @@ export default{
     Grid
   },
   data: () => ({
-
+    headers: [],
+    api: UserAPI
   }),
   props:{
     tmp_Prop: {
@@ -46,10 +53,29 @@ export default{
 
   },
   created(){
-
+    let primaryHeader = [
+      {key: "fullName", title: "Tên học sinh"},
+      {key: "point", title: "Điểm"},
+      {key: "examCode", title: "Mã đề"},
+    ]
+    this.headers = [{
+      key: "STT",
+      title: "STT",
+      align: 'start',
+      sortable: false,
+      width: "30"
+    }]
+    primaryHeader.forEach(el => {
+      this.headers.push({
+        key: el.key,
+        title: el.title,
+        align: 'end',
+        sortable: true
+      });
+    })
   },
   methods:{
-
+    
   }
 }
 /* STYLE */
