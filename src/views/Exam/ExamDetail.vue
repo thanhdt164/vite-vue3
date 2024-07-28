@@ -1,10 +1,78 @@
 <template>
   <BaseArea title="Bài kiểm tra">
+    <template v-slot:right-tool>
+      <v-btn class="btn-save-quiz" variant="tonal" @click="mergeQuiz">
+        Trộn đề
+        <v-icon end icon="mdi-content-save-plus" ></v-icon>
+      </v-btn>
+      <v-btn class="" variant="tonal" @click="viewOriginExam">
+        Xem đề gốc
+        <v-icon end icon="mdi-rotate-left" ></v-icon>
+      </v-btn>
+    </template>
     <template v-slot:center-area>
-      <Grid></Grid>
+      <Tab
+        :listTab="listTab"
+        tab="DetailExam"
+      >
+        <template v-slot:GridMergeExam>
+          <Grid
+            :api="api"
+            :headers="headersMerge"
+            :replacePagingGrid="pagingGridMerge"
+            :customConvertPageData="customConvertPageData"
+            @clickRow="clickRow"
+          ></Grid>
+        </template>
+        <template v-slot:DetailExam>
+          <div class="exam-box">
+          <!-- HEADER -->
+          <v-row class="exam-header">
+            <v-col :cols="4" class="left-header">
+              <div>Phòng GDĐT Sơn Dương</div>
+              <div>Trường THCS Văn Phú</div>
+            </v-col>
+            <v-col :cols="8" class="right-header">
+              <div class="exam-title">Đề kiểm tra đề xuất bồi dưỡng thường xuyên</div>
+              <div class="subject">Môn: Vật lý</div>
+              <div class="time">Thời gian: 50 phút (Không kể thời gian giao đề)</div>
+            </v-col>
+          </v-row>
+          <!-- BODY -->
+          <v-row class="exam-body">
+            <v-col :cols="12" class="item-quiz" v-for="(quiz, index) in quizs" :key="index">
+              <div class="question">
+                <div class="quiz-number">Câu {{index+1}}: </div>
+                <p class="quiz-content" v-html="quiz.questionContent"></p>
+              </div>
+              <div class="answer">
+                <div v-for="(item, id) in [1,2,3,4]" :key="id" class="answer-item">
+                  <div 
+                    :class="{'red': quiz.answers[id].isTrue}"
+                    class="answer-mark"
+                  >{{ ["A", "B", "C", "D"][id] }}.</div>
+                  <p class="answer-detail" v-html="quiz.answers[id].answerContent"></p>
+                </div>
+              </div>
+            </v-col>
+          </v-row>
+          <!-- FOOTER -->
+          <v-row class="exam-footer">
+          
+          </v-row>
+        </div>
+        </template>
+      </Tab>
+      <!-- <Grid
+        :api="api"
+        :headers="headersMerge"
+        :replacePagingGrid="pagingGridMerge"
+        :customConvertPageData="customConvertPageData"
+        @clickRow="clickRow"
+      ></Grid> -->
       <!-- Exam Area -->
-      <div class="exam-box">
-        <!-- HEADER -->
+      <!-- <div class="exam-box">
+        HEADER
         <v-row class="exam-header">
           <v-col :cols="4" class="left-header">
             <div>Phòng GDĐT Sơn Dương</div>
@@ -16,7 +84,7 @@
             <div class="time">Thời gian: 50 phút (Không kể thời gian giao đề)</div>
           </v-col>
         </v-row>
-        <!-- BODY -->
+        BODY
         <v-row class="exam-body">
           <v-col :cols="12" class="item-quiz" v-for="(quiz, index) in quizs" :key="index">
             <div class="question">
@@ -34,11 +102,11 @@
             </div>
           </v-col>
         </v-row>
-        <!-- FOOTER -->
+        FOOTER
         <v-row class="exam-footer">
         
         </v-row>
-      </div>
+      </div> -->
     </template>
   </BaseArea>
 </template>
@@ -49,6 +117,7 @@ import ApiService from '../../axios/axios.js';
 import ToolBar from '../../components/ToolBar.vue';
 import Grid from '../../components/Grid.vue'
 import {useToast} from 'vue-toast-notification';
+import Tab from "@/components/Template/Tab.vue"
 
 export default{
   data: () => ({
@@ -96,39 +165,58 @@ export default{
         ]
       }
     ],
-    headerMerge: [
-      {
-        title: 'ID đề thi', key: 'examTestID', align: 'left'
-      },
+
+    headersMerge: [],
+    pagingGridMerge: null,
+    customConvertPageData: null,
+    sourceHeadersMerge: [
+      // {
+      //   title: 'ID đề thi', key: 'examTestID', align: 'left'
+      // },
       {
         title: 'Mã đề thi', key: 'examTestCode', align: 'left'
       },
       {
-        title: 'Đề gốc', key: 'isOrgin', align: 'left'
+        title: 'Đề gốc', key: 'isOrigin', align: 'left', type: 'bool'
+      },
+      {
+        title: 'Thời gian', key: 'time', align: 'left'
       },
     ],
     toast: useToast(),
     datasMerge: [],
-    arrQuestionAnswers: []
+    arrQuestionAnswers: [],
+    api: ApiService,
+    originQuizs: [],
   }),
   components:{
     BaseArea,
     ToolBar,
-    Grid
+    Grid,
+    Tab
   },
   async created(){
+    this.initTab()
+    this.initMergeExam()
     //this.ExamsByID();
     //preview
-    var id = this.$route.query.id.split("/")[0];
-    var res = await ApiService.getExamByCode(id);
+    var code = this.$route.query.code;
+    var res = await ApiService.getExamByCode(code);
     if (res){
       this.quizs = res.data.data.questionAnswers
+      this.originQuizs = res.data.data.questionAnswers;
     }
 
     // lấy all đề merge
-    this.getAllMerge()
+    // this.getAllMerge()
   },
   methods:{
+    initTab(){
+      this.listTab = [
+        { Key: "DetailExam", Title: "Chi tiết đề thi" },
+        { Key: "GridMergeExam", Title: "Đề trộn" },
+      ]
+    },
     ExamsByID(){
       ApiService.ExamsByID().then(res => {
         this.quizs = res;
@@ -138,9 +226,54 @@ export default{
 
       }) 
     },
+    initMergeExam(){
+      this.headersMerge = [{
+        key: "STT",
+        title: "STT",
+        align: 'start',
+        sortable: false,
+        width: "30"
+      }]
+      this.sourceHeadersMerge.forEach(el => {
+        this.headersMerge.push({
+          key: el.key,
+          title: el.title,
+          align: 'end',
+          sortable: true,
+          type: el.type
+        });
+      })
+      this.pagingGridMerge = ({
+        PageIndex,
+        PageSize,
+        ValueWhere
+      }) => {
+        let id = this.$route.query.id;
+        return ApiService.getallShuffExams(id);
+      }
+      this.customConvertPageData = (pageData) => {
+        pageData.forEach(el => {
+          el.examTestID = el.exam.examTestID
+          el.examTestCode = el.exam.examTestCode
+          el.isOrigin = el.exam.isOrigin
+          el.time = el.exam.time
+        }) 
+      }
+    },
+    getAllMerge(){
+      let id = this.$route.query.id;
+      ApiService.getallShuffExams(id).then(res => {
+        this.datasMerge = res.data.data.map(x => x.exam);
+        this.arrQuestionAnswers = res.data.data.map(x =>x.questionAnswers);
+      }).catch(err => {
+        
+      }).finally(() => {
+
+      }) 
+    },
     mergeQuiz(){
       // call api merge
-      var code = this.$route.query.id.split("/")[0];
+      var code = this.$route.query.code;
       ApiService.shuffExams(code).then(res => {
         if(res.data.data){
           this.toast.success('Trộn đề thi thành công!')
@@ -154,17 +287,14 @@ export default{
 
       }) 
     },
-    getAllMerge(){
-      let id = this.$route.params.id;
-      ApiService.getallShuffExams(id).then(res => {
-        this.datasMerge = res.data.data.map(x => x.exam);
-        this.arrQuestionAnswers = res.data.data.map(x =>x.questionAnswers);
-      }).catch(err => {
-        
-      }).finally(() => {
-
-      }) 
+    clickRow(data){
+      this.quizs = data.questionAnswers
+      this.$mitt.$emit('changetab', 'DetailExam')
     },
+    viewOriginExam(){
+      this.quizs = this.originQuizs
+      this.$mitt.$emit('changetab', 'DetailExam')
+    }
   },
 }
   
@@ -189,6 +319,7 @@ export default{
   }
 }
 .exam-box{
+  width: 100%;
   padding-top: 32px;
 }
 .exam-body{
@@ -225,5 +356,8 @@ export default{
       }
     }
   }
+}
+.btn-save-quiz{
+  margin-right: 8px;
 }
 </style>

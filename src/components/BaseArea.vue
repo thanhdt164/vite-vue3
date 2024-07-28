@@ -13,11 +13,13 @@
                 {{ item.title }}
               </template>
             </v-breadcrumbs>
+            
           </template>
           <template v-slot:right-tool>
             <!-- <v-btn icon>
               <v-icon>mdi-magnify</v-icon>
             </v-btn> -->
+            <slot name="right-tool"></slot>
           </template>
         </ToolBar>
       </v-row>

@@ -237,6 +237,7 @@ export default {
         align: 'start',
         sortable: false,
         key: 'name',
+        type: 'bool|boolean'
       },
       { title: 'Calories', key: 'calories', align: 'end' },
       { title: 'Fat (g)', key: 'fat', align: 'end' },
@@ -257,7 +258,7 @@ export default {
     snackbar: false,
     currentItemIndex: -1,
     currentItem: null,
-
+    firstTimeConvert: true,
   }),
   props:{
     api: {
@@ -269,12 +270,16 @@ export default {
       default: null
     },
     replacePagingGrid:{
-      type: Boolean,
-      default: false
+      type: Function,
+      default: null
     },
     showbtnAdd:{
       type: Boolean,
       default: false
+    },
+    customConvertPageData: {
+      type: Function,
+      default: null
     }
   },
   created(){
@@ -316,35 +321,55 @@ export default {
     async pagingGrid(pageIndex, pageSize = 10, valueWhere = ""){
       let pageData = [];
       let total = 0;
+      let res = null;
       if(this.replacePagingGrid){
-        let res = await this.api.replacePagingGrid({
+        res = await this.replacePagingGrid({
           PageIndex: pageIndex,
           PageSize: pageSize,
           ValueWhere: valueWhere
         })
-        pageData = res.data.data.pageData
-        total = pageData.length
       }else{
-        let res = await this.api.paging({
+        res = await this.api.paging({
           PageIndex: pageIndex,
           PageSize: pageSize,
           ValueWhere: valueWhere
         })
-        pageData = res.data.data.pageData
-        total = res.data.data.pageSize
       }
+      pageData = res.data.data.pageData
+      total = res.data.data.pageSize
       this.convertPageData(pageData);
       this.serverItems = pageData
       this.totalItems = total
       this.loading = false
     },
     /**
-     * 
+     * Convert dữ liệu paging
      */
     convertPageData(pageData){
-      pageData.forEach((el, id) => {
-        el["STT"] = id + 1 
-      });
+      this.customConvertPageData && this.customConvertPageData(pageData)
+      if(this.firstTimeConvert){
+        this.firstTimeConvert = false;
+        pageData.forEach((el, id) => {
+          el["STT"] = id + 1
+          // Case headers data type
+          // Lần đầu tiên convert
+          this.headersX.forEach(header => {
+            let key = header.key
+            switch(header.type){
+              case 'bool':
+              case 'boolean':
+                if(el[key]){
+                  el[key] = 'Có'
+                }else{
+                  el[key] = 'Không'
+                }
+                break;
+              default:
+                break;
+            }
+          })   
+        });
+      } 
     },
     handleRowClick(evt,e){
       this.$emit("clickRow",e.item)
@@ -440,6 +465,7 @@ export default {
 
 <style lang="scss">
 .grid-box{
+  width: 100%;
   height: 100%;
   // padding: 0 0 0 24px;
   .grid-table{
