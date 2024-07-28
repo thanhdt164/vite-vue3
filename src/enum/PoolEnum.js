@@ -1,8 +1,20 @@
 const TimeEnum = {
-  Fifteen: '15 phút',
-  Fourty: '45 phút',
-  Ninety : '90 phút',
-  OneEighty: '180 phút'
+  Fifteen: {
+    Value: 15,
+    Text: '15 phút'
+  },
+  FourtyFive: {
+    Value: 45,
+    Text: '45 phút'
+  },
+  Ninety : {
+    Value: 90,
+    Text: '90 phút'
+  } ,
+  OneEighty: {
+    Value: 180,
+    Text: '180 phút'
+  }
 };
 
 // Mức độ nhận biết

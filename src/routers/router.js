@@ -53,7 +53,7 @@ const routes = [
     { 
         path: '/template', 
         name: "template", 
-        component: Template,
+        // component: Template,
         children: [
             { path: '/template/grid', name: 'grid', component: Template },
             { path: '/template/tab', name: 'tab', component: Tab },
@@ -105,6 +105,7 @@ function parseJwt (token) {
 }
 router.beforeEach((to, from, next) => {
     var token = parseJwt(localStorage.getItem('token'));
+    localStorage.setItem('roleName', token.RoleName)
     var currentTime = new Date().getTime();
     if(((!token || token.exp < currentTime/1000) && (to.path !== '/login' && to.path !== '/register'))){
         next('/login');

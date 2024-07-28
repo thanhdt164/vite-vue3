@@ -23,6 +23,13 @@ class UserAPI extends BaseAPI{
         let url = this.url('/lst-users-exam')
         return baseCRUD.get(url)
     }
+    /**
+     * Kết quả của từng học sing
+     */
+    resultByUser(){
+        let url = this.url('/result-by-user')
+        return baseCRUD.get(url)
+    }
     async replacePagingGrid(pagingRequest) {
         let url = this.url(`/paging`);
         return baseCRUD.post(url, pagingRequest);

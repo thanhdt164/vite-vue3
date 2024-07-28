@@ -4,7 +4,6 @@
       <Grid
         :api="api"
         :headers="headers"
-        :replacePagingGrid="true"
       >
       </Grid>
     </template>
@@ -50,7 +49,10 @@ export default{
     }
   },
   computed: {
-
+    roleName(){
+      let roleName = localStorage.getItem('roleName');
+      return roleName;
+    }
   },
   created(){
     let primaryHeader = [
@@ -73,6 +75,16 @@ export default{
         sortable: true
       });
     })
+
+    if(!this.roleName.includes("Teacher")){
+      this.pagingGrid = ({
+        PageIndex,
+        PageSize,
+        ValueWhere
+      }) => {
+        return UserAPI.ResultByUser();
+      }
+    }
   },
   methods:{
     

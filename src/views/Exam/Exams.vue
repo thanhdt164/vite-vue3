@@ -78,22 +78,26 @@ export default{
     })
 
     // check role
-    if(this.roleName == "Student"){
+    if(!this.roleName.includes("Teacher")){
       this.pagingGrid = ({
         PageIndex,
         PageSize,
         ValueWhere
       }) => {
-        return ExamsAPI.ExamByUser();
+        return ExamsAPI.ExamByUser({
+          PageIndex,
+          PageSize,
+          ValueWhere
+        });
       }
     }
   },
   methods:{
     clickRow(data){
-      if(this.roleName == "Student"){
+      if(!this.roleName.includes("Teacher")){
         this.$router.push({path:"/do-test",query:{id:data.examTestCode}});
       }else{
-        this.$router.push({path:"/exam-detail",query:{id:data.examTestCode}});
+        this.$router.push({path:"/exam-detail",query:{id:data.examTestID, code: data.examTestCode}});
       }
     }
   }

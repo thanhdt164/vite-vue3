@@ -1,6 +1,6 @@
 <!-- TEMPLATE -->
 <template>
-  <BaseArea title="Tạo đề kiểm tra">
+  <BaseArea title="Tạo đề kiểm tra">  
     <template v-slot:center-area>
       <v-sheet class="quiz-info">
         <!-- THÔNG TIN CHUNG -->
@@ -9,6 +9,7 @@
           <v-col style="margin-right: 16px;">
             <CardField
               title="Phòng GDĐT"
+              :text.sync="eduDepartment"
             ></CardField>
           </v-col>
           <v-col style="margin-right: 16px;">
@@ -20,6 +21,7 @@
           <v-col>
             <CardField
               title="Tên đề kiếm tra"
+              :text.sync="examTitle"
             ></CardField>
           </v-col>  
         </v-row>
@@ -106,10 +108,12 @@ export default{
     TextField
   },
   data: () => ({
-    examTestCode: "MD002",
+    examTestCode: "",
     subject: [],
     time: [],
+    eduDepartment: "Phòng GDĐT..",
     school: "Trường THCS..",
+    examTitle: "Đề kiểm tra..",
     quizs: [
         {
             knowledgeLevel: [{Key: "M1", Value: "Nhận biết"}],
@@ -225,7 +229,7 @@ export default{
     let timeSource = this.$enum.TimeEnum
     this.comboboxTimes = {
       label: "Thời gian",
-      source: Object.keys(timeSource).map(x => {return {Key: x, Value: timeSource[x]}})
+      source: Object.keys(timeSource).map(x => {return {Key: x, Value: timeSource[x].Text, NumberValue: timeSource[x].Value}})
     }
   },
   methods:{
@@ -251,7 +255,7 @@ export default{
         "examTestCode": this.examTestCode,
         "isOrigin": true,
         "subject": this.subject.Value,
-        "time": this.time.Value
+        "time": this.time.NumberValue
       }
       let param = {
         exam: exam,
@@ -264,7 +268,7 @@ export default{
       this.quizs.forEach((quiz, id) => {
         let question = {}
         question.questionSortOrder = id + 1
-        question.image = "image" // tạm
+        question.image = "image" 
         question.questionContent = this.removeEmptyTags(quiz.question)
 
         let answers = []
