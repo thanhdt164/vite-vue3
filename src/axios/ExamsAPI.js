@@ -35,5 +35,9 @@ class ExamsAPI extends BaseAPI{
         let url = this.url('/exams-by-user')
         return baseCRUD.post(url, pagingRequest)
     }
+    getResult(examCode){
+        let url = this.url(`/result-analys?code=${examCode}`)
+        return baseCRUD.get(url);
+    }
 }
 export default new ExamsAPI();
