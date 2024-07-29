@@ -20,7 +20,7 @@ import Template from '@/components/Template/Template.vue'
 import DoTest from "@/views/DoTest.vue"
 import Tab from '@/components/Template/Tab.vue'
 import TextFields from '@/components/Template/TextFields.vue'
-
+import AnalysisDetail from '../views/AnaLysisDetail.vue'
 
 // 2. Define some routes
 // Each route should map to a component.
@@ -49,6 +49,7 @@ const routes = [
     { path: '/create-exam', name: "create-exam", component: CreateExam },
     { path: '/user-block', name: "user-block", component: AddUserBLock },
     { path: '/do-test', name: "do-test", component: DoTest },
+    { path: '/analysis-detail', name: "analysis-detail", component: AnalysisDetail },
     // Template
     { 
         path: '/template', 
