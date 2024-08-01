@@ -19,7 +19,11 @@
 					</v-row>
 					<!-- BODY -->
 					<v-row>
-						<vue-countdown :time="9000" v-slot="{minutes, seconds }" @end="endCountDown">
+<<<<<<< HEAD
+						<vue-countdown :time="20000" v-slot="{minutes, seconds }" @end="endCountDown">
+=======
+						<vue-countdown :time="19000" v-slot="{minutes, seconds }" @end="endCountDown">
+>>>>>>> 93632076c8811eb7955c6a988da182b8bfb14378
 							Thời gian làm bài còn：{{ minutes }} phút, {{ seconds }} giây.
 						</vue-countdown>
 					</v-row>
@@ -73,13 +77,17 @@ import { ref } from 'vue';
 import ExamsAPI from '@/axios/ExamsAPI.js';
 import VueCountdown from '@chenfengyuan/vue-countdown';
 import BaseArea from '@/components/BaseArea.vue'
+import { useRoute } from 'vue-router';
+
+const route = useRoute();
+
 
 const quizs = ref([])
 const getDataExam = async (code) =>{
 	var res = await ExamsAPI.getExamDoing(code);
 	quizs.value = res.data.data;
-	console.log(quizs.value);
 }
+const isNotCheck = ref(true);
 function chooseResult(index,item){
 	var lstResults = [];
 	if (item.isMultiAnswer){
@@ -92,10 +100,14 @@ function chooseResult(index,item){
 	}
 	item.results = lstResults;
 }
-getDataExam("U2M280");
+debugger
+const examCode = route.query.code; // Access route parameters
+getDataExam(examCode);
 async function endCountDown(){
+	if (!isNotCheck.value) return;
+	isNotCheck.value = false;
 	var params = {
-		examCode:"U2M280",
+		examCode: examCode,
 		questionDetails:quizs.value
 	}
 	var res = await ExamsAPI.getMarkTest(params);

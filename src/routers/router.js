@@ -6,11 +6,11 @@ import Menu from '../views/Menu.vue'
 import Notification from '../views/Notification.vue'
 import Profiles from '../views/Profiles.vue'
 import Exams from '../views/Exam/Exams.vue'
+import ExamsUser from '../views/Exam/ExamsUser.vue'
 import ExamsDetail from '../views/Exam/ExamDetail.vue'
 import Students from '../views/Students.vue'
 import InputDataAndAnalysis from '../views/InputDataAndAnalysis.vue'
 import Evaluate from '../views/Evaluate.vue'
-import QuizMaker from '../views/QuizMaker.vue'
 import QuizMaker2 from '../views/QuizMaker2.vue'
 import Login from '../views/Login.vue'
 import Register from '../views/Register.vue'
@@ -40,7 +40,8 @@ const routes = [
     //         { path: '/exam-detail', name: "exam-detail", title: "Chi tiết bài kiếm tra", component: ExamsDetail },
     //     ]
     // },
-    { path: '/exams', name: "exams", title: "Bài kiểm tra", component: Exams },
+    { path: '/exams', name: "exams", title: "Danh sách đề thi", component: Exams },
+    { path: '/exams-user', name: "exams-user", title: "Bài kiểm tra", component: ExamsUser },
     { path: '/exam-detail', name: "exam-detail", title: "Chi tiết bài kiếm tra", component: ExamsDetail },
     { path: '/students', name: "students", component: Students },
     { path: '/input-data-and-analysis', name: "input-data-and-analysis", component: InputDataAndAnalysis },
@@ -106,7 +107,6 @@ function parseJwt (token) {
 }
 router.beforeEach((to, from, next) => {
     var token = parseJwt(localStorage.getItem('token'));
-    localStorage.setItem('roleName', token.RoleName)
     var currentTime = new Date().getTime();
     if(((!token || token.exp < currentTime/1000) && (to.path !== '/login' && to.path !== '/register'))){
         next('/login');

@@ -117,7 +117,7 @@ import ApiService from '../../axios/axios.js';
 import ToolBar from '../../components/ToolBar.vue';
 import Grid from '../../components/Grid.vue'
 import {useToast} from 'vue-toast-notification';
-import Tab from "@/components/Template/Tab.vue"
+import Tab from "@/components/Template/Tab.vue";
 
 export default{
   data: () => ({

@@ -25,6 +25,7 @@ const app = createApp(App)
 app.use(router)
 app.use(vuetify)
 app.use(ToastPlugin)
+app.use(emitterObj)
 app.mount('#app')
 
 app.component('QuillEditor', QuillEditor)
@@ -36,7 +37,7 @@ app.config.globalProperties.$enum = {
   KnowledgeTypeEnum
 }
 app.config.globalProperties.$toast = useToast()
-app.config.globalProperties.$emitter = emitterObj
+// app.config.globalProperties.$emitter = emitterObj
 app.config.globalProperties.$mitt = mittObj
 
 

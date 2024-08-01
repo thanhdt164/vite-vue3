@@ -64,6 +64,7 @@ import ExamsAPI from '../axios/ExamsAPI.js';
 import BlockAPI from '../axios/BlockAPI.js';
 import ExamGeneralAPI from '../axios/ExamGeneralAPI.js';
 import { useToast } from 'vue-toast-notification';
+import Tab from "@/components/Template/Tab.vue"
 import  {ref} from 'vue'
 const blockAPI = new BlockAPI();
 const examGeneralAPI = new ExamGeneralAPI();

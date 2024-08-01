@@ -266,11 +266,22 @@ export default{
 
       // Các câu hỏi
       this.quizs.forEach((quiz, id) => {
+        // Câu hỏi
         let question = {}
+        // knowledgeLevel,
+        // knowledgeType,
         question.questionSortOrder = id + 1
         question.image = "image" 
         question.questionContent = this.removeEmptyTags(quiz.question)
-
+        // Mức độ nhận biết
+        question.mainAnalysCode = quiz.knowledgeLevel[0].Key
+        question.mainAnalysName = quiz.knowledgeLevel[0].Value
+        // Loại kiến thức
+        question.subAnalysCode = quiz.knowledgeType[0].Key
+        question.subAnalysCode = quiz.knowledgeType[0].Value
+        question.isMultiResult = quiz.answers.filter(x => x.isTrue == true).length > 1;
+        
+        // Câu trả lời
         let answers = []
         quiz.answers.forEach((answer, idd) => {
           answers.push({

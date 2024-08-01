@@ -5,6 +5,7 @@
         :api="api"
         :headers="headers"
         @clickRow="clickRow"
+        :replacePagingGrid="pagingGrid"
       ></Grid>
     </template>
   </BaseArea>
@@ -55,8 +56,8 @@ export default{
   },
   created(){
     let primaryHeader = [
-      {key: "examTestCode", title: "Mã đề kiểm tra"},
-      {key: "isOrigin", title: "Loại đề (gốc/trộn)", type: 'bool'},
+      {key: "examCode", title: "Mã đề kiểm tra"},
+      {key: "isOrgin", title: "Loại đề (gốc/trộn)"},
       {key: "subject", title: "Môn học"},
       {key: "time", title: "Thời gian"},
     ]
@@ -71,30 +72,26 @@ export default{
       this.headers.push({
         key: el.key,
         title: el.title,
-        type: el.type,
         align: 'end',
         sortable: true
       });
     })
-
-    // check role
-    if(!this.roleName.includes("Teacher")){
-      this.pagingGrid = ({
+    this.pagingGrid = ({
+      PageIndex,
+      PageSize,
+      ValueWhere
+    }) => {
+      return ExamsAPI.ExamByUser({
         PageIndex,
         PageSize,
         ValueWhere
-      }) => {
-        return ExamsAPI.ExamByUser({
-          PageIndex,
-          PageSize,
-          ValueWhere
-        });
-      }
+      });
     }
   },
   methods:{
     clickRow(data){
-      this.$router.push({path:"/exam-detail",query:{id:data.examTestID, code: data.examTestCode}});
+      debugger
+      this.$router.push({path:"/do-test",query:{id:data.userExamID, code: data.examCode}});
     }
   }
 }

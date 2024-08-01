@@ -47,9 +47,18 @@
             <!-- <v-list-item v-show="checkrole('Menu')" @click="direct(1)" class="list-item" prepend-icon="mdi-puzzle" title="Danh mục" value="1"></v-list-item> -->
             <!-- <v-list-item v-show="checkrole('Notification')" @click="direct(2)" class="list-item" prepend-icon="mdi-bell-ring" title="Thông báo" value="2"></v-list-item> -->
             <v-list-item v-show="checkrole('Profiles')" @click="direct(3)" class="list-item" prepend-icon="mdi-account" title="Hồ sơ học sinh" value="3"></v-list-item>
+<<<<<<< HEAD
+            <v-list-item v-show="roleName.includes('Teacher')" @click="direct(4)" class="list-item" prepend-icon="mdi-clipboard-text" 
+              :title="'Danh sách đề thi'" value="4"
+            ></v-list-item>
+            <v-list-item v-show="roleName.includes('Student')" @click="direct(14)" class="list-item" prepend-icon="mdi-clipboard-text" 
+              :title="'Bài kiểm tra'" 
+              value="14"
+=======
             <v-list-item v-show="checkrole('Exams')" @click="direct(4)" class="list-item" prepend-icon="mdi-clipboard-text" 
-              :title="roleName.includes('Teacher') ? 'Danh sách đề thi': 'Bài kiểm tra'" 
+              :title="roleName?.includes('Teacher') ? 'Danh sách đề thi': 'Bài kiểm tra'" 
               value="4"
+>>>>>>> 93632076c8811eb7955c6a988da182b8bfb14378
             ></v-list-item>
             <v-list-item v-show="checkrole('Students')" @click="direct(5)" class="list-item" prepend-icon="mdi-text-box-check-outline" title="Kết quả học sinh" value="5"></v-list-item>
 
@@ -95,6 +104,7 @@ export default{
       ['TextFields', 'mdi-update', '/template/textfields'],
       ['Steper', 'mdi-delete', '/template/steper'],
     ],
+    roleName: ""
   }),
   watch:{
     tmp_obj: {
@@ -113,16 +123,15 @@ export default{
     loginOrRegister(){
       return this.$route.path == '/login' || this.$route.path == '/register'
     },
-    /**
-     * Hiện tại đang có 2 role Student, Teacher
-     */
-    roleName(){
-      let roleName = localStorage.getItem('roleName');
-      return roleName;
-    }
   },
-  created: () => {
-
+  created(){
+    debugger
+    if(localStorage.getItem('roleName')){
+      this.roleName = localStorage.getItem('roleName')
+    }
+    // this.$emitter.$on('updateRole', (roleName) => {
+		// 	this.roleName = roleName
+		// })
   },
   methods:{
     direct(key){
@@ -138,6 +147,9 @@ export default{
           break;
         case 4 :
           this.$router.push('/exams')
+          break;
+        case 14 :
+          this.$router.push('/exams-user')
           break;
         case 5 :
           this.$router.push('/students')
