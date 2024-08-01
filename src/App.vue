@@ -48,7 +48,7 @@
             <!-- <v-list-item v-show="checkrole('Notification')" @click="direct(2)" class="list-item" prepend-icon="mdi-bell-ring" title="Thông báo" value="2"></v-list-item> -->
             <v-list-item v-show="checkrole('Profiles')" @click="direct(3)" class="list-item" prepend-icon="mdi-account" title="Hồ sơ học sinh" value="3"></v-list-item>
             <v-list-item v-show="checkrole('Exams')" @click="direct(4)" class="list-item" prepend-icon="mdi-clipboard-text" 
-              :title="roleName.includes('Teacher') ? 'Danh sách đề thi': 'Bài kiểm tra'" 
+              :title="roleName?.includes('Teacher') ? 'Danh sách đề thi': 'Bài kiểm tra'" 
               value="4"
             ></v-list-item>
             <v-list-item v-show="checkrole('Students')" @click="direct(5)" class="list-item" prepend-icon="mdi-text-box-check-outline" title="Kết quả học sinh" value="5"></v-list-item>
