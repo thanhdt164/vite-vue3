@@ -28,14 +28,14 @@
         <v-row>
           <v-col style="margin-right: 16px;">
             <Combobox 
-              :select="quiz.knowledgeLevel"
+              v-model="quiz.knowledgeLevel"
               :label="comboboxTypeM.label"
               :item_source="comboboxTypeM.source"
             ></Combobox>
           </v-col>
           <v-col>
             <Combobox
-              :select="quiz.knowledgeType"
+              v-model="quiz.knowledgeType"
               :label="comboboxTypeN.label"
               :item_source="comboboxTypeN.source"
             ></Combobox>

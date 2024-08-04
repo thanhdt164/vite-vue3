@@ -10,5 +10,13 @@ class ExamGeneralAPI extends BaseAPI{
         let url = this.url('/exam-test-general')
         return await baseCRUD.post(url, data);
     }
+    Paging(pagingRequest){
+        let url = this.url('/paging')
+        return baseCRUD.post(url, pagingRequest)
+    }
+    PagingByUser(pagingRequest){
+        let url = this.url('/paging-by-user')
+        return baseCRUD.post(url, pagingRequest)
+    }
 }
 export default ExamGeneralAPI;

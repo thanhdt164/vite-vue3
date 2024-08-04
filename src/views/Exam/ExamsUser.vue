@@ -56,10 +56,10 @@ export default{
   },
   created(){
     let primaryHeader = [
-      {key: "examCode", title: "Mã đề kiểm tra"},
-      {key: "isOrgin", title: "Loại đề (gốc/trộn)"},
-      {key: "subject", title: "Môn học"},
-      {key: "time", title: "Thời gian"},
+      {key: "SubExamCode", title: "Mã đề kiểm tra"},
+      {key: "MainExamCode", title: "Mã đề gốc"},
+      {key: "Subject", title: "Môn học"},
+      {key: "Time", title: "Thời gian", suffix: 'Phút'},
     ]
     this.headers = [{
       key: "STT",
@@ -73,7 +73,9 @@ export default{
         key: el.key,
         title: el.title,
         align: 'end',
-        sortable: true
+        sortable: true,
+        prefix: el.prefix,
+        suffix: el.suffix
       });
     })
     this.pagingGrid = ({
@@ -90,8 +92,7 @@ export default{
   },
   methods:{
     clickRow(data){
-      debugger
-      this.$router.push({path:"/do-test",query:{id:data.userExamID, code: data.examCode}});
+      this.$router.push({path:"/do-test",query:{id:data.ExamTestID, code: data.SubExamCode}});
     }
   }
 }

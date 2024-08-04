@@ -93,7 +93,6 @@ export default {
 			var tokenParse = this.parseJwt(token);
 			// this.$emitter.$emit('updaterole', token.RoleName)
     	localStorage.setItem('roleName', tokenParse.RoleName)
-			debugger
 		},
 		parseJwt (token) {
 			if(!token) return "";

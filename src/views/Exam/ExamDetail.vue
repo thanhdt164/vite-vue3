@@ -22,6 +22,8 @@
             :replacePagingGrid="pagingGridMerge"
             :customConvertPageData="customConvertPageData"
             @clickRow="clickRow"
+            :triggerPaging="triggerPaging"
+            :gridHeighExpand="-36"
           ></Grid>
         </template>
         <template v-slot:DetailExam>
@@ -188,6 +190,7 @@ export default{
     arrQuestionAnswers: [],
     api: ApiService,
     originQuizs: [],
+    triggerPaging: false,
   }),
   components:{
     BaseArea,
@@ -260,24 +263,31 @@ export default{
         }) 
       }
     },
-    getAllMerge(){
+    async getAllMerge(){
       let id = this.$route.query.id;
-      ApiService.getallShuffExams(id).then(res => {
-        this.datasMerge = res.data.data.map(x => x.exam);
-        this.arrQuestionAnswers = res.data.data.map(x =>x.questionAnswers);
-      }).catch(err => {
+      let res = await ApiService.getallShuffExams(id);
+      this.datasMerge = res.data.data.pageData.map(x => x.exam);
+      this.arrQuestionAnswers = res.data.data.pageData.map(x =>x.questionAnswers);
+      // ApiService.getallShuffExams(id).then(res => {
+      //   this.datasMerge = res.data.data.map(x => x.exam);
+      //   this.arrQuestionAnswers = res.data.data.map(x =>x.questionAnswers);
+      // }).catch(err => {
         
-      }).finally(() => {
+      // }).finally(() => {
 
-      }) 
+      // }) 
     },
     mergeQuiz(){
       // call api merge
       var code = this.$route.query.code;
-      ApiService.shuffExams(code).then(res => {
+      ApiService.shuffExams(code).then(async (res) => {
         if(res.data.data){
           this.toast.success('Trộn đề thi thành công!')
-          this.getAllMerge()
+          // await this.getAllMerge()
+          this.triggerPaging = false
+          setTimeout(() => {
+            this.triggerPaging = true;
+          }, 0);
         }else{
           this.toast.success('Trộn đề thi thất bại!')
         }
