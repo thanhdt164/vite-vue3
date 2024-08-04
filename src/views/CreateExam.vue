@@ -88,7 +88,11 @@ const getAllBlock = async ()=>{
 getAllTest()
 getAllBlock()
 function selectTests(val){
-    lstTestID.value = val.map(x=>x.examTestID);
+	console.log(val);
+    lstTestID.value = val.map(x=>({
+		ID : x.examTestID,
+		Code : x.examTestCode
+	}));
 }
 const blockID = ref(0);
 function selectBlock(val){
