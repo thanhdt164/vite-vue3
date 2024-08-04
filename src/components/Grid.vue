@@ -1,5 +1,5 @@
 <template>
-  <div class="grid-box">
+  <div ref="grid-box" class="grid-box">
     <v-card-title class="d-flex align-center">
       <v-spacer></v-spacer>
       <v-responsive
@@ -280,10 +280,25 @@ export default {
     customConvertPageData: {
       type: Function,
       default: null
+    },
+    gridHeighExpand: {
+      type: Number,
+      default: 0
+    },
+    triggerPaging:{
+      type: Boolean,
+      default: false
+    },
+    convertMultiTime:{
+      type: Boolean,
+      default: false
     }
   },
   created(){
     this.init();
+  },
+  mounted(){
+    this.$refs['grid-box'].style.height = `calc(100% + ${this.gridHeighExpand}px)`
   },
   watch: {
     name () {
@@ -292,6 +307,12 @@ export default {
     calories () {
       this.search = String(Date.now())
     },
+    triggerPaging(val){
+      debugger
+      if(val){
+        this.loadItems(this.page, this.itemsPerPage, this.sortBy)
+      }
+    }
   },
   methods: {
     init(){
@@ -347,7 +368,7 @@ export default {
      */
     convertPageData(pageData){
       this.customConvertPageData && this.customConvertPageData(pageData)
-      if(this.firstTimeConvert){
+      if(this.firstTimeConvert || this.convertMultiTime){
         this.firstTimeConvert = false;
         pageData.forEach((el, id) => {
           el["STT"] = id + 1
@@ -366,6 +387,14 @@ export default {
                 break;
               default:
                 break;
+            }
+            // Tiền tố
+            if(header.prefix){
+              el[key] = header.prefix + " " + el[key]
+            }
+            // Hậu tố
+            if(header.suffix){
+              el[key] += " " + header.suffix
             }
           })   
         });
@@ -466,8 +495,6 @@ export default {
 <style lang="scss">
 .grid-box{
   width: 100%;
-  height: 100%;
-  // padding: 0 0 0 24px;
   .grid-table{
     height: calc(100% - 56px);
     .v-data-table__thead{

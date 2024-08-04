@@ -83,10 +83,26 @@ export default {
 			return !!v || 'Không được để trống'
 		},
 		async initLogin (res) {
-			localStorage.setItem('token',res.data.access_token)
+			this.processToken(res.data.access_token)
 			// Call lấy dữ liệu userInfor, userOption
 			var res = await UserAPI.InitLogin()
 			localStorage.setItem('ListRole', res.data.data)
+		},
+		processToken(token){
+			localStorage.setItem('token', token)
+			var tokenParse = this.parseJwt(token);
+			// this.$emitter.$emit('updaterole', token.RoleName)
+    	localStorage.setItem('roleName', tokenParse.RoleName)
+		},
+		parseJwt (token) {
+			if(!token) return "";
+			var base64Url = token?.split('.')[1];
+			var base64 = base64Url?.replace(/-/g, '+').replace(/_/g, '/');
+			var jsonPayload = decodeURIComponent(window.atob(base64)?.split('').map(function(c) {
+					return '%' + ('00' + c.charCodeAt(0).toString(16)).slice(-2);
+			}).join(''));
+
+			return JSON.parse(jsonPayload);
 		}
 	},
 }

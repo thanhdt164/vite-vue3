@@ -1,11 +1,11 @@
 <!-- TEMPLATE -->
 <template>
-  <BaseArea title="Tạo đề kiểm tra">  
+  <BaseArea title="Tạo đề kiểm tra">
     <template v-slot:center-area>
       <v-sheet class="quiz-info">
         <!-- THÔNG TIN CHUNG -->
         <v-label>Thông tin chung:</v-label>
-        <v-row style="width: 70%;">
+        <v-row style="width: 75%;">
           <v-col style="margin-right: 16px;">
             <CardField
               title="Phòng GDĐT"
@@ -27,8 +27,8 @@
         </v-row>
         <!-- Thông tin khác -->
         <v-label>Thông tin khác:</v-label>
-        <!-- Môn học -->
-        <v-row style="width: 50%;">
+        <!-- Mã đề -->
+        <v-row style="width: 75%;">
           <v-col cols="3">
             <v-label>Mã đề: </v-label>
           </v-col>
@@ -36,8 +36,17 @@
             <TextField v-model="examTestCode"></TextField>
           </v-col>
         </v-row>
+        <!-- Tên bài thi -->
+        <v-row style="width: 75%;">
+          <v-col cols="3">
+            <v-label>Tên bài kiểm tra: </v-label>
+          </v-col>
+          <v-col>
+            <TextField v-model="examTestName"></TextField>
+          </v-col>
+        </v-row>
         <!-- Môn học -->
-        <v-row style="width: 50%;">
+        <v-row style="width: 75%;">
           <v-col cols="3">
             <v-label>Môn học: </v-label>
           </v-col>
@@ -50,7 +59,7 @@
           </v-col>
         </v-row>
         <!-- Thời gian -->
-        <v-row style="width: 50%;">
+        <v-row style="width: 75%;">
           <v-col cols="3">
             <v-label>Thời gian:</v-label>
           </v-col>
@@ -109,6 +118,7 @@ export default{
   },
   data: () => ({
     examTestCode: "",
+    examTestName: "",
     subject: [],
     time: [],
     eduDepartment: "Phòng GDĐT..",
@@ -116,8 +126,8 @@ export default{
     examTitle: "Đề kiểm tra..",
     quizs: [
         {
-            knowledgeLevel: [{Key: "M1", Value: "Nhận biết"}],
-            knowledgeType: [{Key: "N1", Value: "Số nguyên tố"}],
+            knowledgeLevel: {Key: "M1", Value: "Nhận biết"},
+            knowledgeType: {Key: "N1", Value: "Số nguyên tố"},
             question: "<p>Lực nào dưới đây là lực đàn hồi?</p>",
             answers: [
                 {
@@ -229,7 +239,7 @@ export default{
     let timeSource = this.$enum.TimeEnum
     this.comboboxTimes = {
       label: "Thời gian",
-      source: Object.keys(timeSource).map(x => {return {Key: x, Value: timeSource[x].Text, NumberValue: timeSource[x].Value}})
+      source: Object.keys(timeSource).map(x => {return {Key: x, Value: timeSource[x].Text}})
     }
   },
   methods:{
@@ -251,26 +261,33 @@ export default{
      * Lưu đề thi
      */
     saveQuiz(){
+      // Thông tin chung
       let exam = {
         "examTestCode": this.examTestCode,
         "isOrigin": true,
         "subject": this.subject.Value,
-        "time": this.time.NumberValue
+        "time": this.$enum.TimeEnum[this.time.Key].Value
       }
       let param = {
         exam: exam,
         questionAnswers: []
       }
-      // Thông tin chung
-      param.exam.examTestCode = this.examTestCode,
-
       // Các câu hỏi
       this.quizs.forEach((quiz, id) => {
+        // Câu hỏi
         let question = {}
         question.questionSortOrder = id + 1
-        question.image = "image" 
+        question.image = "image"
         question.questionContent = this.removeEmptyTags(quiz.question)
-
+        // Mức độ nhận biết - knowledgeLevel
+        question.subAnalysCode = quiz.knowledgeLevel.Key
+        question.subAnalysName = quiz.knowledgeLevel.Value
+        // Loại kiến thức - knowledgeType
+        question.mainAnalysCode = quiz.knowledgeType.Key
+        question.mainAnalysName = quiz.knowledgeType.Value
+        question.isMultiResult = quiz.answers.filter(x => x.isTrue == true).length > 1
+        
+        // Câu trả lời
         let answers = []
         quiz.answers.forEach((answer, idd) => {
           answers.push({

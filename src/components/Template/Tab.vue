@@ -1,6 +1,6 @@
 <!-- TEMPLATE -->
 <template>
-	<v-card class="tab-card">
+	<v-card class="tab-card h-full">
 		<!-- Title tab -->
 		<v-tabs v-model="tabX" align-tabs="center">
 			<v-tab v-for="(item, id) in listTabX" :key="id" :value="item.Key">{{item.Title}}</v-tab>
@@ -8,10 +8,8 @@
 		<!-- Content tab -->
 		<v-tabs-window v-model="tabX">
 			<v-tabs-window-item>
-				<v-container fluid>
-					<v-row> 
-						<slot :name="currentTab.Key">{{ currentTab.Title }}</slot>
-					</v-row>
+				<v-container class="tab-content" fluid>
+					<slot :name="currentTab.Key">{{ currentTab.Title }}</slot>
 				</v-container>
 			</v-tabs-window-item>
 		</v-tabs-window>
@@ -20,13 +18,12 @@
 <!-- SCRIPT -->
 <script>
 /* IMPORT */
-import BaseArea from '@/components/BaseArea.vue'
 
 /* EXPORT */
 export default{
 	name: "Tab",
 	components:{
-		BaseArea,	
+    
 	},
 	data: () => ({
 		tabX: 1,
@@ -47,14 +44,17 @@ export default{
 		}
 	},
 	watch:{
-		tmp_obj: {
-			handler(newVal) {
-				
-			},
-			deep: true, 
-			immediate: true, 
-			once: true, 
-		}
+		// tab: {
+		// 	handler(newVal) {
+    //     this.tabX = newVal
+		// 	},
+		// 	immediate: true, 
+		// },
+    tabX: {
+      handler(newVal){
+        this.$emit("update", newVal)
+      }
+    }
 	},
 	computed: {
 		currentTab(){
@@ -65,12 +65,12 @@ export default{
 	created(){
 		this.tabX = this.tab ?? this.tabX;
 		this.listTabX = this.listTab ?? this.listTabX;
-		this.$mitt.$on('changeTab', (tabKey) => {
-			this.tabX = tabKey
-		})
+		// this.$mitt.$on('changeTab', (tabKey) => {
+		// 	this.tabX = tabKey
+		// })
 	},
 	destroyed(){		
-		this.$mitt.$off('changeTab')
+		// this.$mitt.$off('changeTab')
 	},
 	methods:{
 
@@ -91,6 +91,10 @@ export default{
 	.v-btn__content{
 		text-transform: none;
 	}
+  .tab-content{
+    height: 100%;
+    padding: 0px;
+  }
 }
 </style>
 <style scoped lang="scss">

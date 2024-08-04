@@ -1,5 +1,10 @@
 <template>
 <BaseArea title="Làm bài kiểm tra">
+	<template v-slot:right-tool>
+		<vue-countdown :time="19000" v-slot="{minutes, seconds }" @end="endCountDown">
+			Thời gian làm bài còn：{{ minutes }} phút, {{ seconds }} giây.
+		</vue-countdown>
+	</template>
 	<template v-slot:center-area>
 		<v-container class="container">
 			<v-sheet class="sheet light">
@@ -18,11 +23,6 @@
 						</v-col>
 					</v-row>
 					<!-- BODY -->
-					<v-row>
-						<vue-countdown :time="19000" v-slot="{minutes, seconds }" @end="endCountDown">
-							Thời gian làm bài còn：{{ minutes }} phút, {{ seconds }} giây.
-						</vue-countdown>
-					</v-row>
 					<div class="exam-body">
 						<div	class="item-quiz" v-for="(quiz, index) in quizs" :key="index">
 							<v-row>
@@ -34,7 +34,7 @@
 							<v-row>
 								<v-col cols="12">
 									<div class="answer">
-										<v-row v-for="(item, id) in [1,2,3,4]" :key="id" class="quiz-item">
+										<v-row v-if="false" v-for="(item, id) in [1,2,3,4]" :key="id" class="quiz-item">
 											<div>
 												<v-checkbox 
 													class="answer-checkbox	mr-0 mt-0" 
@@ -47,20 +47,25 @@
 												<v-label v-html="quiz.answers[id].answerContent"></v-label>
 											</div>
 										</v-row>
+										<!-- radio -->
+										<v-row v-else>
+											<v-radio-group v-model="radios">
+												<v-radio v-for="(item, id) in [1,2,3,4]" :key="id" :value="id">
+													<v-label v-html="quiz.answers[id].answerContent"></v-label>
+												</v-radio>
+											</v-radio-group>
+										</v-row>
 									</div>
 								</v-col>
 							</v-row>
 						</div>
-						<div >
-							<v-btn class="btn-add-quiz" variant="tonal" @click="endCountDown">
-								Nộp bài
-								<v-icon end icon="mdi mdi-coffee-maker-check" ></v-icon>
-							</v-btn>
-						</div>
+						<v-btn class="btn-add-quiz" variant="tonal" @click="endCountDown">
+							Nộp bài
+							<v-icon end icon="mdi mdi-coffee-maker-check" ></v-icon>
+						</v-btn>
 					</div>
 					<!-- FOOTER -->
 					<v-row class="exam-footer">
-						<!-- footer -->
 					</v-row>
 				</div>
 			</v-sheet>
@@ -73,6 +78,10 @@ import { ref } from 'vue';
 import ExamsAPI from '@/axios/ExamsAPI.js';
 import VueCountdown from '@chenfengyuan/vue-countdown';
 import BaseArea from '@/components/BaseArea.vue'
+import { useRoute } from 'vue-router';
+
+const route = useRoute();
+
 
 const quizs = ref([])
 const getDataExam = async (code) =>{
@@ -92,12 +101,13 @@ function chooseResult(index,item){
 	}
 	item.results = lstResults;
 }
-getDataExam("U2M280");
+const examCode = route.query.code; // Access route parameters
+getDataExam(examCode);
 async function endCountDown(){
 	if (!isNotCheck.value) return;
 	isNotCheck.value = false;
 	var params = {
-		examCode:"U2M280",
+		examCode: examCode,
 		questionDetails:quizs.value
 	}
 	var res = await ExamsAPI.getMarkTest(params);

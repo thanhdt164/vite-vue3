@@ -5,6 +5,7 @@
         :api="api"
         :headers="headers"
         @clickRow="clickRow"
+        :replacePagingGrid="pagingGrid"
       ></Grid>
     </template>
   </BaseArea>
@@ -55,10 +56,10 @@ export default{
   },
   created(){
     let primaryHeader = [
-      {key: "examTestCode", title: "Mã đề kiểm tra"},
-      {key: "isOrigin", title: "Loại đề (gốc/trộn)", type: 'bool'},
-      {key: "subject", title: "Môn học"},
-      {key: "time", title: "Thời gian"},
+      {key: "SubExamCode", title: "Mã đề kiểm tra"},
+      {key: "MainExamCode", title: "Mã đề gốc"},
+      {key: "Subject", title: "Môn học"},
+      {key: "Time", title: "Thời gian", suffix: 'Phút'},
     ]
     this.headers = [{
       key: "STT",
@@ -71,30 +72,27 @@ export default{
       this.headers.push({
         key: el.key,
         title: el.title,
-        type: el.type,
         align: 'end',
-        sortable: true
+        sortable: true,
+        prefix: el.prefix,
+        suffix: el.suffix
       });
     })
-
-    // check role
-    if(!this.roleName.includes("Teacher")){
-      this.pagingGrid = ({
+    this.pagingGrid = ({
+      PageIndex,
+      PageSize,
+      ValueWhere
+    }) => {
+      return ExamsAPI.ExamByUser({
         PageIndex,
         PageSize,
         ValueWhere
-      }) => {
-        return ExamsAPI.ExamByUser({
-          PageIndex,
-          PageSize,
-          ValueWhere
-        });
-      }
+      });
     }
   },
   methods:{
     clickRow(data){
-      this.$router.push({path:"/exam-detail",query:{id:data.examTestID, code: data.examTestCode}});
+      this.$router.push({path:"/do-test",query:{id:data.ExamTestID, code: data.SubExamCode}});
     }
   }
 }
