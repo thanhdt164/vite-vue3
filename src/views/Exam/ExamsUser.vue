@@ -49,16 +49,13 @@ export default{
     }
   },
   computed: {
-    roleName(){
-      let roleName = localStorage.getItem('roleName');
-      return roleName;
-    }
+
   },
   created(){
     let primaryHeader = [
       {key: "SubExamCode", title: "Mã đề kiểm tra"},
       {key: "MainExamCode", title: "Mã đề gốc"},
-      {key: "Subject", title: "Môn học"},
+      {key: "SubjectName", title: "Môn học"},
       {key: "Time", title: "Thời gian", suffix: 'Phút'},
     ]
     this.headers = [{

@@ -25,8 +25,14 @@
 import BaseArea from '@/components/BaseArea.vue'
 import ExamsAPI from '../axios/ExamsAPI.js'
 import  {ref} from 'vue'
+import { useRoute } from 'vue-router';
+
+const route = useRoute();
+
 const fullName = ref("")
 const comment = ref("")
+let examCode = ref("")
+
 const getAnalysDetail = async (examCode) =>{
     var res = await ExamsAPI.getResultAnalys(examCode);
     if (res.data.success){
@@ -34,7 +40,8 @@ const getAnalysDetail = async (examCode) =>{
         comment.value = res.data.data.resultJson
     }
 }
-getAnalysDetail("U2M280");
+examCode = route.query.examCode
+getAnalysDetail(examCode);
 </script>
 <style scoped>
 .card {

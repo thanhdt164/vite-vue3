@@ -3,9 +3,10 @@ import {baseCRUD} from "@/axios/BaseConfig";
 
 class AnalysisContentAPI extends BaseAPI{
     constructor(name = "AnalysisContent"){
+        super();
         this.controller = name;
     }
     // Phương thức riêng
     
 }
-export default AnalysisContentAPI;
+export default new AnalysisContentAPI();

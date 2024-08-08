@@ -50,7 +50,7 @@
             <v-list-item v-show="roleName?.includes('Teacher')" @click="direct(4)" class="list-item" prepend-icon="mdi-clipboard-text" 
               :title="'Danh sách đề thi'" value="4"
             ></v-list-item>
-            <v-list-item v-show="roleName?.includes('Student')" @click="direct(14)" class="list-item" prepend-icon="mdi-clipboard-text" 
+            <v-list-item v-show="true" @click="direct(14)" class="list-item" prepend-icon="mdi-clipboard-text" 
               :title="'Bài kiểm tra'" 
               value="14"
             ></v-list-item>

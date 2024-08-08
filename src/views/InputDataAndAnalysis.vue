@@ -1,7 +1,40 @@
 <template>
   <BaseArea title="Nhập liệu phân tích">
     <template v-slot:center-area>
-      <Grid></Grid>
+      <Tab
+			:listTab="listTab"
+			:tab="tab"
+			@update="updateTab($event)"
+			>
+        <template v-slot:SourceTypeAnalysis>
+          <div class="grid-source-type">
+            <v-col cols="6" style="height: 300px;">
+              <Grid 
+                titleGrid="Mức độ nhận biết"
+                :showSearch="false"
+                :showPaging="false"
+                :showSelect="false"
+              ></Grid>
+            </v-col>
+            <v-col cols="6" style="height: 300px;">
+              <Grid 
+                titleGrid="Loại kiến thức"
+                :showSearch="false"
+                :showPaging="false"
+                :showSelect="false"
+              ></Grid>
+            </v-col>
+          </div>
+        </template>
+        <template v-slot:DetailAnalysis>
+          <Grid 
+            titleGrid="Nội dung phân tích"
+            :showSearch="false"
+            :showPaging="false"
+            :gridHeighExpand="-36"
+          ></Grid>
+        </template>
+      </Tab>
     </template>
   </BaseArea>
 </template>
@@ -11,6 +44,7 @@
 import BaseArea from '@/components/BaseArea.vue'
 import Expansion from '@/components/Expansion.vue'
 import Grid from '@/components/Grid.vue'
+import Tab from "@/components/Template/Tab.vue"
 
 /* EXPORT */
 export default{
@@ -18,10 +52,15 @@ export default{
   components:{
     BaseArea,
     Expansion,
-    Grid
+    Grid,
+    Tab
   },
   data: () => ({
-
+    listTab: [
+			{ Key: "SourceTypeAnalysis", Title: "Bảng quy ước" },
+			{ Key: "DetailAnalysis", Title: "Nội dung phân tích" },
+		],
+		tab: "SourceTypeAnalysis"
   }),
   props:{
     tmp_Prop: {
@@ -49,13 +88,19 @@ export default{
 
   },
   methods:{
-
+    updateTab(val){
+      this.tab = val;
+    }
   }
 }
 /* STYLE */
 </script>
 <style scoped lang="scss">
-
+.grid-source-type{
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+}
 </style>
 <style lang="scss">
 

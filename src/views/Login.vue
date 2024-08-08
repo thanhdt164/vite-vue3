@@ -67,12 +67,14 @@ export default {
 				Password:this.password
 			}
 			var res = await ApiService.login(param);
-			if(res && res.status == 200){
+			if(res && res.status == 200 && res.data.success){
 				this.$toast.success("Đăng nhập thành công");
 				await this.initLogin(res.data);
 				setTimeout(() => {
 					this.$router.push("/exams");
 				}, 1000);
+			}else{
+				this.$toast.error(res.data.message);
 			}
 			if (!this.form) return
 			this.loading = true
@@ -111,16 +113,22 @@ export default {
 .login-field{
 	.v-input__control{
 		/* width: fit-content; */
-		height: 40px;
+		height: 56px;
 	}
 	.v-field__field{
-		height: 40px;
+		height: 56px;
 		.v-field__input{
-			height: 40px;
+			height: 56px;
 			min-height: auto;
 		}
 		
 	}
+	// .v-input--density-default{
+	// 	--v-input-control-height: 40px;
+	// 	--v-input-padding-top: 0px;
+	// 	--v-input-padding-bottom: 0px;
+	// 	--v-field-padding-bottom: 0px;
+	// }
 }
 </style>
 <style lang="scss" scoped>

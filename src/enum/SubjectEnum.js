@@ -1,12 +1,13 @@
 const SubjectEnum = {
-  Maths: 'Toán',
-  Physics: 'Vật lý',
-  Chemistry : 'Hóa học',
-  Biology: 'Sinh học',
-  Geography: 'Địa lý',
-  Literature: 'Ngữ văn',
-  IT: 'Tin học',
-  History: 'Lịch sử'
+  "TOAN": 'Toán',
+  "VAT_LY": 'Vật lý',
+  "HOA_HOC" : 'Hóa học',
+  "SINH_HOC": 'Sinh học',
+  "DIA_LY": 'Địa lý',
+  "NGU_VAN": 'Ngữ văn',
+  "TIN_HOC": 'Tin học',
+  "LICH_SU": 'Lịch sử',
+  "TIENG_ANH": 'Tiếng anh'
 };
 
 export default SubjectEnum;

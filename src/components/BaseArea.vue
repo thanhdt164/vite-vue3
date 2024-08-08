@@ -112,9 +112,9 @@ export default{
   }
   .center-area{
     font-size: 14px;
-    height: calc(100% - 56px - 56px);
+    height: calc(100% - 56px - 44px);
     overflow: scroll;
-    padding: 0 0 0 24px !important;
+    padding: 12px 0 0 12px !important;
     // padding: 0 !important;
   }
   .bot-area{
