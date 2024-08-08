@@ -1,8 +1,16 @@
 <template>
   <div ref="grid-box" class="grid-box">
-    <v-card-title class="d-flex align-center">
+    <v-card-title class="card-title d-flex align-center">
+      <v-responsive
+        v-if="titleGrid"
+        class="mx-auto"
+        max-width="400"
+      >
+      {{ titleGrid }}
+      </v-responsive>
       <v-spacer></v-spacer>
       <v-responsive
+        v-show="showSearch"
         class="mx-auto"
         max-width="400"
       >
@@ -25,9 +33,9 @@
       </v-btn>
     </v-card-title>
     <v-data-table-server 
-    class="grid-table"
+    class="grid-table custom-border"
     v-model="itemSelected"
-    show-select
+    :show-select="showSelect"
     return-object
 
     :items-per-page="itemsPerPage" 
@@ -39,7 +47,12 @@
     item-value="name" 
     multi-sort
     @update:options="loadItems"
-    @click:row="handleRowClick">
+    @click:row="handleRowClick"
+    loading-text="Đang tải..."
+    items-per-page-text="Số mục"
+    :items-per-page-options="[5, 10, 15, 20]"
+    :page-text="customPageText"
+    >
       <template v-slot:top>
       </template>
       <template v-slot:thead>
@@ -48,11 +61,13 @@
       </template>
       <template v-slot:item.actions="{ item }">
         <v-icon
+          v-show="showEdit"
           class="me-2"
           @click="editItem(item)"
           icon="mdi-pencil"
         ></v-icon>
         <v-icon
+          v-show="showDelete"
           @click="deleteItem(item)"
           icon="mdi-delete"
         ></v-icon>
@@ -60,6 +75,7 @@
       <template v-slot:no-data>
         Dữ liệu trống
       </template>
+      
     </v-data-table-server>
     <!-- Dialog sửa -->
     <v-dialog v-model="dialogEdit" max-width="400" persistent>
@@ -227,7 +243,7 @@ const FakeAPI = {
 export default {
   data: () => ({
     page: 1,
-    itemsPerPage: 5,
+    itemsPerPage: 20,
     sortBy: [],
 
     itemSelected: [],
@@ -237,7 +253,9 @@ export default {
         align: 'start',
         sortable: false,
         key: 'name',
-        type: 'bool|boolean'
+        type: 'bool|boolean',
+        width: 200,
+        fixed: true
       },
       { title: 'Calories', key: 'calories', align: 'end' },
       { title: 'Fat (g)', key: 'fat', align: 'end' },
@@ -265,6 +283,10 @@ export default {
       type: Object,
       default: null
     },
+    titleGrid: {
+      type: String,
+      default: ""
+    },
     headers:{
       type: Array,
       default: null
@@ -291,6 +313,26 @@ export default {
     },
     convertMultiTime:{
       type: Boolean,
+      default: true
+    },
+    showSearch:{
+      type: Boolean,
+      default: true
+    },
+    showSelect:{
+      type: Boolean,
+      default: true
+    },
+    showPaging: {
+      type: Boolean,
+      default: true
+    },
+    showEdit:{
+      type: Boolean,
+      default: false
+    },
+    showDelete: {
+      type: Boolean,
       default: false
     }
   },
@@ -298,7 +340,28 @@ export default {
     this.init();
   },
   mounted(){
-    this.$refs['grid-box'].style.height = `calc(100% + ${this.gridHeighExpand}px)`
+    // Check titleGrid vaf showSearch
+    let top = 0;
+    if(!this.titleGrid && !this.showSearch){
+      top = 52 - 16;
+    }
+    this.$refs['grid-box'].style.height = `calc(100% + ${this.gridHeighExpand}px + ${top}px)`
+    // Check showPaging 
+    if(!this.showPaging){
+      setTimeout(() => {
+        this.$el.querySelector('.grid-table .v-data-table-footer').classList.add('hidden-important');
+      }, 0);
+    }
+  },
+  computed:{
+    customPageText(context) {
+      let page = context.page
+      let size = context.itemsPerPage
+      let total = context.totalItems
+      let from = (page-1)*size + 1
+      let to = Math.min(page*size, total)
+      return `${from} - ${to} trên ${total}`;
+    },
   },
   watch: {
     name () {
@@ -308,7 +371,6 @@ export default {
       this.search = String(Date.now())
     },
     triggerPaging(val){
-      debugger
       if(val){
         this.loadItems(this.page, this.itemsPerPage, this.sortBy)
       }
@@ -490,6 +552,7 @@ export default {
 .btn-add{
   margin-left: 8px;
 }
+
 </style>
 
 <style lang="scss">
@@ -497,22 +560,55 @@ export default {
   width: 100%;
   .grid-table{
     height: calc(100% - 56px);
+    .v-field__input {
+      padding-bottom: 6px !important;
+    }
     .v-data-table__thead{
       position: sticky;
       top: 0;
       background: white;
       z-index: 10;
     }
+    // .v-data-table-footer {
+    //   display: none !important;
+    // }
+    
   }
+  .v-card-title{
+    padding: 0.5rem 0;
+  }
+  .v-data-table__thead{
+    background-color: #f6f6f6;
+  }
+  .v-data-table-footer{
+    // background-color: #f6f6f6;
+    // border: 1px solid #f6f6f6;
+    // border-radius: 4px;
+  }
+  .v-data-table-footer__info{
+    padding-inline-end: 8px;
+  }
+  .v-data-table-footer__items-per-page{
+    padding-inline-end: 12px;
+    span {
+      padding-inline-end: 8px;
+    }
+  }
+}
+.hidden-important {
+  display: none !important;
 }
 .search-bar{
   .v-field__input {
     padding: 0 8px !important;
   }
+  
 }
-.grid-table{
-  .v-field__input {
-    padding-bottom: 6px !important;
+.custom-border {
+  border-top: 1px solid #e0e0e0 !important; /* Thêm border màu đen */
+  // border-radius: 4px;
+  thead{
+    background-color: #f6f6f6;
   }
 }
 </style>

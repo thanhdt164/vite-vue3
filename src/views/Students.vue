@@ -4,6 +4,7 @@
       <Grid
         :api="api"
         :headers="headers"
+        @clickRow="clickRow"
       >
       </Grid>
     </template>
@@ -76,18 +77,11 @@ export default{
       });
     })
 
-    if(!this.roleName.includes("Teacher")){
-      this.pagingGrid = ({
-        PageIndex,
-        PageSize,
-        ValueWhere
-      }) => {
-        return UserAPI.ResultByUser();
-      }
-    }
   },
   methods:{
-    
+    clickRow(data){
+      this.$router.push({path:"/analysis-detail", query:{examCode: data.examCode}});
+    }
   }
 }
 /* STYLE */

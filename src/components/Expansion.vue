@@ -1,30 +1,36 @@
 <!-- TEMPLATE -->
 <template>
   <v-expansion-panels
-  v-model="panel"
+  v-model="quizOpen"
   multiple
   variant="accordion"
   >
     <v-expansion-panel 
-    :disabled="disabled"
-    :value="1"
+    v-for="(quiz, id) in quizs"
+    :key="id"
+    :value="id+1"
     class="item-quiz"
+    :disabled="disabled"
     >
       <v-expansion-panel-title>
-        {{ title }}
+        {{ title + `${id + 1}` }}
+        <v-spacer></v-spacer>
+        <div style="margin-right: 16px">
+          <v-icon @click.stop="clearQuiz(id)">mdi-minus</v-icon>
+        </div>
       </v-expansion-panel-title>
       <v-expansion-panel-text class="">
-        <slot></slot>
         <v-row>
           <div class="question">
             <QuillEditor 
-              theme="snow" :toolbar="toolbarOptions" 
+              theme="snow" 
+              :toolbar="toolbarOptions" 
               v-model:content="quiz.question"
               contentType="html"
             />
           </div>
         </v-row>
-
+        <!-- Chủ đề - tiêu chí -->
         <v-row>
           <v-col style="margin-right: 16px;">
             <Combobox 
@@ -41,7 +47,7 @@
             ></Combobox>
           </v-col>
         </v-row>
-
+        <!-- Câu trả lời -->
         <v-row v-for="(item, id) in [1,2,3,4]" :key="id" class="answer-box">
           <v-checkbox 
             class="answer-checkbox" 
@@ -57,8 +63,7 @@
               contentType="html"
             />
           </div>
-      </v-row>
-        
+        </v-row>
       </v-expansion-panel-text>
     </v-expansion-panel>
   </v-expansion-panels>
@@ -67,6 +72,7 @@
 <script>
 /* IMPORT */
 import Combobox from '@/components/Combobox.vue'
+import AnalysisContentAPI from '@/axios/AnalysisContentAPI.js'
 
 /* EXPORT */
 export default{
@@ -75,7 +81,7 @@ components:{
   Combobox
 },
 data: () => ({
-  panel: [1, 2, 3],
+  quizOpen: [1],
   toolbarOptions : [
     //['bold', 'italic', 'underline', 'strike'],        // toggled buttons
     ['blockquote', 'code-block'],
@@ -121,8 +127,8 @@ props:{
   quiz:{
     type: Object,
     default: {
-        knowledgeLevel: [{Key: "M1", Value: "Nhận biết"}],
-        knowledgeType: [{Key: "N1", Value: "Số nguyên tố"}],
+        knowledgeLevel: [{Key: "M1", Value: "M1 - Nhận biết"}],
+        knowledgeType: [{Key: "N1", Value: "N1 - Số nguyên tố"}],
         question: "<p>Lực nào dưới đây là lực đàn hồi?</p>",
         answers: [
             {
@@ -144,7 +150,10 @@ props:{
         ]
     }
   },
-
+  quizs: {
+    type: Array,
+    default: []
+  }
 },
 watch:{
   tmp_obj: {
@@ -163,19 +172,57 @@ computed: {
 
 },
 created(){
-  this.comboboxTypeM = {
-    label: "Mức độ nhận biết",
-    source: Object.keys(this.$enum.KnowledgeLevelEnum).map(x => {return {Key: x, Value: this.$enum.KnowledgeLevelEnum[x]}})
-  }
+  this.initAnalysisContent();
+  // this.comboboxTypeM = {
+  //   label: "Mức độ nhận biết",
+  //   source: Object.keys(this.$enum.KnowledgeLevelEnum).map(x => {return {Key: x, Value: this.$enum.KnowledgeLevelEnum[x]}})
+  // }
 
-  this.comboboxTypeN = {
-    label: "Loại kiến thức",
-    source: Object.keys(this.$enum.KnowledgeTypeEnum).map(x => {return {Key: x, Value: this.$enum.KnowledgeTypeEnum[x]}})
-  }
+  // this.comboboxTypeN = {
+  //   label: "Loại kiến thức",
+  //   source: Object.keys(this.$enum.KnowledgeTypeEnum).map(x => {return {Key: x, Value: this.$enum.KnowledgeTypeEnum[x]}})
+  // }
 
 },
 methods:{
+  initAnalysisContent(){
+    AnalysisContentAPI.getAll().then(res => {
+      if(res.data.success){
+        // let sourceTypeM = this.$enum.KnowledgeLevelEnum;
+        // this.comboboxTypeM = {
+        //   label: "Mức độ nhận biết",
+        //   source: Object.keys(sourceTypeM).map(x => {return {Key: x, Value: this.$enum.KnowledgeLevelEnum[x]}})
+        // }
+        let sourceTypeM = res.data.data.filter(x => x.point)
+        this.comboboxTypeM = {
+          label: "Mức độ nhận biết",
+          source: sourceTypeM.map(x => {
+            return {
+              Key: x.analysisContentID, 
+              Value: `${x.name}`
+            }})
+        }
+        // let sourceTypeN = this.$enum.KnowledgeTypeEnum;
+        // this.comboboxTypeN = {
+        //   label: "Loại kiến thức",
+        //   source: Object.keys(sourceTypeN).map(x => {return {Key: x, Value: this.$enum.KnowledgeTypeEnum[x]}})
+        // }
+        let sourceTypeN = res.data.data.filter(x => !x.point)
+        this.comboboxTypeN = {
+          label: "Loại kiến thức",
+          source: sourceTypeN.map(x => {
+            return {
+              Key: x.analysisContentID, 
+              Value: `${x.name}`
+            }})
+        }
 
+      }
+    })
+  },
+  clearQuiz(idQuiz){
+    this.quizs.splice(idQuiz, 1)
+  }
 }
 }
 /* STYLE */

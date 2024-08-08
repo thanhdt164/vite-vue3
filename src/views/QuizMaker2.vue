@@ -4,20 +4,24 @@
     <template v-slot:center-area>
       <v-sheet class="quiz-info">
         <!-- THÔNG TIN CHUNG -->
-        <v-label>Thông tin chung:</v-label>
-        <v-row style="width: 75%;">
-          <v-col style="margin-right: 16px;">
+        <v-label style="margin-bottom: 8px">Thông tin chung:</v-label>
+        <v-row style="width: 50%;">
+          <v-col>
             <CardField
               title="Phòng GDĐT"
               :text.sync="eduDepartment"
             ></CardField>
           </v-col>
-          <v-col style="margin-right: 16px;">
+        </v-row>
+        <v-row style="width: 50%;">
+          <v-col>
             <CardField
               title="Trường"
               :text.sync="school"
             ></CardField>
           </v-col>
+        </v-row>
+        <v-row style="width: 50%;">
           <v-col>
             <CardField
               title="Tên đề kiếm tra"
@@ -26,7 +30,7 @@
           </v-col>  
         </v-row>
         <!-- Thông tin khác -->
-        <v-label>Thông tin khác:</v-label>
+        <v-label style="margin-bottom: 16px">Thông tin khác:</v-label>
         <!-- Mã đề -->
         <v-row style="width: 75%;">
           <v-col cols="3">
@@ -76,10 +80,11 @@
         <!-- CÂU HỎI -->
         <v-sheet class="quiz-list">
           <v-row>
-            <Expansion v-for="(quiz, index) in quizs" :key="index"
+            <!-- <Expansion v-for="(quiz, index) in quizs" :key="index"
               :title="`Câu hỏi ${index+1}:`"
               :quiz="quiz"
-            ></Expansion>
+            ></Expansion> -->
+            <Expansion :quizs="quizs"></Expansion>
           </v-row>
           <v-row class="foot-quiz-box">
             <v-btn class="btn-save-quiz" variant="tonal" @click="saveQuiz">
@@ -149,6 +154,8 @@ export default{
             ]
         },
         {
+            knowledgeLevel: {Key: "M1", Value: "Nhận biết"},
+            knowledgeType: {Key: "N1", Value: "Số nguyên tố"},
             question: "<p>Khi có một lực tác động lên vật thì vận tốc của vật sẽ như thế nào?</p>",
             answers: [
                 {
@@ -174,35 +181,8 @@ export default{
     comboboxSubjects: {},
     comboboxTimes: {},
     examModel: {
-      "exam": {
-        //"examTestID": 0,
-        "examTestCode": "",
-        "isOrigin": true,
-        "subject": [],
-        "time": []
-      },
-      "questionAnswers": [
-        {
-          //"questionID": "",
-          //"examTestID": 0,
-          "questionSortOrder": 0,
-          //"subAnalysysID": 0,
-          //"mainAnalysysID": 0,
-          "image": "string",
-          "questionContent": "string",
-          "knowledgeLevel": [],
-          "knowledgeType": [],
-          "answers": [
-            {
-              //"answerID": 0,
-              //"questionID": "",
-              "answerContent": "string",
-              "isTrue": true,
-              "answerSortOrder": 0
-            }
-          ]
-        }
-      ]
+      exam: {},
+      questionAnswers: []
     }
 
 
@@ -248,6 +228,8 @@ export default{
      */
     addQuiz(){
       this.quizs.push({
+        knowledgeLevel: {Key: "M1", Value: "Nhận biết"},
+        knowledgeType: {Key: "N1", Value: "Số nguyên tố"},
         question: null,
         answers: [
           { text: "", isTrue: false },
@@ -264,9 +246,13 @@ export default{
       // Thông tin chung
       let exam = {
         "examTestCode": this.examTestCode,
+        "examTestName": this.examTestName,
+        "subjectCode": this.subject.Key,
+        "subjectName": this.subject.Value,
+        "time": this.$enum.TimeEnum[this.time.Key].Value,
         "isOrigin": true,
-        "subject": this.subject.Value,
-        "time": this.$enum.TimeEnum[this.time.Key].Value
+        "educationTrainName": "Sở giáo dục tỉnh quảng bình",
+        "schoolName": "Trường ",
       }
       let param = {
         exam: exam,
@@ -280,11 +266,12 @@ export default{
         question.image = "image"
         question.questionContent = this.removeEmptyTags(quiz.question)
         // Mức độ nhận biết - knowledgeLevel
-        question.subAnalysCode = quiz.knowledgeLevel.Key
-        question.subAnalysName = quiz.knowledgeLevel.Value
+        question.subAnalysisCode = quiz.knowledgeLevel.Key
+        // question.subAnalysName = quiz.knowledgeLevel.Value
+
         // Loại kiến thức - knowledgeType
-        question.mainAnalysCode = quiz.knowledgeType.Key
-        question.mainAnalysName = quiz.knowledgeType.Value
+        question.mainAnalysisCode = quiz.knowledgeType.Key
+        // question.mainAnalysName = quiz.knowledgeType.Value
         question.isMultiResult = quiz.answers.filter(x => x.isTrue == true).length > 1
         
         // Câu trả lời
@@ -299,7 +286,6 @@ export default{
         question.answers = answers;
         param.questionAnswers.push(question)
       });
-
       ApiService.InsertExam(param).then(res => {
         if(res.data.success){
           this.$toast.success('Lưu đề thi thành công!')

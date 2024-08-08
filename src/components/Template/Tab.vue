@@ -7,11 +7,13 @@
 		</v-tabs>
 		<!-- Content tab -->
 		<v-tabs-window v-model="tabX">
-			<v-tabs-window-item>
-				<v-container class="tab-content" fluid>
-					<slot :name="currentTab.Key">{{ currentTab.Title }}</slot>
-				</v-container>
-			</v-tabs-window-item>
+			<keep-alive>
+				<v-tabs-window-item>
+					<v-container class="tab-content" fluid>
+						<slot :name="currentTab.Key">{{ currentTab.Title }}</slot>
+					</v-container>
+				</v-tabs-window-item>
+			</keep-alive>
 		</v-tabs-window>
 	</v-card>
 </template>
@@ -65,12 +67,12 @@ export default{
 	created(){
 		this.tabX = this.tab ?? this.tabX;
 		this.listTabX = this.listTab ?? this.listTabX;
-		// this.$mitt.$on('changeTab', (tabKey) => {
-		// 	this.tabX = tabKey
-		// })
+		this.$mitt.$on('changeTab', (tabKey) => {
+			this.tabX = tabKey
+		})
 	},
 	destroyed(){		
-		// this.$mitt.$off('changeTab')
+		this.$mitt.$off('changeTab')
 	},
 	methods:{
 

@@ -1,5 +1,5 @@
 <template>
-    <div class="d-flex align-center justify-center" style="height: 100vh">
+    <div class="register-field d-flex align-center justify-center" style="height: 100vh">
         <v-sheet width="400" class="mx-auto">
             <v-form fast-fail @submit.prevent="signup">
                 <v-text-field v-model="name" label="Tên người dùng"></v-text-field>
@@ -70,3 +70,26 @@ export default {
     },
 };
 </script>
+
+<style lang="scss">
+.register-field{
+	.v-input__control{
+		/* width: fit-content; */
+		height: 56px;
+	}
+	.v-field__field{
+		height: 56px;
+		.v-field__input{
+			height: 56px;
+			min-height: auto;
+		}
+		
+	}
+	// .v-input--density-default{
+	// 	--v-input-control-height: 40px;
+	// 	--v-input-padding-top: 0px;
+	// 	--v-input-padding-bottom: 0px;
+	// 	--v-field-padding-bottom: 0px;
+	// }
+}
+</style>

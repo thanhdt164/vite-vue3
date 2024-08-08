@@ -158,8 +158,6 @@ let examModel = {
       //"questionID": "",
       //"examTestID": 0,
       "questionSortOrder": 0,
-      //"subAnalysysID": 0,
-      //"mainAnalysysID": 0,
       "image": "string",
       "questionContent": "string",
       "answers": [

@@ -1,5 +1,5 @@
 <template>
-  <BaseArea title="Bài kiểm tra">
+  <BaseArea title="Danh sách đề thi">
     <template v-slot:center-area>
       <Grid
         :api="api"
@@ -26,7 +26,6 @@ export default{
   data: () => ({
     headers: [],
     api: ExamsAPI,
-    pagingGrid: null
   }),
   props:{
     tmp_Prop: {
@@ -48,17 +47,14 @@ export default{
     }
   },
   computed: {
-    roleName(){
-      let roleName = localStorage.getItem('roleName');
-      return roleName;
-    }
+
   },
   created(){
     let primaryHeader = [
       {key: "examTestCode", title: "Mã đề kiểm tra"},
       {key: "isOrigin", title: "Loại đề (gốc/trộn)", type: 'bool'},
-      {key: "subject", title: "Môn học"},
-      {key: "time", title: "Thời gian"},
+      {key: "subjectName", title: "Môn học"},
+      {key: "time", title: "Thời gian", suffix: "Phút"},
     ]
     this.headers = [{
       key: "STT",
@@ -72,25 +68,13 @@ export default{
         key: el.key,
         title: el.title,
         type: el.type,
-        align: 'end',
-        sortable: true
+        align: 'center',
+        sortable: true,
+        prefix: el.prefix,
+        suffix: el.suffix
       });
     })
 
-    // check role
-    if(!this.roleName.includes("Teacher")){
-      this.pagingGrid = ({
-        PageIndex,
-        PageSize,
-        ValueWhere
-      }) => {
-        return ExamsAPI.ExamByUser({
-          PageIndex,
-          PageSize,
-          ValueWhere
-        });
-      }
-    }
   },
   methods:{
     clickRow(data){

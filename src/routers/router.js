@@ -18,6 +18,7 @@ import CreateExam from '../views/CreateExam.vue'
 import AddUserBLock from '../views/AddUserBLock.vue'
 import Template from '@/components/Template/Template.vue'
 import DoTest from "@/views/DoTest.vue"
+import DoTest2 from "@/views/DoTest2.vue"
 import Tab from '@/components/Template/Tab.vue'
 import TextFields from '@/components/Template/TextFields.vue'
 import AnalysisDetail from '../views/AnaLysisDetail.vue'
@@ -49,7 +50,7 @@ const routes = [
     { path: '/quiz-maker', name: "quiz-maker", component: QuizMaker2 },
     { path: '/create-exam', name: "create-exam", component: CreateExam },
     { path: '/user-block', name: "user-block", component: AddUserBLock },
-    { path: '/do-test', name: "do-test", component: DoTest },
+    { path: '/do-test', name: "do-test", component: DoTest2 },
     { path: '/analysis-detail', name: "analysis-detail", component: AnalysisDetail },
     // Template
     { 
