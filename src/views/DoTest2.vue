@@ -1,7 +1,7 @@
 <template>
 <BaseArea title="Làm bài kiểm tra">
 	<template v-slot:right-tool>
-		<vue-countdown :time="20000" v-slot="{minutes, seconds }" @end="endCountDown">
+		<vue-countdown :time="timeCount" v-slot="{minutes, seconds }" @end="endCountDown">
 			Thời gian làm bài còn: {{ minutes }} phút, {{ seconds }} giây.
 		</vue-countdown>
 	</template>
@@ -77,6 +77,7 @@ export default{
   data: () => ({
 		quizs: [],
 		isNotCheck: true,
+		timeCount:10000000
   }),
   props:{
     tmp_Prop: {
@@ -111,6 +112,7 @@ export default{
 				this.quizs.forEach(el => {
 					el.results = []
 				})
+				this.timeCount = 20000;
 			});
 		},
 		async endCountDown(){
@@ -122,6 +124,7 @@ export default{
 				questionDetails: this.quizs
 			}
 			var res = await ExamsAPI.getMarkTest(params);
+			this.$toast.success("Nộp bài thành công")
 			// Chuyển hướng sang phân hệ kết quả học sinh
 			this.$router.push({path:"/students"});
 		},
