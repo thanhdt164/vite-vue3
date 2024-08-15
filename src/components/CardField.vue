@@ -79,7 +79,7 @@ export default{
   watch:{
     textX: {
       handler(newVal, oldVal) {
-        //this.value = newVal;
+        // this.$emit('input', newVal);
         this.$emit('update:text', newVal);
       },
     }

@@ -9,7 +9,7 @@
           <v-col>
             <CardField
               title="Phòng GDĐT"
-              :text.sync="eduDepartment"
+              v-model:text="eduDepartment"
             ></CardField>
           </v-col>
         </v-row>
@@ -17,7 +17,7 @@
           <v-col>
             <CardField
               title="Trường"
-              :text.sync="school"
+              v-model:text="school"
             ></CardField>
           </v-col>
         </v-row>
@@ -25,7 +25,7 @@
           <v-col>
             <CardField
               title="Tên đề kiếm tra"
-              :text.sync="examTitle"
+              v-model:text="examTitle"
             ></CardField>
           </v-col>  
         </v-row>
@@ -38,15 +38,6 @@
           </v-col>
           <v-col>
             <TextField v-model="examTestCode"></TextField>
-          </v-col>
-        </v-row>
-        <!-- Tên bài thi -->
-        <v-row style="width: 75%;">
-          <v-col cols="3">
-            <v-label>Tên bài kiểm tra: </v-label>
-          </v-col>
-          <v-col>
-            <TextField v-model="examTestName"></TextField>
           </v-col>
         </v-row>
         <!-- Môn học -->
@@ -123,7 +114,6 @@ export default{
   },
   data: () => ({
     examTestCode: "",
-    examTestName: "",
     subject: [],
     time: [],
     eduDepartment: "Phòng GDĐT..",
@@ -246,13 +236,13 @@ export default{
       // Thông tin chung
       let exam = {
         "examTestCode": this.examTestCode,
-        "examTestName": this.examTestName,
+        "examTestName": this.examTitle,
         "subjectCode": this.subject.Key,
         "subjectName": this.subject.Value,
         "time": this.$enum.TimeEnum[this.time.Key].Value,
         "isOrigin": true,
-        "educationTrainName": "Sở giáo dục tỉnh quảng bình",
-        "schoolName": "Trường ",
+        "educationTrainName": this.eduDepartment,
+        "schoolName": this.school,
       }
       let param = {
         exam: exam,
