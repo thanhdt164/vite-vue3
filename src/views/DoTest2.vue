@@ -108,6 +108,10 @@ export default{
 		getDataExam(){
 			let code = this.$route.query.code; // Access route parameters
 			ExamsAPI.getExamDoing(code).then(res => {
+				if (res.data.data.length == 0){
+					this.$toast.warning("Bài kiểm tra đã làm hoặc có lỗi xảy ra")
+					return;
+				}
 				this.quizs = res.data.data;
 				this.quizs.forEach(el => {
 					el.results = []
