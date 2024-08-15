@@ -8,12 +8,12 @@
       <v-row class="p-0">
         <ToolBar>
           <template v-slot:left-tool>
+            <slot name="left-tool"></slot>
             <v-breadcrumbs :items="itemsBreadCrumbs">
               <template v-slot:title="{ item }">
                 {{ item.title }}
               </template>
             </v-breadcrumbs>
-            
           </template>
           <template v-slot:right-tool>
             <!-- <v-btn icon>
@@ -76,12 +76,12 @@ export default{
     this.titleX = this.title;
     // let pathItems = this.$route.fullPath.split('/');
     this.itemsBreadCrumbs.push({
-      title: `Home`,
+      title: ``,
       disabled: true,
     })
     this.$route.matched.forEach((match, id) => {
       this.itemsBreadCrumbs.push({
-        title: `${match.name}`,
+        title: `${match.meta.title}`,
         // disabled: id == pathItems.length,
         disabled: false,
         href: match.path

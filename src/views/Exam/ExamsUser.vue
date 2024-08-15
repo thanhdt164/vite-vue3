@@ -57,6 +57,7 @@ export default{
       {key: "MainExamCode", title: "Mã đề gốc"},
       {key: "SubjectName", title: "Môn học"},
       {key: "Time", title: "Thời gian", suffix: 'Phút'},
+      {key: "IsTest", title: "Đã kiểm tra", type: "boolean"},
     ]
     this.headers = [{
       key: "STT",
@@ -71,6 +72,7 @@ export default{
         title: el.title,
         align: 'end',
         sortable: true,
+        type: el.type,
         prefix: el.prefix,
         suffix: el.suffix
       });
@@ -89,7 +91,9 @@ export default{
   },
   methods:{
     clickRow(data){
-      this.$router.push({path:"/do-test",query:{id:data.ExamTestID, code: data.SubExamCode}});
+      if(data.IsTest == "Không"){
+        this.$router.push({path:"/do-test",query:{id:data.ExamTestID, code: data.SubExamCode}});
+      }
     }
   }
 }
