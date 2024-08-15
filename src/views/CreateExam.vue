@@ -41,7 +41,7 @@
 										label="Chọn đề thi"
 										:item_source="lstTests"
 										item_key="examTestID"
-										item_value="subject"
+										item_value="examTestName"
 										:is_multiple="true"
 										@update:select="selectTests"
 									>

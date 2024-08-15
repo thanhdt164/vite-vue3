@@ -16,7 +16,7 @@
                     Kết quả phân tích bài kiểm tra
             </div>
             <div class="card">
-                <div> {{ comment }}</div>
+                <div v-html="comment"></div>
             </div>
     </template>
     </BaseArea>
