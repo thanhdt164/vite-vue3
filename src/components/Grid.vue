@@ -321,7 +321,7 @@ export default {
     },
     showSelect:{
       type: Boolean,
-      default: true
+      default: false
     },
     showPaging: {
       type: Boolean,

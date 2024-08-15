@@ -1,5 +1,8 @@
 <template>
   <BaseArea title="Bài kiểm tra">
+    <template v-slot:left-tool>
+      <v-icon @click="$router.push('/exams')">mdi-arrow-left</v-icon>
+    </template>
     <template v-slot:right-tool>
       <v-btn class="btn-save-quiz" variant="tonal" @click="mergeQuiz">
         Trộn đề
@@ -31,13 +34,15 @@
             <!-- HEADER -->
             <v-row class="exam-header">
               <v-col :cols="4" class="left-header">
-                <div>Phòng GDĐT Sơn Dương</div>
-                <div>Trường THCS Văn Phú</div>
+                <!-- Phòng GD -->
+                <div>{{ examData.educationTrainName }}</div>
+                <!-- Trường -->
+                <div>{{ examData.schoolName }}</div>
               </v-col>
               <v-col :cols="8" class="right-header">
-                <div class="exam-title">Đề kiểm tra đề xuất bồi dưỡng thường xuyên</div>
-                <div class="subject">Môn: Vật lý</div>
-                <div class="time">Thời gian: 50 phút (Không kể thời gian giao đề)</div>
+                <div class="exam-title">{{ examData.examTestName }}</div>
+                <div class="subject">Môn: {{ examData.subjectName }}</div>
+                <div class="time">Thời gian: {{ examData.time }} phút (Không kể thời gian giao đề)</div>
               </v-col>
             </v-row>
             <!-- BODY -->
@@ -176,13 +181,19 @@ export default{
       //   title: 'ID đề thi', key: 'examTestID', align: 'left'
       // },
       {
-        title: 'Mã đề thi', key: 'examTestCode', align: 'left'
+        title: 'Bài kiểm tra', key: 'examTestName', align: 'left'
       },
       {
-        title: 'Đề gốc', key: 'isOrigin', align: 'left', type: 'bool'
+        title: 'Môn học', key: 'subjectName', align: 'left',
       },
       {
         title: 'Thời gian', key: 'time', align: 'left', suffix: 'Phút'
+      },
+      {
+        title: 'Phòng GDĐT', key: 'educationTrainName', align: 'left',
+      },
+      {
+        title: 'Trường', key: 'schoolName', align: 'left',
       },
     ],
     toast: useToast(),
@@ -191,6 +202,7 @@ export default{
     api: ApiService,
     originQuizs: [],
     triggerPaging: false,
+    examData: {},
   }),
   components:{
     BaseArea,
@@ -204,6 +216,7 @@ export default{
     var code = this.$route.query.code;
     var res = await ApiService.getExamByCode(code);
     if (res){
+      this.examData = res.data.data.exam;
       this.quizs = res.data.data.questionAnswers
       this.originQuizs = res.data.data.questionAnswers;
     }
@@ -214,15 +227,6 @@ export default{
         { Key: "DetailExam", Title: "Chi tiết đề thi" },
         { Key: "GridMergeExam", Title: "Đề trộn" },
       ]
-    },
-    ExamsByID(){
-      ApiService.ExamsByID().then(res => {
-        this.quizs = res;
-      }).catch(err => {
-        
-      }).finally(() => {
-
-      }) 
     },
     initMergeExam(){
       this.headersMerge = [{
