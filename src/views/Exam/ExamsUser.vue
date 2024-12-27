@@ -6,6 +6,7 @@
         :headers="headers"
         @clickRow="clickRow"
         :replacePagingGrid="pagingGrid"
+        :textBoolean="{true: 'Đã làm', false: 'Chưa làm'}"
       ></Grid>
     </template>
   </BaseArea>
@@ -91,7 +92,7 @@ export default{
   },
   methods:{
     clickRow(data){
-      if(data.IsTest == "Không"){
+      if(data.IsTest == "Chưa làm"){
         this.$router.push({path:"/do-test",query:{id:data.ExamTestID, code: data.SubExamCode}});
       }
     }

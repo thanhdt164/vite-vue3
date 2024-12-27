@@ -46,21 +46,25 @@
           <v-list density="compact" nav>
             <!-- <v-list-item v-show="checkrole('Menu')" @click="direct(1)" class="list-item" prepend-icon="mdi-puzzle" title="Danh mục" value="1"></v-list-item> -->
             <!-- <v-list-item v-show="checkrole('Notification')" @click="direct(2)" class="list-item" prepend-icon="mdi-bell-ring" title="Thông báo" value="2"></v-list-item> -->
-            <v-list-item v-show="checkrole('Profiles')" @click="direct(3)" class="list-item" prepend-icon="mdi-account" title="Hồ sơ học sinh" value="3"></v-list-item>
-            <v-list-item v-show="roleName?.includes('Teacher')" @click="direct(4)" class="list-item" prepend-icon="mdi-clipboard-text" 
-              :title="'Danh sách đề thi'" value="4"
+            <v-list-item v-show="roleName?.includes('Teacher')" @click="direct(3)" class="list-item" prepend-icon="mdi-account" 
+              title="Hồ sơ học sinh" 
+              value="3"
             ></v-list-item>
-            <v-list-item v-show="true" @click="direct(14)" class="list-item" prepend-icon="mdi-clipboard-text" 
+            <v-list-item v-show="roleName?.includes('Teacher')" @click="direct(4)" class="list-item" prepend-icon="mdi-clipboard-text" 
+              :title="'Danh sách đề thi'" 
+              value="4"
+            ></v-list-item>
+            <v-list-item v-show="roleName?.includes('Student')" @click="direct(14)" class="list-item" prepend-icon="mdi-clipboard-text" 
               :title="'Bài kiểm tra'" 
               value="14"
             ></v-list-item>
-            <v-list-item v-show="checkrole('Students')" @click="direct(5)" class="list-item" prepend-icon="mdi-text-box-check-outline" title="Kết quả học sinh" value="5"></v-list-item>
+            <v-list-item v-show="true" @click="direct(5)" class="list-item" prepend-icon="mdi-text-box-check-outline" title="Kết quả học sinh" value="5"></v-list-item>
 
-            <v-list-item v-show="checkrole('InputDataAndAnalysis')" @click="direct(6)" class="list-item" prepend-icon="mdi-poll" title="Nhập liệu phân tích" value="6"></v-list-item>
+            <v-list-item v-show="roleName?.includes('Teacher')" @click="direct(6)" class="list-item" prepend-icon="mdi-poll" title="Nhập liệu phân tích" value="6"></v-list-item>
             <!-- <v-list-item v-show="checkrole('Evaluate')" @click="direct(7)" class="list-item" prepend-icon="mdi-star" title="Đánh giá" value="7"></v-list-item> -->
-            <v-list-item v-show="checkrole('Exams')" @click="direct(8)" class="list-item" prepend-icon="mdi-file-document-plus" title="Tạo đề kiểm tra" value="8"></v-list-item>
-            <v-list-item v-show="checkrole('Exams')" @click="direct(9)" class="list-item" prepend-icon="mdi mdi-format-list-group-plus" title="Tạo kỳ thi" value="9"></v-list-item>
-            <v-list-item v-show="checkrole('Exams')" @click="direct(10)" class="list-item" prepend-icon="mdi mdi-badge-account" title="Phân khối" value="10"></v-list-item>
+            <v-list-item v-show="roleName?.includes('Teacher')" @click="direct(8)" class="list-item" prepend-icon="mdi-file-document-plus" title="Tạo đề kiểm tra" value="8"></v-list-item>
+            <v-list-item v-show="roleName?.includes('Teacher')" @click="direct(9)" class="list-item" prepend-icon="mdi mdi-format-list-group-plus" title="Tạo kỳ thi" value="9"></v-list-item>
+            <v-list-item v-show="roleName?.includes('Teacher')" @click="direct(10)" class="list-item" prepend-icon="mdi mdi-badge-account" title="Phân khối" value="10"></v-list-item>
             <!-- <v-list-group value="Template">
               <template v-slot:activator="{ props }">
                 <v-list-item v-bind="props" class="list-item" prepend-icon="mdi-star" title="Template" value="100"></v-list-item>
@@ -87,6 +91,11 @@
 </template>
 
 <script>
+import $ from "jquery";
+
+window.jQuery = window.$ = $;
+
+import mittObj from './plugins/mitt.js'
 export default{
   data: () => ({
     drawer: true,
@@ -121,9 +130,9 @@ export default{
     if(localStorage.getItem('roleName')){
       this.roleName = localStorage.getItem('roleName')
     }
-    // this.$emitter.$on('updateRole', (roleName) => {
-		// 	this.roleName = roleName
-		// })
+    mittObj.$on('updateRoleName', () => {
+			this.roleName = localStorage.getItem('roleName')
+		})
   },
   methods:{
     direct(key){

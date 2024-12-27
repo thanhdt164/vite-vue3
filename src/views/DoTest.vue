@@ -34,7 +34,7 @@
 							<v-row>
 								<v-col cols="12">
 									<div class="answer">
-										<v-row v-if="false" v-for="(item, id) in [1,2,3,4]" :key="id" class="quiz-item">
+										<v-row v-if="quiz.isMultiAnswer" v-for="(item, id) in [1,2,3,4]" :key="id" class="quiz-item">
 											<div>
 												<v-checkbox 
 													class="answer-checkbox	mr-0 mt-0" 
