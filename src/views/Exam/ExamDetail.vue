@@ -177,9 +177,9 @@ export default{
     pagingGridMerge: null,
     customConvertPageData: null,
     sourceHeadersMerge: [
-      // {
-      //   title: 'ID đề thi', key: 'examTestID', align: 'left'
-      // },
+      {
+        title: 'Mã đề thi', key: 'examTestCode', align: 'left'
+      },
       {
         title: 'Bài kiểm tra', key: 'examTestName', align: 'left'
       },
@@ -259,7 +259,10 @@ export default{
         pageData.forEach(el => {
           el.examTestID = el.exam.examTestID
           el.examTestCode = el.exam.examTestCode
-          el.isOrigin = el.exam.isOrigin
+          el.examTestName = el.exam.examTestName,
+          el.educationTrainName = el.exam.educationTrainName,
+          el.schoolName = el.exam.schoolName,
+          el.subjectName = el.exam.subjectName,
           el.time = el.exam.time
         }) 
       }

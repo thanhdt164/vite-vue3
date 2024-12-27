@@ -2,8 +2,8 @@
     <div class="register-field d-flex align-center justify-center" style="height: 100vh">
         <v-sheet width="400" class="mx-auto">
             <v-form fast-fail @submit.prevent="signup">
-                <v-text-field v-model="name" label="Tên người dùng"></v-text-field>
-                <v-text-field v-model="fullName" label="Tên đăng nhập"></v-text-field>
+                <v-text-field v-model="fullName" label="Tên người dùng"></v-text-field>
+                <v-text-field v-model="name" label="Tên đăng nhập"></v-text-field>
                 <v-text-field v-model="email" label="Email"></v-text-field>
                 <v-text-field 
                     v-model="password" 

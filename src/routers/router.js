@@ -22,6 +22,7 @@ import DoTest2 from "@/views/DoTest2.vue"
 import Tab from '@/components/Template/Tab.vue'
 import TextFields from '@/components/Template/TextFields.vue'
 import AnalysisDetail from '../views/AnaLysisDetail.vue'
+import MyEditor from '../components/Mathquill4/MyEditor.vue'
 
 // 2. Define some routes
 // Each route should map to a component.
@@ -45,13 +46,14 @@ const routes = [
     { path: '/exams-user', name: "exams-user", title: "Bài kiểm tra", component: ExamsUser, meta: { title: "Bài kiểm tra" } },
     { path: '/exam-detail', name: "exam-detail", title: "Chi tiết bài kiếm tra", component: ExamsDetail, meta: { title: "Chi tiết bài kiếm tra" } },
     { path: '/students', name: "students",title: "Kết quả học sinh", component: Students, meta: { title: "Chi tiết bài kiếm tra" } },
-    { path: '/input-data-and-analysis', name: "input-data-and-analysis", title: "Nhập liệu phân tích",component: InputDataAndAnalysis,  },
+    { path: '/input-data-and-analysis', name: "input-data-and-analysis", title: "Nhập liệu phân tích",component: InputDataAndAnalysis, meta: { title: "Nhập liệu phân tích" }  },
     { path: '/evaluate', name: "evaluate", component: Evaluate },
     { path: '/quiz-maker', name: "quiz-maker",title: "Tạo đề kiểm tra", component: QuizMaker2, meta: { title: "Tạo đề kiểm tra" } },
     { path: '/create-exam', name: "create-exam", title: "Kỳ thi",component: CreateExam, meta: { title: "Kỳ thi" } },
     { path: '/user-block', name: "user-block",title: "Phân khối", component: AddUserBLock, meta: { title: "Phân khối" } },
     { path: '/do-test', name: "do-test", component: DoTest2, meta: { title: "Làm bài kiểm tra" } },
     { path: '/analysis-detail', name: "analysis-detail", component: AnalysisDetail, meta: { title: "Phân tích chi tiết" } },
+    { path: '/quill', name: "quill", component: MyEditor, meta: { title: "Quill" } },
     // Template
     { 
         path: '/template', 

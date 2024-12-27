@@ -28,6 +28,11 @@
               v-model:content="quiz.question"
               contentType="html"
             />
+            <!-- <QuillEditor  
+              theme="snow" 
+              :toolbar="toolbarOptions" 
+              contentType="html"
+            /> -->
           </div>
         </v-row>
         <!-- Chủ đề - tiêu chí -->
@@ -62,6 +67,7 @@
               v-model:content="quiz.answers[id].text"
               contentType="html"
             />
+            
           </div>
         </v-row>
       </v-expansion-panel-text>

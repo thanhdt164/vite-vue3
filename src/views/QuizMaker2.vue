@@ -165,7 +165,76 @@ export default{
                     isTrue: false
                 }
             ]
-        }
+        },
+        {
+            knowledgeLevel: {Key: "M1", Value: "Nhận biết"},
+            knowledgeType: {Key: "N1", Value: "Số nguyên tố"},
+            question: "<p>Đơn vị của lực trong hệ SI là gì?</p>",
+            answers: [
+                {
+                    text: "<p>Newton (N).<p/>",
+                    isTrue: true
+                },
+                {
+                    text: "<p>Kilogram (kg).<p/>",
+                    isTrue: false
+                },
+                {
+                    text: "<p>Mét (m).<p/>",
+                    isTrue: false
+                },
+                {
+                    text: "<p>Giây (s).<p/>",
+                    isTrue: true
+                }
+            ]
+        },
+        {
+            knowledgeLevel: {Key: "M1", Value: "Nhận biết"},
+            knowledgeType: {Key: "N1", Value: "Số nguyên tố"},
+            question: "<p>Lực ma sát trượt xuất hiện khi nào?</p>",
+            answers: [
+                {
+                    text: "<p>Khi một vật trượt trên bề mặt của vật khác.<p/>",
+                    isTrue: true
+                },
+                {
+                    text: "<p>Khi một vật đứng yên trên bề mặt của vật khác.<p/>",
+                    isTrue: false
+                },
+                {
+                    text: "<p>Khi một vật lăn trên bề mặt của vật khác.<p/>",
+                    isTrue: true
+                },
+                {
+                    text: "<p>Khi một vật bay trong không khí.<p/>",
+                    isTrue: false
+                }
+            ]
+        },
+        {
+            knowledgeLevel: {Key: "M1", Value: "Nhận biết"},
+            knowledgeType: {Key: "N1", Value: "Số nguyên tố"},
+            question: "<p>Công thức tính công cơ học là gì?</p>",
+            answers: [
+                {
+                    text: "<p>A = F.s<p/>",
+                    isTrue: true
+                },
+                {
+                    text: "<p>A = m.g<p/>",
+                    isTrue: false
+                },
+                {
+                    text: "<p>A = v.t<p/>",
+                    isTrue: false
+                },
+                {
+                    text: "<p>A = P.V<p/>",
+                    isTrue: false
+                }
+            ]
+        },
     ],
     // Môn học
     comboboxSubjects: {},

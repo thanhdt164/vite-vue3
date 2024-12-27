@@ -12,6 +12,16 @@ const instance = axios.create({
       'Authorization':localStorage.getItem('token'),
     },
   });
+function login(data){
+    let instanceLogin = axios.create({
+        baseURL: 'https://localhost:7114',
+        headers: {
+          'Content-Type': 'application/json', 
+          'Authorization': null,
+        }});
+    return instanceLogin.post("/AuthenticateController/login",data)
+}
+
   
 // Phương thức GET
 function getAPI(endpoint) {
@@ -30,9 +40,6 @@ function putAPI(endpoint, data) {
 // Phương thức DELETE
 function deleteAPI(endpoint) {
     return instance.delete(endpoint);
-}
-function login(data){
-    return instance.post("/AuthenticateController/login",data)
 }
 function getAllAnalysisContent(){
     return instance.get("/AnalysisContent/get-all")

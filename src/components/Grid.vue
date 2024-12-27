@@ -334,6 +334,13 @@ export default {
     showDelete: {
       type: Boolean,
       default: false
+    },
+    textBoolean: {
+      type: Object,
+      default: {
+        true: "Có",
+        false: "Không"
+      }
     }
   },
   created(){
@@ -442,9 +449,9 @@ export default {
               case 'bool':
               case 'boolean':
                 if(el[key]){
-                  el[key] = 'Có'
+                  el[key] = this.textBoolean['true']
                 }else{
-                  el[key] = 'Không'
+                  el[key] = this.textBoolean['false']
                 }
                 break;
               default:

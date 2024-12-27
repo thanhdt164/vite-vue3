@@ -108,7 +108,7 @@
 		listTab = [
 			{ Key: "CreateExam", Title: "Tạo kì thi" },
 			{ Key: "ExamGeneralPaging", Title: "Danh sách sách kì thi" },
-			{ Key: "ExamGeneralByUser", Title: "Kì thi đã đăng kí" },
+			//{ Key: "ExamGeneralByUser", Title: "Kì thi đã đăng kí" },
 		]
 		tab = "CreateExam"
 	}
