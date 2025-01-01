@@ -70,9 +70,6 @@ export default {
 			if(res && res.status == 200 && res.data.success){
 				this.$toast.success("Đăng nhập thành công");
 				await this.initLogin(res.data);
-				setTimeout(() => {
-					this.$router.push("/exams");
-				}, 1000);
 			}else{
 				this.$toast.error(res.data.message);
 			}
@@ -93,8 +90,16 @@ export default {
 		processToken(token){
 			localStorage.setItem('token', token)
 			var tokenParse = this.parseJwt(token);
-			// this.$emitter.$emit('updaterole', token.RoleName)
+			
     	localStorage.setItem('roleName', tokenParse.RoleName)
+			setTimeout(() => {
+				if(tokenParse.RoleName == "Teacher"){
+					this.$router.push("/exams");
+				}else{
+					this.$router.push("/exams-user");
+				}
+			}, 1000);
+			this.$mitt.$emit('updateRoleName')
 		},
 		parseJwt (token) {
 			if(!token) return "";

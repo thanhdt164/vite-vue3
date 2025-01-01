@@ -56,6 +56,7 @@ import UserAPI from '../axios/UserAPI.js';
 import BlockAPI from '../axios/BlockAPI.js';
 
 import  {ref} from 'vue'
+const $toast = useToast();
 const lstStudent = ref([])
 const blockAPI = new BlockAPI();
 const lstBlock = ref([])

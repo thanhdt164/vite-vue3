@@ -10,13 +10,13 @@
 			<!-- HEADER -->
 			<v-row class="exam-header">
 				<v-col :cols="4" class="left-header">
-					<div>Phòng GDĐT Sơn Dương</div>
-					<div>Trường THCS Văn Phú</div>
+					<div>Phòng GDĐT Hòa Bình</div>
+					<div>Trường THCS Hòa Bình 1</div>
 				</v-col>
 				<v-col :cols="8" class="right-header">
-					<div class="exam-title">Đề kiểm tra đề xuất bồi dưỡng thường xuyên</div>
+					<div class="exam-title">Đề kiểm tra giữa học kì 1 - Năm học 2023-2024</div>
 					<div class="subject">Môn: Vật lý</div>
-					<div class="time">Thời gian: 50 phút (Không kể thời gian giao đề)</div>
+					<div class="time">Thời gian: 90 phút (Không kể thời gian giao đề)</div>
 				</v-col>
 			</v-row>
 			<!-- BODY -->
@@ -129,7 +129,7 @@ export default{
 				this.quizs.forEach(el => {
 					el.results = []
 				})
-				this.timeCount = 20000;
+				this.timeCount = 120000;
 			});
 		},
 		async endCountDown(){

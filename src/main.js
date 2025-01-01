@@ -12,23 +12,31 @@ import 'vue-toast-notification/dist/theme-bootstrap.css';
 //Enum
 import SubjectEnum from '@/enum/SubjectEnum.js';
 import { TimeEnum, KnowledgeLevelEnum, KnowledgeTypeEnum } from '@/enum/PoolEnum.js';
-// Quill
-import '@vueup/vue-quill/dist/vue-quill.snow.css';
-import { QuillEditor } from '@vueup/vue-quill'
 
 // import './style.css'
 import './css/scollbar.css'
 import './css/common.scss'
 
 
+
 const app = createApp(App)
 app.use(router)
 app.use(vuetify)
 app.use(ToastPlugin)
-app.use(emitterObj)
+// MathQuill4Quill
+// import "katex/dist/katex.css";
+// import "@vueup/vue-quill/dist/vue-quill.bubble.css";
+// import "@vueup/vue-quill/dist/vue-quill.snow.css";
+
+// import "mathquill4quill/mathquill4quill.css";
+// import { MathQuill4Quill } from '@/plugins/mathquill4quill.js';
 app.mount('#app')
 
+// Quill
+import '@vueup/vue-quill/dist/vue-quill.snow.css';
+import { QuillEditor } from '@vueup/vue-quill'
 app.component('QuillEditor', QuillEditor)
+
 
 app.config.globalProperties.$enum = {
   SubjectEnum, 
@@ -37,7 +45,6 @@ app.config.globalProperties.$enum = {
   KnowledgeTypeEnum
 }
 app.config.globalProperties.$toast = useToast()
-// app.config.globalProperties.$emitter = emitterObj
 app.config.globalProperties.$mitt = mittObj
 
 
