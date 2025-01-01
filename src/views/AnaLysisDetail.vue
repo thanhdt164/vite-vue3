@@ -9,7 +9,7 @@
                     Họ và tên: <span>{{ fullName }}</span>
                 </div>
                 <div>
-                    Điểm: <span>10</span>
+                    Điểm: <span>{{ poin }}</span>
                 </div>
             </div>
             <div class="title mb-2">
@@ -32,12 +32,14 @@ const route = useRoute();
 const fullName = ref("")
 const comment = ref("")
 let examCode = ref("")
+const poin = ref(0)
 
 const getAnalysDetail = async (examCode) =>{
     var res = await ExamsAPI.getResultAnalys(examCode);
     if (res.data.success){
         fullName.value = res.data.data.fullName
         comment.value = res.data.data.resultJson
+        poin.value = res.data.data.poin || 0
     }
 }
 examCode = route.query.examCode

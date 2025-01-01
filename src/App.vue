@@ -114,7 +114,7 @@ export default{
   },
   computed: {
     loginOrRegister(){
-      return this.$route.path == '/login' || this.$route.path == '/register'
+      return this.$route.path == '/login' || this.$route.path == '/register' || this.$route.path == '/do-test'
     },
   },
   created(){
