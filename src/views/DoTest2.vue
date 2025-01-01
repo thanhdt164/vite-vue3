@@ -62,22 +62,35 @@
 		</div>
 	</template>
 </BaseArea>
+<ConfirmationDialog 
+	:message="dialogMessage" 
+	:isVisible="isDialogVisible" 
+	@update:isVisible="isDialogVisible = $event"
+	@confirmed="handleConfirm"
+	@canceled="handleCancel"
+/>
 </template>
 <script>
 import ExamsAPI from '@/axios/ExamsAPI.js';
 import VueCountdown from '@chenfengyuan/vue-countdown';
 import BaseArea from '@/components/BaseArea.vue'
+import ConfirmationDialog from '../views/ConfirmDialog.vue';
 
 export default{
   name: "",
   components:{
     BaseArea,
-		VueCountdown
+	VueCountdown,
+	ConfirmationDialog
   },
   data: () => ({
 		quizs: [],
 		isNotCheck: true,
-		timeCount:10000000
+		timeCount:10000000,
+		isDialogVisible: false,
+      	dialogMessage: 'Nếu bạn thoát khỏi màn hình này, bài thi sẽ được chấm điểm với kết quả hiện tại. Bạn có muốn tiếp tục?',
+		routerNextTo:"",
+		isStop:false
   }),
   props:{
     tmp_Prop: {
@@ -146,8 +159,27 @@ export default{
 		},
 		chooseResultRadio(quiz){
 			quiz.results = [quiz.results[0]]
-		}
-  }
+		},
+		showDialog() {
+      		this.isDialogVisible = true;
+		},
+		handleConfirm() {
+			this.isStop = true
+			this.$router.push({path:this.routerNextTo});
+		},
+		handleCancel() {
+			//this.isStopExam = true
+		},
+  },
+  beforeRouteLeave(to, from, next) {
+  	this.showDialog()
+	this.routerNextTo = to.path
+	if (this.isStop){
+		this.endCountDown()
+		next(true)
+	}
+	next(false)
+  },
 }
 
 </script>

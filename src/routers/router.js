@@ -24,6 +24,7 @@ import TextFields from '@/components/Template/TextFields.vue'
 import AnalysisDetail from '../views/AnaLysisDetail.vue'
 import MyEditor from '../components/Mathquill4/MyEditor.vue'
 
+
 // 2. Define some routes
 // Each route should map to a component.
 // We'll talk about nested routes later.
@@ -115,6 +116,7 @@ router.beforeEach((to, from, next) => {
         next('/login');
         return;
     }
+    if (from.name = 'login')
     next()
 })
 export {router};
